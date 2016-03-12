@@ -67,12 +67,13 @@ class RestaurantTableViewController: UITableViewController {
 		}
 	}
 
+	// 创建自定义的滑动动作，并且最后将它们作为数组返回
 	override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
 		let shareAction = UITableViewRowAction(style: .Default, title: "Share") {
 			[unowned self] (action, indexPath) in
-			UIImage(named: self.restaurants.restaurantImages[indexPath.row]).flatMap {
+			if let image = UIImage(named: self.restaurants.restaurantImages[indexPath.row]) {
 				let defaultText = "Just check in \(self.restaurants.restaurantNames[indexPath.row])"
-				let activity = UIActivityViewController(activityItems: [$0, defaultText], applicationActivities: nil)
+				let activity = UIActivityViewController(activityItems: [image, defaultText], applicationActivities: nil)
 				self.presentViewController(activity, animated: true, completion: nil)
 			}
 		}
@@ -83,8 +84,9 @@ class RestaurantTableViewController: UITableViewController {
 			self.restaurants.removeResuaurant(indexPath.row)
 			self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		}
-
-		return [shareAction, deleteAction]
+		shareAction.backgroundColor = UIColor(red: 28/255.0, green: 165/255.0, blue: 253/255.0, alpha: 1.0)
+		// 返回的顺序可能会影响显示的，倒序显示。
+		return [deleteAction, shareAction]
 	}
 	// MARK: - Table View Delegate Methods
 
