@@ -8,23 +8,29 @@
 
 import UIKit
 import CoreData
+import MessageUI
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
-
+    var mailCompose: MFMailComposeViewController!
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
 		// 设置导航栏的颜色和字体, 对全局有效
 		// 这个可以设置全局的导航栏的风格为 明亮. 或者通过 preferedStatusBarStyle 改变
 		// 不过需要去项目文件中, 添加一个键, 并设置为 NO
-		UIApplication.sharedApplication().statusBarStyle = .LightContent
+		// UIApplication.sharedApplication().statusBarStyle = .LightContent
 		UINavigationBar.appearance().barTintColor = UIColor(red: 242/255.0, green: 116/255.0, blue: 119/255.0, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
 		if let barFont = UIFont(name: "Avenir-Light", size: 24) {
 			UINavigationBar.appearance().titleTextAttributes =
-				[NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: barFont]
+                [NSForegroundColorAttributeName: UIColor.whiteColor(),
+                 NSFontAttributeName: barFont]
 		}
+
+        mailCompose = nil
+        mailCompose = MFMailComposeViewController()
 		return true
 	}
 

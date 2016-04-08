@@ -19,15 +19,18 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 		super.viewDidLoad()
 		title = restaurant.name
 		restaurantImageView.image = UIImage(data: restaurant.image!)
-		detailTableView.backgroundColor = UIColor(red: 242/255.0, green: 66/255.0, blue: 119/255.0, alpha: 0.5)
+		detailTableView.backgroundColor = UIColor.whiteColor()
 		// 脚注就是表格没有现实数据的部分，将它们移除
 		detailTableView.estimatedRowHeight = 36
 		detailTableView.rowHeight = UITableViewAutomaticDimension
 		detailTableView.tableFooterView = UIView(frame: CGRect.zero)
 		// Do any additional setup after loading the view.
+
+//		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 		if restaurant.rating != .None {
 			ratingButton.setImage(UIImage(named: restaurant.rating.rawValue), forState: .Normal)
 		}
+
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -48,27 +51,28 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-					  as! RestaurantDetailTableViewCell
+		let identifier = "DetailCell"
+
+		let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
 		// 使单元格透明
 		cell.backgroundColor = UIColor.clearColor()
 		switch indexPath.row {
 		case 0:
-			cell.fieldLabel.text = "Name"
-			cell.valueField.text = restaurant.name
+			cell.textLabel?.text = "Name"
+			cell.detailTextLabel?.text = restaurant.name
 		case 1:
-			cell.fieldLabel.text = "Type"
-			cell.valueField.text = restaurant.type
+			cell.textLabel?.text = "Location"
+			cell.detailTextLabel?.text = restaurant.location
 		case 2:
-			cell.fieldLabel.text = "Location"
-			cell.valueField.text = restaurant.location
+			cell.textLabel?.text = "Type"
+			cell.detailTextLabel?.text = restaurant.type
 		case 3:
-			cell.fieldLabel.text = "Phone"
-			cell.valueField.text = restaurant.phoneNumber
+			cell.textLabel?.text = "Phone"
+			cell.detailTextLabel?.text = restaurant.phoneNumber
 		case 4:
-			cell.fieldLabel.text = "Been here"
+			cell.textLabel?.text = "Been here"
 			if let isVisit = restaurant.isVisited?.boolValue {
-				cell.valueField.text = isVisit ? "Yes, I've been here" : "No"
+				cell.detailTextLabel?.text = isVisit ? "Yes, I've been here" : "No"
 			}
 		default:
 			break
@@ -76,13 +80,14 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 		return cell
 	}
 
+
 	func tableView(tableView: UITableView,
 						willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
 		return nil
 	}
 
 
-	@IBAction func closeReview(segue: UIStoryboardSegue) {
+	@IBAction func unwindToDetail(segue: UIStoryboardSegue) {
 		if let ratingVC = segue.sourceViewController as? ReviewViewController {
 			if ratingVC.rating == "None" {
 				return
@@ -90,10 +95,21 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 			ratingButton.setImage(UIImage(named: ratingVC.rating), forState: .Normal)
 			restaurant.rating = Rating(rawValue: ratingVC.rating)!
 
-			guard let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext else { return }
-
-			try! managedObjectContext.save()
+		} else if let editVC = segue.sourceViewController
+				as? AddRestaurantTableViewController {
+			let newRest = editVC.newRestaurant
+			if !restaurant.image!.isEqualToData(newRest.image!) {
+				restaurantImageView.image = UIImage(data: newRest.image!)
+			}
+			restaurant = editVC.newRestaurant
+			detailTableView.reloadData()
 		}
+
+		guard let managedObjectContext =
+			(UIApplication.sharedApplication().delegate as? AppDelegate)?
+				.managedObjectContext else { return }
+		
+		try! managedObjectContext.save()
 	}
 
 
@@ -104,6 +120,10 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 		} else if segue.identifier == "modallyReview" {
 			let reviewVC = segue.destinationViewController as! ReviewViewController
 			reviewVC.rating = restaurant.rating.rawValue
+		} else if segue.identifier == "EditRestaurant" {
+			let navigationVC = segue.destinationViewController as! UINavigationController
+			let editVc = navigationVC.topViewController as! AddRestaurantTableViewController
+			editVc.newRestaurant = restaurant
 		}
 	}
 	// TODO: 不允许点击表格的信息.

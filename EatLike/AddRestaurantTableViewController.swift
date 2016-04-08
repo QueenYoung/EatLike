@@ -12,6 +12,7 @@ class AddRestaurantTableViewController: UITableViewController,
 												    UIImagePickerControllerDelegate,
 													 UINavigationControllerDelegate,
 													 UITextFieldDelegate {
+    var isUpdate = false
 
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var nameTextField: UITextField!
@@ -24,12 +25,19 @@ class AddRestaurantTableViewController: UITableViewController,
 	var newRestaurant: Restaurant!
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		title = "New Restaurant"
 		if yesButton.backgroundColor == UIColor.redColor() {
 			yesButton.enabled = false
 		} else {
 			noButton.enabled = false
 		}
+
+        if newRestaurant != nil {
+            configeRestaurantInformation()
+        } else {
+            nameTextField.becomeFirstResponder()
+            title = "New Restaurant"
+        }
+
 	}
 
 	override func viewWillDisappear(animated: Bool) {
@@ -43,38 +51,43 @@ class AddRestaurantTableViewController: UITableViewController,
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if indexPath.row == 0 {
+            let canMakePicture = UIImagePickerController.isCameraDeviceAvailable(.Rear)
 			let imagePicker = UIImagePickerController()
 			// Never don't forget!!!!!!!!
 			imagePicker.delegate = self
-			let actionSheet = UIAlertController(title: "Select Image",
-			                                    message: "Which way you want to use",
-			                                    preferredStyle: .ActionSheet)
-			let pictureAction = UIAlertAction(title: "Saved Pictures", style: .Default) {
-				[unowned self] _ in
-				imagePicker.sourceType = .SavedPhotosAlbum
-				// imagePicker.allowsEditing = true
-				self.presentViewController(imagePicker, animated: true, completion: nil)
-			}
+            if !canMakePicture {
+                imagePicker.sourceType = .PhotoLibrary
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+            } else {
+                // 如果可以后置照相机的话, 再询问使用哪一种
+                let actionSheet = UIAlertController(title: "Select Image",
+                                                    message: "Which way you want to use",
+                                                    preferredStyle: .ActionSheet)
+                let pictureAction = UIAlertAction(title: "Saved Pictures", style: .Default) {
+                    [unowned self] _ in
+                    imagePicker.sourceType = .PhotoLibrary
+                    // imagePicker.allowsEditing = true
+                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                }
 
-			let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
-				[unowned self] _ in
-				imagePicker.sourceType = .Camera
-				self.presentViewController(imagePicker, animated: true, completion: nil)
-			}
+                let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
+                    [unowned self] _ in
+                    imagePicker.sourceType = .Camera
+                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                }
 
-			actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-			actionSheet.addAction(pictureAction)
-			if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-				actionSheet.addAction(cameraAction)
-			}
-
-			presentViewController(actionSheet, animated: true, completion: nil)
+                actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                actionSheet.addAction(pictureAction)
+                actionSheet.addAction(cameraAction)
+                
+                presentViewController(actionSheet, animated: true, completion: nil)
+            }
 		}
 
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
 
-
+    // MARK: - ImagePicker Delegate Methods
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
 		imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
 		imageView.contentMode = .ScaleAspectFill
@@ -87,37 +100,41 @@ class AddRestaurantTableViewController: UITableViewController,
 		dismissViewControllerAnimated(true, completion: nil)
 	}
 
-
+    // MARK: - IBAction
 	@IBAction func changeState(sender: UIButton) {
 		swap(&yesButton.backgroundColor, &noButton.backgroundColor)
 		swap(&yesButton.enabled, &noButton.enabled)
 	}
 
 	@IBAction func saveNewRestaurant(sender: UIBarButtonItem) {
-		guard let managedObjectContext =
-			(UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
-			else { return }
-		newRestaurant = NSEntityDescription.insertNewObjectForEntityForName("Restaurant", inManagedObjectContext: managedObjectContext) as? Restaurant
+        let name = nameTextField.text!
+        let type = typeTextField.text!
+        let location = locationTextField.text!
 
-		let name = nameTextField.text!
-		let location = locationTextField.text!
-		let type = locationTextField.text!
-		// 返回的是 NSData 类型, 刚好可以初始化
-		let image = imageView.image.flatMap { UIImagePNGRepresentation($0) }
-		let phone = phoneTextField.text!
-		let visit = yesButton.backgroundColor == UIColor.redColor() ? true : false
+        // 如果 name type 或者 location 有一个没有填, 则提示用户
+        if name.isEmpty || type.isEmpty || location.isEmpty {
+            navigationItem.rightBarButtonItem?.enabled = false
+            let alert = UIAlertController(
+                title: "Wrong!",
+                message: "Can't proceed because one of fields is blank.",
+                preferredStyle: .Alert)
 
-		if name.isEmpty || location.isEmpty || type.isEmpty {
-			navigationItem.rightBarButtonItem?.enabled = false
-			return
-		}
-		
-		newRestaurant.name = name
-		newRestaurant.location = location
-		newRestaurant.type = type
-		newRestaurant.image = image
-		newRestaurant.phoneNumber = phone
-		newRestaurant.isVisited = visit
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+
+        guard let managedObjectContext =
+                (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+                else { return }
+        
+        if !isUpdate {
+            newRestaurant = NSEntityDescription
+                .insertNewObjectForEntityForName("Restaurant"
+                ,inManagedObjectContext: managedObjectContext) as? Restaurant
+        }
+
+        updateRestaurantInformation()
 
 		do {
 			try managedObjectContext.save()
@@ -126,8 +143,16 @@ class AddRestaurantTableViewController: UITableViewController,
 			return
 		}
 
-		performSegueWithIdentifier("unwindToHome", sender: self)
+        if isUpdate {
+            performSegueWithIdentifier("unwindToDetailView", sender: self)
+        } else {
+            performSegueWithIdentifier("unwindToHomeView", sender: self)
+        }
 	}
+
+    @IBAction func cancel() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
 	// MARK: - Text Field Delegates
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -135,7 +160,7 @@ class AddRestaurantTableViewController: UITableViewController,
 
 		if nameTextField.isFirstResponder() {
 			locationTextField.becomeFirstResponder()
-		} else if locationTextField.isFirstResponder() {
+        } else if locationTextField.isFirstResponder() {
 			typeTextField.becomeFirstResponder()
 		} else if typeTextField.isFirstResponder() {
 			phoneTextField.becomeFirstResponder()
@@ -162,5 +187,33 @@ class AddRestaurantTableViewController: UITableViewController,
 		return true
 	}
 
+    private func configeRestaurantInformation() {
+        imageView.image        = UIImage(data: newRestaurant.image!)
+        nameTextField.text     = newRestaurant.name
+        locationTextField.text = newRestaurant.location
+        typeTextField.text     = newRestaurant.type
+        phoneTextField.text    = newRestaurant.phoneNumber
+        isUpdate               = true
 
+        imageView.contentMode = .ScaleAspectFill
+    }
+
+
+    private func updateRestaurantInformation() {
+
+        let name     = nameTextField.text!
+        let location = locationTextField.text!
+        let type     = typeTextField.text!
+        // 返回的是 NSData 类型, 刚好可以初始化
+        let image    = imageView.image.flatMap { UIImagePNGRepresentation($0) }
+        let phone    = phoneTextField.text!
+        let visit    = yesButton.backgroundColor == UIColor.redColor() ? true : false
+
+        newRestaurant.name        = name
+        newRestaurant.location    = location
+        newRestaurant.type        = type
+        newRestaurant.image       = image
+        newRestaurant.phoneNumber = phone
+        newRestaurant.isVisited   = visit
+    }
 }

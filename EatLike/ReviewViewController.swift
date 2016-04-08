@@ -23,6 +23,7 @@ class ReviewViewController: UIViewController {
 		dislikeButton.transform = transform
 		greatButton.transform = transform
 		likeButton.transform = transform
+        
 		let blur = UIBlurEffect(style: .Dark)
 		let blurView = UIVisualEffectView(effect: blur)
 		// Setting the frame of the blur
@@ -72,15 +73,5 @@ class ReviewViewController: UIViewController {
 		performSegueWithIdentifier("unwindToDetailView", sender: sender)
 	}
 
-	
-	/*
-	// MARK: - Navigation
-
-	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-	// Get the new view controller using segue.destinationViewController.
-	// Pass the selected object to the new view controller.
-	}
-	*/
 
 }

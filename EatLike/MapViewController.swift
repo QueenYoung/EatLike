@@ -21,6 +21,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 		mapView.showsCompass = true
 		mapView.showsTraffic = true
 		mapView.showsScale = true
+		mapView.showsBuildings = true
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -34,6 +35,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 			placemarks, error in
 			if error != nil {
 				print(error)
+				self.mapView.showsUserLocation = true
 				return
 			}
 
@@ -49,6 +51,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 		}
 	}
 
+	// MARK: - MapView Delegate Method
 	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
 		let identifier = "My Pin"
 
@@ -56,6 +59,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 			return nil
 		}
 
+		// 和 Cell 一样, 也通过重用队列中的 Annotation 来节省内存
 		var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
 
 		// 如果队列中不存在可重用的， 则重新创建
@@ -72,15 +76,5 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 
 		return annotationView
 	}
-
-	/*
-	// MARK: - Navigation
-
-	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-	// Get the new view controller using segue.destinationViewController.
-	// Pass the selected object to the new view controller.
-	}
-	*/
 
 }
