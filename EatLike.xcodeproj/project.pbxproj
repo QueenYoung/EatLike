@@ -15,6 +15,7 @@
 		96275E6F1C93099F00E90E2E /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */; };
 		96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E701C93CE9100E90E2E /* Restaurant.swift */; };
 		9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9645B5931C9D0FAD00C94E35 /* EatLike.xcdatamodeld */; };
+		9692D2811CB8B765006D5CEF /* ExtensionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9692D2801CB8B765006D5CEF /* ExtensionFile.swift */; };
 		969641E01C984832006B6A09 /* AddRestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */; };
 		969641E21C992ED3006B6A09 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 969641E11C992ED3006B6A09 /* MapKit.framework */; };
 		96A87F601C983667006BAA9C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A87F5F1C983667006BAA9C /* MapViewController.swift */; };
@@ -44,6 +45,7 @@
 		96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		96275E701C93CE9100E90E2E /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		9645B5941C9D0FAD00C94E35 /* EatLike.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EatLike.xcdatamodel; sourceTree = "<group>"; };
+		9692D2801CB8B765006D5CEF /* ExtensionFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionFile.swift; sourceTree = "<group>"; };
 		969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRestaurantTableViewController.swift; sourceTree = "<group>"; };
 		969641E11C992ED3006B6A09 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		96A87F5F1C983667006BAA9C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				96F7DD171CABA1D60042707E /* AboutTableViewController.swift */,
 				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
 				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
+				9692D2801CB8B765006D5CEF /* ExtensionFile.swift */,
 				96A87F5F1C983667006BAA9C /* MapViewController.swift */,
 				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
 				96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */,
@@ -209,6 +212,7 @@
 				96275E6D1C92E96100E90E2E /* RestaurantTableViewController.swift in Sources */,
 				9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */,
 				96E6E9091CA1912F00D33EB9 /* WalkthroughContentViewController.swift in Sources */,
+				9692D2811CB8B765006D5CEF /* ExtensionFile.swift in Sources */,
 				969641E01C984832006B6A09 /* AddRestaurantTableViewController.swift in Sources */,
 				96275E6F1C93099F00E90E2E /* RestaurantTableViewCell.swift in Sources */,
 				96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */,

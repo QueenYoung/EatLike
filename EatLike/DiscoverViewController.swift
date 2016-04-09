@@ -40,7 +40,7 @@ UICollectionViewDelegate {
             ID: "1008611",
             name: "Rome",
             type: "Itlay",
-            phone: "143-2934-1239",
+            phone: "130-3723-2552",
             image: UIImage(named: "forkeerestaurant"),
             price: 56,
             isLike: true),
@@ -57,13 +57,7 @@ UICollectionViewDelegate {
 
     @IBAction func callRestaurant(sender: UIButton) {
         let string = sender.titleLabel?.text
-        sender.setTitleColor(UIColor.yellowColor(), forState: .Highlighted)
-        var telnumber = String(string!.characters.filter { $0 != "-" })
-
-        telnumber.insertContentsOf("telprompt://%@".characters, at: telnumber.startIndex)
-        print(telnumber)
-        guard let phone = NSURL(string: telnumber) else { return }
-        UIApplication.sharedApplication().openURL(phone)
+        presentViewController(sender.call(string!)!, animated: true, completion: nil)
     }
 
     // TODO: 目前只是完成了对所有 button 的唯一一个可以变红色

@@ -13,24 +13,30 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 	@IBOutlet weak var restaurantImageView: UIImageView!
 	@IBOutlet weak var detailTableView: UITableView!
 	@IBOutlet weak var ratingButton: UIButton!
+	@IBOutlet weak var noteImage: UIImageView!
+	@IBOutlet weak var noteLabel: UILabel!
 	var restaurant: Restaurant!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = restaurant.name
+		// 设置状态栏的透明效果
+		navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+		navigationController?.navigationBar
+			.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+		navigationController?.navigationBar.shadowImage = UIImage.init()
 		restaurantImageView.image = UIImage(data: restaurant.image!)
-		detailTableView.backgroundColor = UIColor.whiteColor()
-		// 脚注就是表格没有现实数据的部分，将它们移除
-		detailTableView.estimatedRowHeight = 36
-		detailTableView.rowHeight = UITableViewAutomaticDimension
-		detailTableView.tableFooterView = UIView(frame: CGRect.zero)
-		// Do any additional setup after loading the view.
 
-//		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+		detailTableView.backgroundColor = UIColor.clearColor()
+		// 脚注就是表格没有现实数据的部分，将它们移除
+		detailTableView.tableFooterView = UIView(frame: CGRect.zero)
+
 		if restaurant.rating != .None {
 			ratingButton.setImage(UIImage(named: restaurant.rating.rawValue), forState: .Normal)
 		}
 
+		// 如果 note 有信息的话, 就显示. 没有的话, 不显示同时隐藏图标
+		configureNoteLabel()
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -101,8 +107,11 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 			if !restaurant.image!.isEqualToData(newRest.image!) {
 				restaurantImageView.image = UIImage(data: newRest.image!)
 			}
+
 			restaurant = editVC.newRestaurant
 			detailTableView.reloadData()
+
+			configureNoteLabel()
 		}
 
 		guard let managedObjectContext =
@@ -121,20 +130,26 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate,
 			let reviewVC = segue.destinationViewController as! ReviewViewController
 			reviewVC.rating = restaurant.rating.rawValue
 		} else if segue.identifier == "EditRestaurant" {
-			let navigationVC = segue.destinationViewController as! UINavigationController
-			let editVc = navigationVC.topViewController as! AddRestaurantTableViewController
+			let editVc = segue.destinationViewController as! AddRestaurantTableViewController
 			editVc.newRestaurant = restaurant
 		}
 	}
-	// TODO: 不允许点击表格的信息.
-	/*
-	// MARK: - Navigation
 
-	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-	// Get the new view controller using segue.destinationViewController.
-	// Pass the selected object to the new view controller.
+	@IBAction func call(sender: UIButton) {
+		let telphone = restaurant.phoneNumber
+		if let telphone = telphone {
+			presentViewController(sender.call(telphone)!, animated: true, completion: nil)
+		}
 	}
-	*/
 
+	private func configureNoteLabel() {
+		if restaurant.note.isEmpty {
+			noteImage.hidden = true
+			noteLabel.hidden = true
+		} else {
+			noteImage.hidden = false
+			noteLabel.hidden = false
+			noteLabel.text = restaurant.note
+		}
+	}
 }

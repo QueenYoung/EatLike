@@ -17,6 +17,7 @@ class Restaurant: NSManagedObject {
 	// 因为 coredata 不存在 Boolean 类型, 所以需要使用 NSNumber
 	@NSManaged var isVisited: NSNumber?
 	@NSManaged private var ratingValue: String
+    @NSManaged var note: String
 	// 通过新建一个属性, 来让枚举可以更好的在 Core Data 下工作
 	var rating: Rating {
 		get {
@@ -27,7 +28,6 @@ class Restaurant: NSManagedObject {
 			self.ratingValue = newValue.rawValue
 		}
 	}
-
 
 	/* init?(name: String, type: String, location: String,
 	                 phoneNumber: String, picture image: NSData?, isVisited: Bool) {
@@ -64,3 +64,20 @@ extension String {
 		return self[self.startIndex.advancedBy(index, limit: self.endIndex.predecessor())]
 	}
 }
+
+func ==(lhs: Restaurant, rhs: Restaurant) -> Bool {
+	if lhs.name != rhs.name {
+		return false
+	} else if lhs.location != rhs.location {
+		return false
+	} else if lhs.type != rhs.type {
+		return false
+	} else if lhs.phoneNumber != rhs.phoneNumber {
+		return false
+	} else if lhs.note != rhs.note {
+		return false
+	} else {
+		return true
+	}
+}
+

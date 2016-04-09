@@ -21,7 +21,7 @@ class RestaurantTableViewController: UITableViewController,
 		bar.placeholder = "Search Restaurants"
         bar.sizeToFit()
 		bar.tintColor = UIColor.whiteColor()
-		bar.barTintColor = UIColor(red: 223/255.0, green: 104/255.0, blue: 104/255.0, alpha: 1.0)
+		bar.barTintColor = UIColor(colorLiteralRed: 0xd7/255.0, green: 0xd7/255.0, blue: 0xd7/255.0, alpha: 1.0)
 		return searchController
 	}()
 

@@ -9,32 +9,30 @@
 import UIKit
 import CoreData
 class AddRestaurantTableViewController: UITableViewController,
-												    UIImagePickerControllerDelegate,
-													 UINavigationControllerDelegate,
-													 UITextFieldDelegate {
+                                        UIImagePickerControllerDelegate,
+                                        UINavigationControllerDelegate,
+                                        UITextFieldDelegate {
     var isUpdate = false
 
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var locationTextField: UITextField!
 	@IBOutlet weak var typeTextField: UITextField!
-	@IBOutlet weak var yesButton: UIButton!
-	@IBOutlet weak var noButton: UIButton!
 	@IBOutlet weak var phoneTextField: UITextField!
+    @IBOutlet weak var noteTextField: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
 	
 	var newRestaurant: Restaurant!
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		if yesButton.backgroundColor == UIColor.redColor() {
-			yesButton.enabled = false
-		} else {
-			noButton.enabled = false
-		}
-
         if newRestaurant != nil {
             configeRestaurantInformation()
+	        imageView.image = UIImage(data: newRestaurant.image!)
         } else {
             nameTextField.becomeFirstResponder()
+            saveButton.hidden = true
+            backButton.hidden = true
             title = "New Restaurant"
         }
 
@@ -101,12 +99,8 @@ class AddRestaurantTableViewController: UITableViewController,
 	}
 
     // MARK: - IBAction
-	@IBAction func changeState(sender: UIButton) {
-		swap(&yesButton.backgroundColor, &noButton.backgroundColor)
-		swap(&yesButton.enabled, &noButton.enabled)
-	}
 
-	@IBAction func saveNewRestaurant(sender: UIBarButtonItem) {
+	@IBAction func saveNewRestaurant(sender: UIButton) {
         let name = nameTextField.text!
         let type = typeTextField.text!
         let location = locationTextField.text!
@@ -127,11 +121,13 @@ class AddRestaurantTableViewController: UITableViewController,
         guard let managedObjectContext =
                 (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
                 else { return }
-        
+
+        // 如果是添加新的数据, 则插入一个新的数据实例.
         if !isUpdate {
             newRestaurant = NSEntityDescription
-                .insertNewObjectForEntityForName("Restaurant"
-                ,inManagedObjectContext: managedObjectContext) as? Restaurant
+                .insertNewObjectForEntityForName(
+                    "Restaurant",
+                    inManagedObjectContext: managedObjectContext) as? Restaurant
         }
 
         updateRestaurantInformation()
@@ -164,8 +160,8 @@ class AddRestaurantTableViewController: UITableViewController,
 			typeTextField.becomeFirstResponder()
 		} else if typeTextField.isFirstResponder() {
 			phoneTextField.becomeFirstResponder()
-		} else if phoneTextField.isFirstResponder() {
-			phoneTextField.resignFirstResponder()
+		} else if noteTextField.isFirstResponder() {
+            noteTextField.resignFirstResponder()
 		}
 		return true
 	}
@@ -175,7 +171,7 @@ class AddRestaurantTableViewController: UITableViewController,
 		let decimalSet = NSCharacterSet.decimalDigitCharacterSet()
 		let typeSet = NSCharacterSet(charactersInString: string)
 		var phone = phoneTextField.text!
-		guard decimalSet.isSupersetOfSet(typeSet) && phone.characters.count < 13 else { return false }
+		guard decimalSet.isSupersetOfSet(typeSet) && phone.characters.count <= 13 else { return false }
 		if phone.characters.count >= 7 {
 			if phone[3] != "-" {
 				phone.insert("-", atIndex: phone.startIndex.advancedBy(3))
@@ -193,6 +189,7 @@ class AddRestaurantTableViewController: UITableViewController,
         locationTextField.text = newRestaurant.location
         typeTextField.text     = newRestaurant.type
         phoneTextField.text    = newRestaurant.phoneNumber
+        noteTextField.text     = newRestaurant.note
         isUpdate               = true
 
         imageView.contentMode = .ScaleAspectFill
@@ -207,13 +204,13 @@ class AddRestaurantTableViewController: UITableViewController,
         // 返回的是 NSData 类型, 刚好可以初始化
         let image    = imageView.image.flatMap { UIImagePNGRepresentation($0) }
         let phone    = phoneTextField.text!
-        let visit    = yesButton.backgroundColor == UIColor.redColor() ? true : false
+        let note     = noteTextField.text!
 
         newRestaurant.name        = name
         newRestaurant.location    = location
         newRestaurant.type        = type
         newRestaurant.image       = image
         newRestaurant.phoneNumber = phone
-        newRestaurant.isVisited   = visit
+        newRestaurant.note        = note
     }
 }
