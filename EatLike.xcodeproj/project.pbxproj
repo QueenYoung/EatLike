@@ -24,8 +24,8 @@
 		96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801001CB283F9003BC85E /* DiscoverViewController.swift */; };
 		96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */; };
 		96C801071CB28B1C003BC85E /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C801061CB28B1C003BC85E /* Discover.storyboard */; };
-		96C99E611C9436210007849E /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C99E601C9436210007849E /* RestaurantDetailTableViewCell.swift */; };
 		96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C99E751C95A6D80007849E /* ReviewViewController.swift */; };
+		96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */; };
 		96E6E9091CA1912F00D33EB9 /* WalkthroughContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E6E9081CA1912F00D33EB9 /* WalkthroughContentViewController.swift */; };
 		96E6E90B1CA192A600D33EB9 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E6E90A1CA192A600D33EB9 /* WalkthroughPageViewController.swift */; };
 		96E6E90F1CA278A900D33EB9 /* about.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96E6E90D1CA278A900D33EB9 /* about.storyboard */; };
@@ -49,13 +49,13 @@
 		969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRestaurantTableViewController.swift; sourceTree = "<group>"; };
 		969641E11C992ED3006B6A09 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		96A87F5F1C983667006BAA9C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
+		96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 		96C801001CB283F9003BC85E /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverRestaurants.swift; sourceTree = "<group>"; };
 		96C801061CB28B1C003BC85E /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
-		96C99E601C9436210007849E /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
 		96C99E751C95A6D80007849E /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRestaurantViewController.swift; sourceTree = "<group>"; };
 		96E6E9081CA1912F00D33EB9 /* WalkthroughContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughContentViewController.swift; sourceTree = "<group>"; };
 		96E6E90A1CA192A600D33EB9 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		96E6E90E1CA278A900D33EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/about.storyboard; sourceTree = "<group>"; };
@@ -81,8 +81,9 @@
 			children = (
 				969641E11C992ED3006B6A09 /* MapKit.framework */,
 				96275E581C92E5EF00E90E2E /* Products */,
-				96E6E90C1CA192B400D33EB9 /* Walkthrough */,
-				96275E591C92E5EF00E90E2E /* EatLike */,
+				96B564461CC1D0A6008638BD /* Support Files */,
+				96B564421CC1D019008638BD /* Storyboards */,
+				96B564431CC1D041008638BD /* Eat Like */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,33 +95,77 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		96275E591C92E5EF00E90E2E /* EatLike */ = {
+		96275E591C92E5EF00E90E2E /* FavoritesTab */ = {
+			isa = PBXGroup;
+			children = (
+				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
+				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
+				9692D2801CB8B765006D5CEF /* ExtensionFile.swift */,
+				96A87F5F1C983667006BAA9C /* MapViewController.swift */,
+				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
+				969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */,
+				96C99E751C95A6D80007849E /* ReviewViewController.swift */,
+				96275E701C93CE9100E90E2E /* Restaurant.swift */,
+			);
+			name = FavoritesTab;
+			path = EatLike;
+			sourceTree = "<group>";
+		};
+		96B564421CC1D019008638BD /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				96275E5E1C92E5EF00E90E2E /* Main.storyboard */,
 				96E6E9121CA2792500D33EB9 /* Favorites.storyboard */,
 				96E6E90D1CA278A900D33EB9 /* about.storyboard */,
 				96C801061CB28B1C003BC85E /* Discover.storyboard */,
+			);
+			name = Storyboards;
+			path = EatLike;
+			sourceTree = "<group>";
+		};
+		96B564431CC1D041008638BD /* Eat Like */ = {
+			isa = PBXGroup;
+			children = (
+				96E6E90C1CA192B400D33EB9 /* Walkthrough */,
+				96B564451CC1D070008638BD /* AboutTab */,
+				96B564441CC1D050008638BD /* DiscoverTab */,
+				96275E591C92E5EF00E90E2E /* FavoritesTab */,
+			);
+			name = "Eat Like";
+			sourceTree = "<group>";
+		};
+		96B564441CC1D050008638BD /* DiscoverTab */ = {
+			isa = PBXGroup;
+			children = (
+				96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */,
 				96C801001CB283F9003BC85E /* DiscoverViewController.swift */,
 				96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */,
 				96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */,
-				96F7DD191CABA7900042707E /* FeedbackWebViewController.swift */,
+			);
+			name = DiscoverTab;
+			path = EatLike;
+			sourceTree = "<group>";
+		};
+		96B564451CC1D070008638BD /* AboutTab */ = {
+			isa = PBXGroup;
+			children = (
 				96F7DD171CABA1D60042707E /* AboutTableViewController.swift */,
-				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
-				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
-				9692D2801CB8B765006D5CEF /* ExtensionFile.swift */,
-				96A87F5F1C983667006BAA9C /* MapViewController.swift */,
-				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
-				96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */,
-				9645B5931C9D0FAD00C94E35 /* EatLike.xcdatamodeld */,
-				969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */,
-				96C99E751C95A6D80007849E /* ReviewViewController.swift */,
-				96C99E601C9436210007849E /* RestaurantDetailTableViewCell.swift */,
-				96275E701C93CE9100E90E2E /* Restaurant.swift */,
-				96275E611C92E5EF00E90E2E /* Assets.xcassets */,
+				96F7DD191CABA7900042707E /* FeedbackWebViewController.swift */,
+			);
+			name = AboutTab;
+			path = EatLike;
+			sourceTree = "<group>";
+		};
+		96B564461CC1D0A6008638BD /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
 				96275E631C92E5EF00E90E2E /* LaunchScreen.storyboard */,
 				96275E661C92E5EF00E90E2E /* Info.plist */,
+				96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */,
+				96275E611C92E5EF00E90E2E /* Assets.xcassets */,
+				9645B5931C9D0FAD00C94E35 /* EatLike.xcdatamodeld */,
 			);
+			name = "Support Files";
 			path = EatLike;
 			sourceTree = "<group>";
 		};
@@ -218,9 +263,9 @@
 				96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */,
 				96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */,
 				96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */,
+				96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */,
 				96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */,
 				96E6E90B1CA192A600D33EB9 /* WalkthroughPageViewController.swift in Sources */,
-				96C99E611C9436210007849E /* RestaurantDetailTableViewCell.swift in Sources */,
 				96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */,
 				96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */,
 				96F7DD181CABA1D60042707E /* AboutTableViewController.swift in Sources */,

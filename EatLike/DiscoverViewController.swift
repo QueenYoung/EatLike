@@ -9,14 +9,14 @@
 import UIKit
 
 class DiscoverViewController: UIViewController,
-    UICollectionViewDataSource,
-UICollectionViewDelegate {
+                              UICollectionViewDataSource,
+                              UICollectionViewDelegate {
+
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var backgroundBlurImage: UIImageView!
     @IBOutlet var userLabel: UILabel!
     @IBOutlet var ratingLabel: UILabel!
 
-    private var selected: UIButton?
     private var discovers: [DiscoverRestaurants] = [
         DiscoverRestaurants(
             ID: "宋仲基",
@@ -25,7 +25,8 @@ UICollectionViewDelegate {
             phone: "138-0405-1234",
             image: UIImage(named: "cafeloisl"),
             price: 40,
-            isLike: true),
+            isLike: true,
+            userImage: UIImage(named: "avatar")),
 
         DiscoverRestaurants(
             ID: "都敏俊",
@@ -34,7 +35,8 @@ UICollectionViewDelegate {
             phone: "188-1231-3412",
             image: UIImage(named: "donostia"),
             price: 39,
-            isLike: false),
+            isLike: false,
+            userImage: UIImage(named: "avatar2")),
 
         DiscoverRestaurants(
             ID: "1008611",
@@ -43,7 +45,8 @@ UICollectionViewDelegate {
             phone: "130-3723-2552",
             image: UIImage(named: "forkeerestaurant"),
             price: 56,
-            isLike: true),
+            isLike: true,
+            userImage: UIImage(named: "avatar3")),
 
         DiscoverRestaurants(
             ID: "12389",
@@ -52,7 +55,8 @@ UICollectionViewDelegate {
             phone: "130-6512-0086",
             image: UIImage(named: "confessional"),
             price: 40,
-            isLike: true)
+            isLike: true,
+            userImage: UIImage(named: "avatar4"))
     ]
 
     @IBAction func callRestaurant(sender: UIButton) {
@@ -62,17 +66,6 @@ UICollectionViewDelegate {
 
     // TODO: 目前只是完成了对所有 button 的唯一一个可以变红色
     // 应该保证每一个 cell 有独立的 status
-    @IBAction func like(sender: UIButton) {
-        if selected == nil {
-            selected = sender
-            sender.tintColor = UIColor.redColor()
-        } else if selected == sender {
-            return
-        }
-
-        swap(&sender.tintColor, &selected!.tintColor)
-        selected = sender
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +82,10 @@ UICollectionViewDelegate {
         ratingLabel.text = discovers[0].rating
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        tabBarController?.tabBar.hidden = false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -103,8 +100,10 @@ UICollectionViewDelegate {
         cell.configure(restaurant)
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! DiscoverCollectionViewCell
+    func collectionView(collectionView: UICollectionView,
+                        cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
+            "Cell", forIndexPath: indexPath) as! DiscoverCollectionViewCell
 
         configureCell(cell, index: indexPath.row)
         return cell
@@ -121,5 +120,26 @@ UICollectionViewDelegate {
             ratingLabel.text = rate.isEmpty ? "这家伙最爱吃这个了." : rate
         }
     }
-    
+
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "modalFriend" {
+            let index = collectionView.indexPathsForSelectedItems()?.first
+
+            if let index = index {
+                let DetailVC = segue.destinationViewController as! FriendRestaurantViewController
+                DetailVC.friendData = discovers[index.row]
+            }
+        }
+    }
+
+    @IBAction func cancelToHome(segue: UIStoryboardSegue) {
+        let source = segue.sourceViewController as! FriendRestaurantViewController
+        let index = collectionView.indexPathsForSelectedItems()?.first
+
+        if let index = index {
+            discovers[index.row] = source.friendData
+        }
+    }
+
 }

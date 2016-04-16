@@ -49,7 +49,7 @@ class AboutTableViewController: UITableViewController,
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
 
-    // 似乎因为 Apple 的问题, 使用虚拟机发送邮件就会异常.
+    // 似乎因为 Apple 的问题, 使用模拟器发送邮件就会异常.
     private func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
             mailCompose.mailComposeDelegate = self

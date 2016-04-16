@@ -42,6 +42,7 @@ class AddRestaurantTableViewController: UITableViewController,
 		super.viewWillDisappear(true)
 		view.endEditing(true)
 	}
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -168,10 +169,13 @@ class AddRestaurantTableViewController: UITableViewController,
 
 	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
 		guard textField === phoneTextField else { return true }
+        // 过滤那些不是数字的所有输入, 即使是粘贴也不行.
 		let decimalSet = NSCharacterSet.decimalDigitCharacterSet()
 		let typeSet = NSCharacterSet(charactersInString: string)
 		var phone = phoneTextField.text!
-		guard decimalSet.isSupersetOfSet(typeSet) && phone.characters.count <= 13 else { return false }
+
+		guard decimalSet.isSupersetOfSet(typeSet) else { return false }
+
 		if phone.characters.count >= 7 {
 			if phone[3] != "-" {
 				phone.insert("-", atIndex: phone.startIndex.advancedBy(3))

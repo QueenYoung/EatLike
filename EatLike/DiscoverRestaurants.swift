@@ -16,10 +16,11 @@ class DiscoverRestaurants {
     var feaurtedImage: UIImage?
     var phoneNumber: String
     var rating    = ""
+    var authorImage: UIImage?
 
 
     init(ID: String, name: String, type: String, phone: String, image: UIImage?,
-         price: Int, isLike: Bool, rating: String = "") {
+         price: Int, isLike: Bool, rating: String = "", userImage: UIImage?) {
         self.restaurantID  = ID
         self.name          = name
         self.type          = type
@@ -27,5 +28,6 @@ class DiscoverRestaurants {
         self.price         = price
         self.isLike        = isLike
         self.phoneNumber   = phone
+        self.authorImage   = userImage
     }
 }
