@@ -534,7 +534,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="u8h-Ef-NIA">
-                                <rect key="frame" x="12" y="104" width="296" height="153"/>
+                                <rect key="frame" x="12" y="104" width="296" height="149"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How would you rate San" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4E-32-Y5E">
                                         <rect key="frame" x="0.0" y="0.0" width="296" height="33"/>
@@ -593,15 +593,20 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="YYU-SH-VPf">
-                                        <rect key="frame" x="0.0" y="103" width="296" height="50"/>
+                                        <rect key="frame" x="0.0" y="103" width="296" height="46"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating_star" translatesAutoresizingMaskIntoConstraints="NO" id="QTP-AD-IAK">
-                                                <rect key="frame" x="0.0" y="0.0" width="296" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="296" height="46"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="X3H-Wa-rnb"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="X3H-Wa-rnb"/>
+                                            </mask>
+                                        </variation>
                                     </stackView>
                                 </subviews>
                             </stackView>
@@ -614,8 +619,14 @@
                             <constraint firstItem="baf-Jd-Zr6" firstAttribute="leading" secondItem="Pob-67-ljC" secondAttribute="leading" id="WV7-Ee-3tl"/>
                             <constraint firstItem="baf-Jd-Zr6" firstAttribute="bottom" secondItem="rsJ-Ik-JDr" secondAttribute="top" id="fyX-gM-TsJ"/>
                             <constraint firstItem="u8h-Ef-NIA" firstAttribute="top" secondItem="ryB-hW-WnH" secondAttribute="bottom" constant="40" id="hXp-jh-V30"/>
+                            <constraint firstItem="rsJ-Ik-JDr" firstAttribute="top" relation="lessThanOrEqual" secondItem="u8h-Ef-NIA" secondAttribute="bottom" constant="315" id="vpC-a4-2kq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="u8h-Ef-NIA" secondAttribute="trailing" constant="-4" id="xAo-OP-aCz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="vpC-a4-2kq"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Rate" id="FkK-OO-Y4a">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Jii-od-d2f">
@@ -635,6 +646,7 @@
                     <connections>
                         <outlet property="backgroundViewImage" destination="baf-Jd-Zr6" id="TMF-wn-R7t"/>
                         <outlet property="questionLabel" destination="H4E-32-Y5E" id="VlS-35-gzq"/>
+                        <outlet property="ratingStackView" destination="clk-27-qBV" id="nTd-Sr-0YQ"/>
                         <outlet property="starsStackView" destination="YYU-SH-VPf" id="haK-XJ-SBv"/>
                         <outletCollection property="ratingButtons" destination="YHS-Wf-Qs4" collectionClass="NSMutableArray" id="ilf-nG-Nyh"/>
                         <outletCollection property="ratingButtons" destination="JTL-Qu-C2E" collectionClass="NSMutableArray" id="Cr3-4A-D6q"/>
@@ -723,11 +735,11 @@
         <image name="contact_number" width="25" height="23"/>
         <image name="edit_image" width="25" height="25"/>
         <image name="favorite" width="25" height="25"/>
-        <image name="location_icon" width="51" height="51"/>
+        <image name="location_icon" width="25" height="25"/>
         <image name="notes_icon" width="23" height="23"/>
         <image name="photoalbum" width="84" height="84"/>
         <image name="rating_star" width="48" height="46"/>
-        <image name="restaurant_category_icon" width="48" height="56"/>
+        <image name="restaurant_category_icon" width="24" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="dhA-Uf-Ihm"/>

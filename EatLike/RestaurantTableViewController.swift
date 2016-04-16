@@ -146,11 +146,11 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         // inital
         cell.alpha = 0.0
-        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -400, 0, 0)
-        cell.layer.transform = rotationTransform
+        let rotationTransform = CGAffineTransformMakeTranslation(-300, 0)
+        cell.transform = rotationTransform
 
         UIView.animateWithDuration(0.6, animations: {
-            cell.layer.transform = CATransform3DIdentity
+            cell.transform = CGAffineTransformIdentity
             cell.alpha = 1.0
         })
     }

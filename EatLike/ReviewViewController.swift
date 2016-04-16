@@ -13,6 +13,7 @@ class ReviewViewController: UIViewController {
     @IBOutlet weak var starsStackView: UIStackView!
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var ratingButtons: [UIButton]!
+    @IBOutlet weak var ratingStackView: UIStackView!
 
     var restaurant: Restaurant!
     var currentUserRating = 0
@@ -22,9 +23,7 @@ class ReviewViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let transform = CGAffineTransformMakeTranslation(0, 500)
         currentUserRating = restaurant.userRate.integerValue
-        ratingButtons.forEach({$0.transform = transform})
         questionLabel.text = "How would you rate \(restaurant.name)"
 
         if currentUserRating > 0 {
@@ -44,6 +43,14 @@ class ReviewViewController: UIViewController {
 		blurView.frame = view.frame
 		backgroundViewImage.addSubview(blurView)
 
+        // animated inital status
+        ratingStackView.axis = .Vertical
+        starsStackView.hidden = true
+        let rotation = CGFloat(M_PI * 2 / 3.0)
+        let rotationTransform = CATransform3DMakeRotation(rotation, 0, 0, 1.0)
+        starsStackView.layer.transform = rotationTransform
+
+        questionLabel.transform = CGAffineTransformMakeTranslation(-300, 0)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -55,17 +62,21 @@ class ReviewViewController: UIViewController {
 		super.viewDidAppear(true)
 		// 因为这个方法晚于 load 方法运行, 所以通过在 load 中设置开始状态
 		// 在这个方法中设置结束状态,并启动弹性动画.
-        var delay = 0.0
 
-        for button in ratingButtons {
-            UIView.animateWithDuration(0.5, delay: delay,
-                                       usingSpringWithDamping: 0.4,
-                                       initialSpringVelocity: 0.5,
-                                       options: [.CurveEaseOut],
-                                       animations: { button.transform = CGAffineTransformIdentity },
-                                       completion: nil)
-            delay += 0.1
-        }
+        UIView.animateWithDuration(0.5, delay: 0.0,
+                                   usingSpringWithDamping: 0.5,
+                                   initialSpringVelocity: 6.0,
+                                   options: [.CurveEaseIn],
+                                   animations: {
+                                    self.questionLabel.transform = CGAffineTransformIdentity
+                                    self.ratingStackView.axis = .Horizontal
+            }, completion: nil)
+
+
+        UIView.animateWithDuration(0.5, delay: 0.2, options: [.CurveEaseIn], animations: {
+            self.starsStackView.hidden = false
+            self.starsStackView.layer.transform = CATransform3DIdentity
+            }, completion: nil)
 	}
 
     @IBAction func cancel(sender: UIBarButtonItem) {
