@@ -16,7 +16,6 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 		createAnnotation()
 		// Do any additional setup after loading the view.
 
-
 		// 分别让地图显示指南针，交通信息和比例
 		mapView.showsCompass = true
 		mapView.showsTraffic = true
@@ -31,8 +30,8 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 
 	private func createAnnotation() {
 		let geoCoder = CLGeocoder()
-		geoCoder.geocodeAddressString(restaurant.location) {
-			placemarks, error in
+        geoCoder.geocodeAddressString(restaurant.location) {
+            placemarks, error in
 			if error != nil {
 				print(error)
 				self.mapView.showsUserLocation = true

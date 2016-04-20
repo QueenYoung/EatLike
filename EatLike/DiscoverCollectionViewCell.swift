@@ -9,24 +9,34 @@
 import UIKit
 
 class DiscoverCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var telphoneButton: UIButton!
-
-//    @IBOutlet weak var dislikeButton: UIButton!
-//    @IBOutlet weak var goodButton: UIButton!
-//    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var likesTotal: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var userThumbImage: UIImageView!
+    @IBOutlet weak var restaurantImageButton: UIButton!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var headView: UIView!
 
     func configure(restaurant: DiscoverRestaurants) {
-        nameLabel.text = restaurant.name
-        typeLabel.text = restaurant.type
-        telphoneButton.setTitle(restaurant.phoneNumber, forState: .Normal)
-        priceLabel.text = "$\(restaurant.price)"
-        imageView.image = restaurant.feaurtedImage
-
-        // 加上圆角效果.
+        priceLabel.text = "\(restaurant.price)"
+        likesTotal.text = String(restaurant.likesTotal)
+        nameLabel.text  = restaurant.name
+        userNameLabel.text = restaurant.userName
+        userThumbImage.image = restaurant.authorImage
+        restaurantImageButton.setImage(restaurant.detailImage, forState: .Normal)
+        userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
+        // 加上圆角效果 and Blur
+//        getBlurView(headView, style: .Dark)
         layer.cornerRadius = 6.0
+    }
+
+    func changeLikeTotal(add: Bool) {
+        if add {
+            let total = Int(likesTotal.text!)! + 1
+            likesTotal.text = "\(total)"
+        } else {
+            let total = Int(likesTotal.text!)! - 1
+            likesTotal.text = "\(total)"
+        }
     }
 }

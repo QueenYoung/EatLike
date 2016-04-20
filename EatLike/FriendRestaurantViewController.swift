@@ -21,12 +21,13 @@ class FriendRestaurantViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        detailImageView.image = friendData.feaurtedImage
+        detailImageView.image = friendData.detailImage
         userImageView.image = friendData.authorImage
 //        descriptionTextView.text = friendData.rating
-        authorLabel.text = "\(friendData.restaurantID)  \(friendData.name)"
-
+        authorLabel.text = String(friendData.userName)
+        authorLabel.text?.appendContentsOf(" | \(friendData.foodName)")
         textViewWithFont(descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
+
     }
 
     override func didReceiveMemoryWarning() {

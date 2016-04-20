@@ -8,26 +8,31 @@
 
 import UIKit
 class DiscoverRestaurants {
-    var restaurantID = ""
-    var name      = ""
-    var type      = ""
-    var price     = 0
-    var isLike    = false
-    var feaurtedImage: UIImage?
-    var phoneNumber: String
-    var rating    = ""
+    var name           = ""
+    var userName       = ""
+    var foodName       = ""
+    var type           = ""
+    var price          = 0
+    var isLike         = false
+    var rating         = ""
+    var likesTotal     = 0
+
+    var detailImage: UIImage?
     var authorImage: UIImage?
 
 
-    init(ID: String, name: String, type: String, phone: String, image: UIImage?,
-         price: Int, isLike: Bool, rating: String = "", userImage: UIImage?) {
-        self.restaurantID  = ID
-        self.name          = name
-        self.type          = type
-        self.feaurtedImage = image
-        self.price         = price
-        self.isLike        = isLike
-        self.phoneNumber   = phone
-        self.authorImage   = userImage
+    init(restaurantName: String, userName: String, foodName: String,
+         type: String, image: UIImage?,
+         price: Int, isLike: Bool = false, rating: String = "",
+         userImage: UIImage?, likes: Int) {
+        self.name = restaurantName
+        self.userName       = userName
+        self.type           = type
+        self.detailImage  = image
+        self.price          = price
+        self.isLike         = isLike
+        self.authorImage    = userImage
+        self.likesTotal     = likes
+        self.foodName       = foodName
     }
 }

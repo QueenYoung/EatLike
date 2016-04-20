@@ -127,7 +127,6 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
 
         let cell = tableView.dequeueReusableCellWithIdentifier(
             "Cell", forIndexPath: indexPath) as! RestaurantTableViewCell
-        configureCell(cell, indexPath: indexPath)
 
         return cell
     }
@@ -144,6 +143,7 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
 
     // MARK: - Delegate Methods
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        configureCell(cell as! RestaurantTableViewCell, indexPath: indexPath)
         // inital
         cell.alpha = 0.0
         let rotationTransform = CGAffineTransformMakeTranslation(-300, 0)
