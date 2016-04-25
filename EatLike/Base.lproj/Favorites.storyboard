@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Restaurant Table View Controller-->
@@ -461,14 +462,75 @@
                             <constraint firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="jHZ-TD-jzo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="aKT-ui-dxk"/>
+                    <navigationItem key="navigationItem" id="aKT-ui-dxk">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" momentary="YES" id="vi8-iH-Rsd">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Walk"/>
+                                <segment title="Car"/>
+                            </segments>
+                        </segmentedControl>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Direction" id="gIf-0f-UOC">
+                                <connections>
+                                    <action selector="getMyLocation" destination="DXo-X0-eqf" id="ccp-ar-Wqn"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Nearby" id="sL1-yZ-wn2">
+                                <connections>
+                                    <action selector="showNearby" destination="DXo-X0-eqf" id="4Dg-GI-cEp"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="8eL-zy-qjJ" id="DhX-X1-kAL"/>
+                        <outlet property="transportSegument" destination="vi8-iH-Rsd" id="Pzj-y3-Pb5"/>
+                        <segue destination="4Jw-MH-KDg" kind="show" identifier="showNavigationSteps" id="Y8e-nB-n3H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JIp-7G-m9G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4673" y="2206"/>
+        </scene>
+        <!--Steps Table View Controller-->
+        <scene sceneID="eFN-JH-XST">
+            <objects>
+                <tableViewController id="4Jw-MH-KDg" customClass="StepsTableViewController" customModule="EatLike" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EYc-t2-vWK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StepCell" textLabel="AEz-wM-Ric" style="IBUITableViewCellStyleDefault" id="29i-Hn-Q1M">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="29i-Hn-Q1M" id="71M-dr-TWI">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AEz-wM-Ric">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="4Jw-MH-KDg" id="Mb7-pd-rIG"/>
+                            <outlet property="delegate" destination="4Jw-MH-KDg" id="mfB-eg-tT9"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x3L-me-zqM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5460" y="2234"/>
         </scene>
         <!--NImabi-->
         <scene sceneID="spc-B4-KhT">
@@ -517,7 +579,7 @@
                                                             <rect key="frame" x="15" y="12" width="34" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wTH-ip-HMW">
@@ -574,8 +636,8 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="NImabi" id="nHm-wj-Pt5">
-                        <barButtonItem key="rightBarButtonItem" image="edit_image" id="tVK-BV-qgf">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="tVK-BV-qgf">
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="RYy-rE-Sx6" kind="presentation" identifier="EditRestaurant" id="L0a-fL-gP2"/>
                             </connections>
@@ -828,6 +890,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MapViewController" automaticallyAdjustsScrollViewInsets="NO" id="I2x-tV-V2d" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IUK-3E-cut">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -849,7 +912,6 @@
         <image name="cafeloisl" width="640" height="640"/>
         <image name="close" width="84" height="84"/>
         <image name="contact_number" width="25" height="23"/>
-        <image name="edit_image" width="25" height="25"/>
         <image name="favorite" width="25" height="25"/>
         <image name="location_icon" width="25" height="25"/>
         <image name="notes_icon" width="23" height="23"/>

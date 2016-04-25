@@ -27,6 +27,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 		navigationController?.navigationBar.shadowImage = UIImage.init()
         navigationController?.interactivePopGestureRecognizer?.enabled = true
 		restaurantImageView.image = UIImage(data: restaurant.image!)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -54,7 +55,9 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 				restaurantImageView.image = UIImage(data: newRest.image!)
 			}
 
+            // TODO: 写一个函数, 判断 restaurant 的哪些属性被修改了.
 			restaurant = editVC.newRestaurant
+
 
 		}
 
@@ -120,7 +123,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         var cell = tableView.dequeueReusableCellWithIdentifier("normalCell")!
         cell.textLabel?.textColor = .blueColor()
         cell.textLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-        cell.detailTextLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        cell.detailTextLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         switch row {
         case 0:
             cell.textLabel?.text = "Location"
