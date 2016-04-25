@@ -9,7 +9,10 @@
 import UIKit
 import CoreData
 class RestaurantTableViewController: UITableViewController,
-NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
+                                     NSFetchedResultsControllerDelegate,
+                                     UISearchResultsUpdating,
+                                     UINavigationControllerDelegate,
+                                     UISearchControllerDelegate {
     // MARK: - Normal Properties
     var fetchResultController: NSFetchedResultsController!
     lazy var searchController: UISearchController = {
@@ -17,6 +20,7 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         //	搜索的时候，背景不会模糊。如果使用的不是另一个独立的视图，需要赋值为 false， 否则无法点击搜索的值
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = true
+        searchController.definesPresentationContext = true
         let bar = searchController.searchBar
         bar.placeholder = "Search Restaurants"
         bar.sizeToFit()
@@ -25,6 +29,9 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         return searchController
     }()
 
+    let notesViewHeight: CGFloat = 128
+    @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet var noteView: UIView!
     var restaurants:[Restaurant] = []
     var searchedRestaurants = [Restaurant]()
     // MARK: - View Controller Methods
@@ -58,14 +65,15 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
 
         // 让 backBarButton 的 title 标题为空
         // 直接设置 title 为空不管用, 因为这个属性默认为 nil
+
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.title = "Restaurants"
-
         // 让 tableView 获得可以动态的定义高度.
         tableView.estimatedRowHeight = tableView.rowHeight
         // 这个属性对于那些系统提供的 Cell 来说是默认属性, 但是对于自定义的类型, 默认值是
         // IB 上的 RowHeight. 需要主动设置
         tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.registerClass(RestaurantTableViewCell.self, forCellReuseIdentifier: "Cell")
         NSNotificationCenter.defaultCenter().addObserver(
             self, selector: .TextSizeChange,
             name: UIContentSizeCategoryDidChangeNotification, object: nil)
@@ -73,6 +81,7 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         // 添加搜索栏
         self.tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
+        searchController.delegate = self
     }
 
     //    override func viewDidAppear(animated: Bool) {
@@ -131,17 +140,33 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         return cell
     }
 
-    // 因为在 ViewRowAction 中实现了删除，所以删除不需要这个方法。
-    /* override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     let row = indexPath.row
-     if editingStyle == .Delete {
-     removeRestaurant(row)
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     }
-     }*/
-
 
     // MARK: - Delegate Methods
+
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        let detailRestaurantNVC = storyboard!
+            .instantiateViewControllerWithIdentifier("restaurantDetailNavigationController")
+            as! UINavigationController
+        let detailRestaurantVC = detailRestaurantNVC.topViewController as! RestaurantDetailViewController
+        detailRestaurantVC.restaurant = restaurants[indexPath.row]
+        showViewController(detailRestaurantVC, sender: self)
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? RestaurantTableViewCell else { return }
+        // TODO: 根据 textView 的文本长度动态设置大小.
+        tableView.beginUpdates()
+
+        if cell.stackView.arrangedSubviews.contains(noteView) {
+            removeNotesView(cell)
+        } else {
+            addNotesViewToCell(cell)
+            noteTextView.text = restaurants[indexPath.row].note
+        }
+        tableView.endUpdates()
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         configureCell(cell as! RestaurantTableViewCell, indexPath: indexPath)
         // inital
@@ -149,7 +174,7 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         let rotationTransform = CGAffineTransformMakeTranslation(-300, 0)
         cell.transform = rotationTransform
 
-        UIView.animateWithDuration(0.6, animations: {
+        UIView.animateWithDuration(0.3, animations: {
             cell.transform = CGAffineTransformIdentity
             cell.alpha = 1.0
         })
@@ -200,35 +225,21 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         return [deleteAction, shareAction, callAction]
     }
 
-    override func tableView(
-        tableView: UITableView,
-        didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
-    }
 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segue.identifier! {
-        case "showRestaurantDetail":
-            guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            let restaurantDetailVC = segue.destinationViewController as! RestaurantDetailViewController
-            restaurantDetailVC.restaurant = searchController.active ?
-                searchedRestaurants[indexPath.row] : restaurants[indexPath.row]
-
-                print("FUCK")
-                print(restaurants[indexPath.row])
-
-            searchController.active = false
-        default:
-            break
+        if segue.identifier == "showRestaurantDetail" {
+            let cell = sender as! RestaurantTableViewCell
+            let row = tableView.indexPathForCell(cell)?.row
+            let controller = segue.destinationViewController as! UINavigationController
+            let restaurantDVC = controller.topViewController as! RestaurantDetailViewController
+            restaurantDVC.restaurant = restaurants[row!]
         }
     }
 
-    func removeRestaurant(index: Int) {
-        restaurants.removeAtIndex(index)
-    }
 
     @IBAction func unwindToHome(segue: UIStoryboardSegue) {
         guard let sourceViewController = segue.sourceViewController as? AddRestaurantTableViewController,
@@ -270,7 +281,21 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         tableView.endUpdates()
     }
 
-    // MARK: - Search Update Methods
+    // MARK: - UISearch Controller
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filterRestaurant(searchText)
+            self.tableView.reloadData()
+        }
+    }
+
+
+    func didPresentSearchController(searchController: UISearchController) {
+        searchController.searchBar.becomeFirstResponder()
+    }
+
+
+    // MARK: - Help Methods
     private func filterRestaurant(search: String) {
         searchedRestaurants = restaurants.filter { $0.name.rangeOfString(search, options: .CaseInsensitiveSearch) != nil }
         // 如果没有匹配的名字， 则匹配地址
@@ -279,13 +304,21 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
         }
     }
 
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            filterRestaurant(searchText)
-            self.tableView.reloadData()
-        }
+
+
+    func addNotesViewToCell(cell: RestaurantTableViewCell) {
+
+        let stack = cell.stackView
+        noteView.heightAnchor.constraintEqualToConstant(notesViewHeight - 48).active = true
+        noteView.clipsToBounds = true
+        stack.addArrangedSubview(noteView)
     }
 
+    func removeNotesView(cell: RestaurantTableViewCell) {
+        let stack = cell.stackView
+        stack.removeArrangedSubview(noteView)
+        noteView.removeFromSuperview()
+    }
     // 当字体类型改变的时候，调用
 
     @objc private func onTextSizeChange(notification: NSNotification) {
@@ -296,7 +329,12 @@ NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+
+    @IBAction func search(sender: UIBarButtonItem) {
+        searchController.active = true
+    }
 }
+
 
 // MARK: - extension partion
 private extension Selector {

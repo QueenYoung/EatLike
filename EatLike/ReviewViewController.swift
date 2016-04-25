@@ -24,7 +24,7 @@ class ReviewViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
         currentUserRating = restaurant.userRate.integerValue
-        questionLabel.text = "How would you rate \(restaurant.name)"
+        questionLabel.text = "\(restaurant.name)"
 
         if currentUserRating > 0 {
             showStarCount(currentUserRating, animated: false)
@@ -39,6 +39,7 @@ class ReviewViewController: UIViewController {
 
 		let blur = UIBlurEffect(style: .Dark)
 		let blurView = UIVisualEffectView(effect: blur)
+        backgroundViewImage.image = UIImage(data: restaurant.image!)
 		// Setting the frame of the blur
 		blurView.frame = view.frame
 		backgroundViewImage.addSubview(blurView)
@@ -51,6 +52,7 @@ class ReviewViewController: UIViewController {
         starsStackView.layer.transform = rotationTransform
 
         questionLabel.transform = CGAffineTransformMakeTranslation(-300, 0)
+
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -79,9 +81,6 @@ class ReviewViewController: UIViewController {
             }, completion: nil)
 	}
 
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
 
     @IBAction func submitRate(sender: UIBarButtonItem) {
         currentUserRating = starsStackView.arrangedSubviews.count

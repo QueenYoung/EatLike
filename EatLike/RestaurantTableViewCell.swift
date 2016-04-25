@@ -13,6 +13,7 @@ class RestaurantTableViewCell: UITableViewCell {
 	@IBOutlet weak var LocationLabel: UILabel!
 	@IBOutlet weak var TypeLabel: UILabel!
 	@IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var stackView: UIStackView!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -39,12 +40,8 @@ class RestaurantTableViewCell: UITableViewCell {
         LocationLabel.text = data.location
         TypeLabel.text = data.type
         thumbnailImageView.image = UIImage(data: data.image!)
-
         updateLabelPerferredFont()
 
-        //		if let visited = restaurant.isVisited?.boolValue {
-        //			cell.accessoryType = visited ? .Checkmark : .None
-        //		}
         /* 给 缩略图添加圆角效果
          但是可以使用 IB 来完成这个任务。
          通过添加 Runtime Attribute 设置半径（为图片框架的长度的一半，半径）

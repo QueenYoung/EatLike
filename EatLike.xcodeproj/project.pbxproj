@@ -102,7 +102,6 @@
 			children = (
 				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
 				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
-				9692D2801CB8B765006D5CEF /* ExtensionFile.swift */,
 				96A87F5F1C983667006BAA9C /* MapViewController.swift */,
 				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
 				969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */,
@@ -165,6 +164,7 @@
 				96275E631C92E5EF00E90E2E /* LaunchScreen.storyboard */,
 				96275E661C92E5EF00E90E2E /* Info.plist */,
 				96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */,
+				9692D2801CB8B765006D5CEF /* ExtensionFile.swift */,
 				96275E611C92E5EF00E90E2E /* Assets.xcassets */,
 				9645B5931C9D0FAD00C94E35 /* EatLike.xcdatamodeld */,
 			);

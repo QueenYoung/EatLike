@@ -8,33 +8,31 @@
 
 import UIKit
 
-class RestaurantDetailViewController: UIViewController {
+class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
+                                      UITableViewDelegate {
     
 	@IBOutlet weak var restaurantImageView: UIImageView!
-//	@IBOutlet weak var ratingButton: UIButton!
-	@IBOutlet weak var starLabel: UILabel!
+    @IBOutlet var tableView: UITableView!
 
 	var restaurant: Restaurant!
 	// MARK: - View Controller 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		title = restaurant.name
+
+		navigationItem.title = restaurant.name
 		// 设置状态栏的透明效果
 		navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 		navigationController?.navigationBar
 			.setBackgroundImage(UIImage(), forBarMetrics: .Default)
 		navigationController?.navigationBar.shadowImage = UIImage.init()
+        navigationController?.interactivePopGestureRecognizer?.enabled = true
 		restaurantImageView.image = UIImage(data: restaurant.image!)
-
-        let count = Int(restaurant.userRate.intValue)
-        configureStarColor(count)
 	}
 	
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(true)
 		// 进入 detail 视图的时候,关闭 hide on swipe 功能.
 //		navigationController?.hidesBarsOnSwipe = false
-		navigationController?.setNavigationBarHidden(false, animated: true)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -58,7 +56,6 @@ class RestaurantDetailViewController: UIViewController {
 
 			restaurant = editVC.newRestaurant
 
-			configureNoteLabel()
 		}
 
 		guard let managedObjectContext =
@@ -73,7 +70,7 @@ class RestaurantDetailViewController: UIViewController {
 		if segue.identifier == "showMap" {
 			let mapVC = segue.destinationViewController as! MapViewController
 			mapVC.restaurant = restaurant
-		} else if segue.identifier == "modallyReview" {
+		} else if segue.identifier == "showReview" {
 			let reviewNC = segue.destinationViewController as! UINavigationController
 			let reviewVC = reviewNC.topViewController as! ReviewViewController
 			reviewVC.restaurant = restaurant
@@ -83,19 +80,80 @@ class RestaurantDetailViewController: UIViewController {
 		}
 	}
 
-	@IBAction func call(sender: UIButton) {
-		let telphone = restaurant.phoneNumber
-		if let telphone = telphone {
-			presentViewController(sender.call(telphone)!, animated: true, completion: nil)
-		}
-	}
+    // MARK: - Table View Data Source
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
 
-	private func configureNoteLabel() {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let row = indexPath.row
+        switch row {
+        case 0:
+            let mapViewNC = storyboard!
+                .instantiateViewControllerWithIdentifier("MapViewController")
+                as! UINavigationController
+            let mapView = mapViewNC.topViewController as! MapViewController
+            mapView.restaurant = restaurant
+            showViewController(mapView, sender: self)
+//            presentViewController(mapView, animated: true, completion: nil)
+        case 2:
+            if let phone = restaurant.phoneNumber,
+               let alert = call(phone)  {
+                presentViewController(alert, animated: true, completion: nil)
+            }
+        case 3:
+            let reviewNC = storyboard!
+                .instantiateViewControllerWithIdentifier("ReviewNavigationController")
+                as! UINavigationController
 
-	}
+            let reviewVC = reviewNC.topViewController as! ReviewViewController
+            reviewVC.restaurant = restaurant
+            showViewController(reviewVC, sender: self)
+        default:
+            break
+        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let row = indexPath.row
+        var cell = tableView.dequeueReusableCellWithIdentifier("normalCell")!
+        cell.textLabel?.textColor = .blueColor()
+        cell.textLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        cell.detailTextLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        switch row {
+        case 0:
+            cell.textLabel?.text = "Location"
+            cell.detailTextLabel?.text = restaurant.location
+        case 1:
+            cell.textLabel?.text = "Category"
+            cell.detailTextLabel?.text = restaurant.type
+        case 2:
+            cell.textLabel?.text = "Phone"
+            cell.detailTextLabel?.text = restaurant.phoneNumber
+        case 3:
+            let count = Int(restaurant.userRate.intValue)
+            cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
+            cell.textLabel?.text = "Review"
+            if count == 0 {
+                cell.detailTextLabel?.text = "Touch me to review the food"
+            } else {
+                cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("★"))
+            }
+        default:
+             break
+        }
+        return cell
+    }
+
 
     private func configureStarColor(count: Int) {
-        starLabel.text = String(count: count, repeatedValue: Character("★"))
-        starLabel.textColor = .yellowColor()
+        let indexpath = NSIndexPath(forRow: 3, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexpath)
+        cell?.detailTextLabel!.text = String(count: count, repeatedValue: Character("★"))
+    }
+
+    @IBAction func cancel(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

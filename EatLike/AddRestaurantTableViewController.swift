@@ -27,6 +27,8 @@ class AddRestaurantTableViewController: UITableViewController,
 	override func viewDidLoad() {
 		super.viewDidLoad()
         if newRestaurant != nil {
+            navigationItem.leftBarButtonItem = navigationItem.backBarButtonItem
+            navigationController?.interactivePopGestureRecognizer?.enabled = true
             configeRestaurantInformation()
 	        imageView.image = UIImage(data: newRestaurant.image!)
         } else {

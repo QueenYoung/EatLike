@@ -18,7 +18,7 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var headView: UIView!
 
     func configure(restaurant: DiscoverRestaurants) {
-        priceLabel.text = "\(restaurant.price)"
+        priceLabel.text = "¥ \(restaurant.price)"
         likesTotal.text = String(restaurant.likesTotal)
         nameLabel.text  = restaurant.name
         userNameLabel.text = restaurant.userName
@@ -26,7 +26,7 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
         restaurantImageButton.setImage(restaurant.detailImage, forState: .Normal)
         userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
         // 加上圆角效果 and Blur
-//        getBlurView(headView, style: .Dark)
+        getBlurView(headView, style: .Dark)
         layer.cornerRadius = 6.0
     }
 

@@ -39,10 +39,9 @@ class DiscoverViewController: UIViewController,
             likes: 10),
     ]
 
-    @IBOutlet weak var likesTotal: UILabel!
     @IBAction func callRestaurant(sender: UIButton) {
         let string = sender.titleLabel?.text
-        presentViewController(sender.call(string!)!, animated: true, completion: nil)
+        presentViewController(call(string!)!, animated: true, completion: nil)
     }
 
     // TODO: 目前只是完成了对所有 button 的唯一一个可以变红色
@@ -50,12 +49,11 @@ class DiscoverViewController: UIViewController,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundBlurImage.image = UIImage(named: "cafelore")
+        backgroundBlurImage.image = UIImage(named: "posatelier")
         getBlurView(backgroundBlurImage, style: .Dark)
 //        getBlurView(headView, style: .Dark)
         // 把背景设为透明色的, 否则是黑的一片
         collectionView.backgroundColor = UIColor.clearColor()
-
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -71,8 +69,6 @@ class DiscoverViewController: UIViewController,
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return discovers.count
     }
-
-
 
     func collectionView(collectionView: UICollectionView,
                         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -117,16 +113,7 @@ class DiscoverViewController: UIViewController,
 
     // MARK: Action
     @IBAction func imageButtonDidPressed(sender: UIButton) {
-        /* UIView.animateWithDuration(0.7, delay: 0.0, options: [], animations: {
-            let width = self.view.bounds.width
-            let height = self.view.bounds.height
-//            self.dialogView.layer.cornerRadius = 0.0
-//            self.dialogView.frame = CGRectMake(0, 0, width, height)
-//            self.imageButton.frame = CGRectMake(0, 0, width, 240)
-        }) { _ in
-            self.performSegueWithIdentifier("modalFriend", sender: self)
-        } */
-//        performSegueWithIdentifier("modalFriend", sender: self)
+
     }
 
     @IBAction func likeButtonDidPressed(sender: UIButton) {
@@ -161,11 +148,3 @@ class DiscoverViewController: UIViewController,
 
 }
 
-public func getBlurView(view: UIView, style: UIBlurEffectStyle) {
-    view.backgroundColor = .clearColor()
-    
-    let blurEffect = UIBlurEffect(style: style)
-    let blurView = UIVisualEffectView(effect: blurEffect)
-    blurView.frame = view.bounds
-    view.addSubview(blurView)
-}
