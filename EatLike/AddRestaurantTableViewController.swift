@@ -22,7 +22,9 @@ class AddRestaurantTableViewController: UITableViewController,
     @IBOutlet weak var noteTextField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var datePicker: UIDatePicker!
 	
+    @IBOutlet weak var dateStackView: UIStackView!
 	var newRestaurant: Restaurant!
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -52,43 +54,52 @@ class AddRestaurantTableViewController: UITableViewController,
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if indexPath.row == 0 {
-            let canMakePicture = UIImagePickerController.isCameraDeviceAvailable(.Rear)
-			let imagePicker = UIImagePickerController()
-			// Never don't forget!!!!!!!!
-			imagePicker.delegate = self
-            if !canMakePicture {
-                imagePicker.sourceType = .PhotoLibrary
-                self.presentViewController(imagePicker, animated: true, completion: nil)
-            } else {
-                // 如果可以后置照相机的话, 再询问使用哪一种
-                let actionSheet = UIAlertController(title: "Select Image",
-                                                    message: "Which way you want to use",
-                                                    preferredStyle: .ActionSheet)
-                let pictureAction = UIAlertAction(title: "Saved Pictures", style: .Default) {
-                    [unowned self] _ in
-                    imagePicker.sourceType = .PhotoLibrary
-                    // imagePicker.allowsEditing = true
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
-                }
-
-                let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
-                    [unowned self] _ in
-                    imagePicker.sourceType = .Camera
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
-                }
-
-                actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                actionSheet.addAction(pictureAction)
-                actionSheet.addAction(cameraAction)
-                
-                presentViewController(actionSheet, animated: true, completion: nil)
-            }
-		}
+            showImagePicker()
+        } else if indexPath.row == 5 {
+            tableView.beginUpdates()
+          
+            tableView.endUpdates()
+        }
 
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
 
     // MARK: - ImagePicker Delegate Methods
+    func showImagePicker() {
+        let canMakePicture = UIImagePickerController.isCameraDeviceAvailable(.Rear)
+        let imagePicker = UIImagePickerController()
+        // Never don't forget!!!!!!!!
+        imagePicker.delegate = self
+        if !canMakePicture {
+            imagePicker.sourceType = .PhotoLibrary
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        } else {
+            // 如果可以后置照相机的话, 再询问使用哪一种
+            let actionSheet = UIAlertController(title: "Select Image",
+                                                message: "Which way you want to use",
+                                                preferredStyle: .ActionSheet)
+            let pictureAction = UIAlertAction(title: "Saved Pictures", style: .Default) {
+                [unowned self] _ in
+                imagePicker.sourceType = .PhotoLibrary
+                // imagePicker.allowsEditing = true
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+            }
+
+            let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
+                [unowned self] _ in
+                //                    imagePicker.sourceType = .Camera
+                //                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                self.performSegueWithIdentifier("ShowCamera", sender: self)
+            }
+
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            actionSheet.addAction(pictureAction)
+            actionSheet.addAction(cameraAction)
+
+            presentViewController(actionSheet, animated: true, completion: nil)
+        }
+    }
+
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
 		imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
 		imageView.contentMode = .ScaleAspectFill
@@ -102,6 +113,15 @@ class AddRestaurantTableViewController: UITableViewController,
 	}
 
     // MARK: - IBAction
+    @IBAction func unwindSavaCapture(sender: UIStoryboardSegue) {
+        if let capturePhoto = sender.sourceViewController as? CapturePhotoViewController {
+            if let image = capturePhoto.image {
+                imageView.image = image
+                imageView.contentMode = .ScaleAspectFill
+                imageView.clipsToBounds = true
+            }
+        }
+    }
 
 	@IBAction func saveNewRestaurant(sender: UIButton) {
         let name = nameTextField.text!

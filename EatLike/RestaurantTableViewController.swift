@@ -84,6 +84,7 @@ class RestaurantTableViewController: UITableViewController,
         searchController.delegate = self
     }
 
+    // 用来显示引导界面
     //    override func viewDidAppear(animated: Bool) {
     //        super.viewDidAppear(true)
     //        let isViewed = NSUserDefaults
@@ -156,7 +157,6 @@ class RestaurantTableViewController: UITableViewController,
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? RestaurantTableViewCell else { return }
         // TODO: 根据 textView 的文本长度动态设置大小.
         tableView.beginUpdates()
-
         if cell.stackView.arrangedSubviews.contains(noteView) {
             removeNotesView(cell)
         } else {
@@ -242,10 +242,6 @@ class RestaurantTableViewController: UITableViewController,
 
 
     @IBAction func unwindToHome(segue: UIStoryboardSegue) {
-        guard let sourceViewController = segue.sourceViewController as? AddRestaurantTableViewController,
-            let newRes = sourceViewController.newRestaurant else { return }
-
-        restaurants.append(newRes)
         // TODO: 希望能够有一个更带感的动画，表示创建新的数据成功。
     }
 

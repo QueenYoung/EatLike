@@ -44,21 +44,19 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 	@IBAction func unwindToDetail(segue: UIStoryboardSegue) {
 		if let ratingVC = segue.sourceViewController as? ReviewViewController {
 			restaurant = ratingVC.restaurant
-			// TODO: Update rating label
             let count = Int(restaurant.userRate.intValue)
 			configureStarColor(count)
 		} else if let editVC = segue.sourceViewController
 				as? AddRestaurantTableViewController {
 			let newRest = editVC.newRestaurant
 			// TODO: 谷歌怎么 判断两个图片是否相同.
-			if !restaurant.image!.isEqualToData(newRest.image!) {
-				restaurantImageView.image = UIImage(data: newRest.image!)
-			}
+            //	if !restaurant.image!.isEqualToData(newRest.image!) {
+            restaurantImageView.image = UIImage(data: newRest.image!)
+            // }
 
             // TODO: 写一个函数, 判断 restaurant 的哪些属性被修改了.
 			restaurant = editVC.newRestaurant
-
-
+            tableView.reloadData()
 		}
 
 		guard let managedObjectContext =
@@ -140,6 +138,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             cell.textLabel?.text = "Review"
             if count == 0 {
                 cell.detailTextLabel?.text = "Touch me to review the food"
+                cell.detailTextLabel?.textColor = UIColor.lightGrayColor()
             } else {
                 cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("★"))
             }

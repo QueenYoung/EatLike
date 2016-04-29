@@ -17,11 +17,13 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     var restaurant: Restaurant!
     var chooseTransportType = MKDirectionsTransportType.Walking
     var currentRoutes: MKRoute?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         createAnnotation()
         // Do any additional setup after loading the view.
         locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         let status = CLLocationManager.authorizationStatus()
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
             mapView.showsUserLocation = true
@@ -33,6 +35,9 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
         mapView.showsTraffic = true
         mapView.showsScale = true
         mapView.showsBuildings = true
+
+        navigationController?.navigationBar.tintColor = UIColor.blueColor()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,7 +63,6 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
             let destinationPlacemark = MKPlacemark(placemark: currentRestaurantPlacemark)
             directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
             directionRequest.transportType = chooseTransportType
-
             return directionRequest
         }
         let directionRequest = setRoute()
@@ -76,6 +80,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
                     // 之后再给通过添加 overlay 把路线添加的地图上.
                     // 不过需要注意的是, 还需要设置 overlay 的属性才行, 否则虽然会显示, 但是看不到
                     let route = routeResponse?.routes.first
+                    // 为之后 segue 操作做准备.
                     self.currentRoutes = route
                     self.mapView.removeOverlays(self.mapView.overlays)
                     self.mapView.addOverlay(route!.polyline, level: .AboveRoads)
@@ -180,10 +185,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if currentRoutes == nil {
             let alert = UIAlertController(title: "You Can't Do This", message: "You should tap the direction button first", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "I will do it", style: .Default) { _ in
-                self.performSelector(#selector(MapViewController.getMyLocation), withObject: nil, afterDelay: 0.5, inModes: [])
-                })
-            presentViewController(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "I will do it", style: .Default, handler: nil))
         } else {
             performSegueWithIdentifier("showNavigationSteps", sender: self)
         }
