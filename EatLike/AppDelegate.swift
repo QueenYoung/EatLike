@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// 不过需要去项目文件中, 添加一个键, 并设置为 NO
 		// UIApplication.sharedApplication().statusBarStyle = .LightContent
 //		UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
-//        UINavigationBar.appearance().tintColor = UIColor(red: 0x89/255.0, green: 0xcc/255.0, blue: 0x3c/255.0, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor(red: 0x89/255.0, green: 0xcc/255.0, blue: 0x3c/255.0, alpha: 1.0)
 		if let barFont = UIFont(name: "Avenir-Light", size: 24) {
 			UINavigationBar.appearance().titleTextAttributes =
                 [NSForegroundColorAttributeName: UIColor(red: 0xd7/255.0, green: 0xd7/255.0, blue: 0xd7/255.0, alpha: 1.0),
@@ -122,4 +122,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 }
+
+
 

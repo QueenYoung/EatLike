@@ -17,6 +17,10 @@ class Restaurant: NSManagedObject {
 	// 因为 coredata 不存在 Boolean 类型, 所以需要使用 NSNumber
     @NSManaged var note: String
     @NSManaged var userRate: NSNumber
+    @NSManaged var needRemind: NSNumber
+    
+    @NSManaged var dueDate: NSDate!
+    @NSManaged var alertMessage: String
 }
 
 
@@ -33,19 +37,34 @@ extension String {
 	}
 }
 
-func ==(lhs: Restaurant, rhs: Restaurant) -> Bool {
-	if lhs.name != rhs.name {
-		return false
-	} else if lhs.location != rhs.location {
-		return false
-	} else if lhs.type != rhs.type {
-		return false
-	} else if lhs.phoneNumber != rhs.phoneNumber {
-		return false
-	} else if lhs.note != rhs.note {
-		return false
-	} else {
-		return true
-	}
+extension Restaurant {
+    func scheduleNotification() {
+	    if !needRemind.boolValue { return }
+        let existingNotification = scheduledNotifications()
+        if let exist = existingNotification {
+            UIApplication.sharedApplication().cancelLocalNotification(exist)
+            return
+        }
+
+	    if dueDate.compare(NSDate()) == .OrderedDescending {
+		    let notification = UILocalNotification()
+		    let calendar     = NSCalendar.currentCalendar()
+		    let noSecondDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: dueDate, options: [])
+		    notification.fireDate = noSecondDate
+		    notification.timeZone = .defaultTimeZone()
+		    notification.alertBody = alertMessage
+		    notification.soundName = UILocalNotificationDefaultSoundName
+		    let identifier = "\(name)\(type)\(phoneNumber)"
+		    notification.userInfo = ["itemID": identifier]
+		    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+	    }
+    }
+
+    private func scheduledNotifications() -> UILocalNotification? {
+        let identifier = "\(name)\(type)\(phoneNumber)"
+        let schedule = UIApplication.sharedApplication().scheduledLocalNotifications
+        guard let all = schedule else { return nil }
+        return all.filter { (($0.userInfo?["itemID"] as? String) ?? "") == identifier }.first
+    }
 }
 

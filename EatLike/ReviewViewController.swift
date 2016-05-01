@@ -21,6 +21,10 @@ class ReviewViewController: UIViewController {
         "Boring", "Meh", "It's OK", "Like It", "Fantastical"
     ]
 
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
         currentUserRating = restaurant.userRate.integerValue

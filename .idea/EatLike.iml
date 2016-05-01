@@ -2,33 +2,38 @@
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/RemindTableViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/WalkthroughPageViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/Info.plist" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/RestaurantTableViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/AddRestaurantTableViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/FeedbackWebViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/DiscoverCollectionViewCell.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/DiscoverRestaurants.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/Assets.xcassets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/ExtensionFile.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/Discover.storyboard" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/RestaurantTableViewController.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/EatLike.xcdatamodeld/EatLike.xcdatamodel" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/RestaurantDetailViewController.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/AppDelegate.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/WalkthroughContentViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/RestaurantTableViewCell.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/RestaurantDetailTableViewCell.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/Discover.storyboard" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/EatLike.xcdatamodeld/EatLike.xcdatamodel" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/AppDelegate.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/CameraViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/WalkthroughContentViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/FriendRestaurantViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/DiscoverViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/AboutTableViewController.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/LaunchScreen.storyboard" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/about.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/Favorites.storyboard" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/about.storyboard" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/LaunchScreen.storyboard" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/CustomMap.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/Base.lproj/Main.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/Restaurant.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/EatLike/MapViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/StepsTableViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/RestaurantDetailViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/CapturePhotoViewController.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/EatLike/ReviewViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/EatLike/MapViewController.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ScaleSegue.swift" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/Library/Caches/AppCode2016.1/DerivedData/EatLike-eoeiyelwmzdkvmekftdejrarxhba/Build/Intermediates/EatLike.build/Debug-iphoneos/EatLike.build/DerivedSources" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Header Search Paths">

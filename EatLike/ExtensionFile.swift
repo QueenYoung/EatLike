@@ -26,7 +26,6 @@ public func call(telphone: String, isAlert: Bool = true) -> UIAlertController? {
         alert.addAction(UIAlertAction(title: "手残,按错", style: .Cancel, handler: nil))
         return alert
     }
-    
     UIApplication.sharedApplication().openURL(url!)
     return nil
 }
@@ -40,3 +39,4 @@ public func getBlurView(view: UIView, style: UIBlurEffectStyle) {
     blurView.frame = view.bounds
     view.insertSubview(blurView, atIndex: 0)
 }
+

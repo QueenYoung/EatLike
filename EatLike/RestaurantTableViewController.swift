@@ -73,11 +73,10 @@ class RestaurantTableViewController: UITableViewController,
         // 这个属性对于那些系统提供的 Cell 来说是默认属性, 但是对于自定义的类型, 默认值是
         // IB 上的 RowHeight. 需要主动设置
         tableView.rowHeight = UITableViewAutomaticDimension
-//        tableView.registerClass(RestaurantTableViewCell.self, forCellReuseIdentifier: "Cell")
+
         NSNotificationCenter.defaultCenter().addObserver(
             self, selector: .TextSizeChange,
             name: UIContentSizeCategoryDidChangeNotification, object: nil)
-
         // 添加搜索栏
         self.tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
