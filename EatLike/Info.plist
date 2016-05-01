@@ -55,7 +55,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Need your authorization to find your current location, help you get the full experience.</string>
 	<key>UIStatusBarHidden</key>

@@ -18,7 +18,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 
     enum CustomSegueIdentifier: String {
         case ReviewNavigationController
-        case MapViewController
+        case ModalMapView
         case ShowReminded
         case EditRestaurant
     }
@@ -68,7 +68,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             // TODO: 写一个函数, 判断 restaurant 的哪些属性被修改了.
             restaurant = editVC.newRestaurant
             tableView.reloadData()
-        } else if let remindVC = segue.destinationViewController as? RemindTableViewController {
+        } else if let remindVC = segue.sourceViewController as? RemindTableViewController {
             restaurant = remindVC.restaurant
             restaurant.scheduleNotification()
         }
@@ -90,6 +90,10 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             let remindVC = segue.destinationViewController as! RemindTableViewController
             remindVC.restaurant = restaurant
             remindVC.dueDate = restaurant.dueDate ?? NSDate()
+        case .ModalMapView:
+            let mapViewNC = segue.destinationViewController as! UINavigationController
+            let mapView = mapViewNC.topViewController as! MapViewController
+            mapView.restaurant = restaurant
         default:
             break
         }
@@ -106,13 +110,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 
         switch row {
         case 0:
-            let mapViewNC = storyboard!
-                .instantiateViewControllerWithIdentifier("MapViewController")
-                as! UINavigationController
-            let mapView = mapViewNC.topViewController as! MapViewController
-            mapView.restaurant = restaurant
-            showViewController(mapView, sender: self)
-        //            presentViewController(mapView, animated: true, completion: nil)
+                performSegueWithIdentifier(.ModalMapView, sender: self)
         case 2:
             // will modal a alert view
             if let phone = restaurant.phoneNumber,

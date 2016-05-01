@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// 不过需要去项目文件中, 添加一个键, 并设置为 NO
 		// UIApplication.sharedApplication().statusBarStyle = .LightContent
 //		UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().tintColor = UIColor(red: 0x89/255.0, green: 0xcc/255.0, blue: 0x3c/255.0, alpha: 1.0)
+        
 		if let barFont = UIFont(name: "Avenir-Light", size: 24) {
 			UINavigationBar.appearance().titleTextAttributes =
                 [NSForegroundColorAttributeName: UIColor(red: 0xd7/255.0, green: 0xd7/255.0, blue: 0xd7/255.0, alpha: 1.0),
@@ -56,9 +56,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
 
+	func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        // TODO: 通过这个方法可以在软件运行的时候, 显示 alert.
+        // 接下来只需要定义一个有意思的就可以.
+		let alert = UIAlertController(title: "Fd", message: nil, preferredStyle: .Alert)
+		alert.addAction(UIAlertAction(title: "jl", style: .Default, handler: nil))
+		window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+	}
 
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        if identifier == "Justsavaworld" {
+            NSNotificationCenter.defaultCenter().postNotificationName("SaveWorld", object: nil)
+        }
 
-	// MARK: - Core Data stack
+        completionHandler()
+    }
+
+	// MARK: - Core Data stack/**/
 
 	lazy var applicationDocumentsDirectory: NSURL = {
 		// The directory the application uses to store the Core Data store file. This code uses a directory named "com.appcoda.CoreDataDemo" in the application's documents Application Support directory.

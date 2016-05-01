@@ -685,6 +685,7 @@
                         <outlet property="tableView" destination="zTq-zQ-aAV" id="Wue-Iq-goQ"/>
                         <segue destination="3Zn-8d-FuY" kind="show" identifier="ShowReminded" id="V1W-qJ-NZO"/>
                         <segue destination="0b3-fE-Rl7" kind="show" identifier="ReviewNavigationController" id="huP-R9-8bp"/>
+                        <segue destination="8Aq-pb-6z5" kind="presentation" identifier="ModalMapView" id="5zx-KZ-BJQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1g2-8D-Eqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -703,7 +704,7 @@
                             <tableViewSection id="czG-ec-zGH">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eiO-EC-8i3">
-                                        <rect key="frame" x="0.0" y="79" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="99" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eiO-EC-8i3" id="OP4-37-Lr5">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
@@ -730,7 +731,7 @@
                             <tableViewSection headerTitle="Choose date to notifite" id="gAu-Hk-g2j">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xBD-3E-n88">
-                                        <rect key="frame" x="0.0" y="186" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="206" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xBD-3E-n88" id="wdj-dB-xnP">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
@@ -760,7 +761,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="9MK-57-XiC" detailTextLabel="mgF-2X-1Z0" style="IBUITableViewCellStyleValue1" id="alg-0m-Rp1">
-                                        <rect key="frame" x="0.0" y="242" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="262" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="alg-0m-Rp1" id="saD-CB-VZO">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
@@ -827,7 +828,9 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="a7g-ES-erJ" firstAttribute="leading" secondItem="p00-wV-oFf" secondAttribute="leading" id="Ls4-Wg-Zlq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="a7g-ES-erJ" secondAttribute="trailing" constant="-8" id="Ra2-Bj-c8x"/>
                             <constraint firstItem="a7g-ES-erJ" firstAttribute="top" secondItem="p00-wV-oFf" secondAttribute="top" id="h6M-Qf-EcZ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="a7g-ES-erJ" secondAttribute="bottom" constant="-8" id="mN1-kX-MBd"/>
                         </constraints>
                     </tableViewCellContentView>
                 </tableViewCell>
@@ -1033,6 +1036,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ReviewNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0b3-fE-Rl7" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xDn-wj-Qeq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1052,7 +1056,7 @@
             <objects>
                 <navigationController storyboardIdentifier="restaurantDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="pxq-m3-Wip" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="azS-fC-zdN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

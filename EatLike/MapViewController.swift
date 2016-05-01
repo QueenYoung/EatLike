@@ -18,16 +18,42 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     var chooseTransportType = MKDirectionsTransportType.Walking
     var currentRoutes: MKRoute?
 
+    var status = CLLocationManager.authorizationStatus() {
+        didSet {
+            if oldValue == .Denied {
+                let alert = UIAlertController(title: "Can't get location", message:
+                    "You can open the direciton authorized", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "GO!", style: .Default, handler: {
+                    _ in
+                    UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+                }))
+                presentViewController(alert, animated: true, completion: nil)
+            } else if oldValue == .AuthorizedWhenInUse {
+                mapView.showsUserLocation = true
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         createAnnotation()
         // Do any additional setup after loading the view.
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
-        let status = CLLocationManager.authorizationStatus()
+        /* let status = CLLocationManager.authorizationStatus()
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
             mapView.showsUserLocation = true
-        }
+        } else if status == .Denied {
+            let alert = UIAlertController(title: "Can't get location", message:
+                "You can open the direciton authorized", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "GO!", style: .Default, handler: {
+                _ in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }))
+            presentViewController(alert, animated: true, completion: nil)
+        } */
 
         transportSegument.addTarget(self, action: #selector(MapViewController.getMyLocation), forControlEvents: .ValueChanged)
         // 分别让地图显示指南针，交通信息和比例
@@ -122,6 +148,9 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
         }
     }
 
+    @IBAction func cancel() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     private func createAnnotation() {
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(restaurant.location) {

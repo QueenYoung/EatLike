@@ -17,7 +17,7 @@ public func call(telphone: String, isAlert: Bool = true) -> UIAlertController? {
             title: "确定要拨打 \(number)",
             message: "请确定你不是无意识的点击",
             preferredStyle: .ActionSheet)
-        let callAction = UIAlertAction(title: "我要吃饭!", style: .Default) {
+        let callAction = UIAlertAction(title: "我要吃饭!", style: .Destructive) {
             _ in
             UIApplication.sharedApplication().openURL(url!)
         }

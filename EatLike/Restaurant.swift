@@ -39,24 +39,30 @@ extension String {
 
 extension Restaurant {
     func scheduleNotification() {
-	    if !needRemind.boolValue { return }
-        let existingNotification = scheduledNotifications()
-        if let exist = existingNotification {
-            UIApplication.sharedApplication().cancelLocalNotification(exist)
-            return
-        }
-
-	    if dueDate.compare(NSDate()) == .OrderedDescending {
+	    if !needRemind.boolValue {
+		    let existingNotification = scheduledNotifications()
+		    if let exist = existingNotification {
+			    print("nimabi")
+			    UIApplication.sharedApplication().cancelLocalNotification(exist)
+			    return
+		    }
+	    } else if dueDate.compare(NSDate()) == .OrderedDescending {
 		    let notification = UILocalNotification()
-		    let calendar     = NSCalendar.currentCalendar()
-		    let noSecondDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: dueDate, options: [])
-		    notification.fireDate = noSecondDate
+            // fix some bug
+            let dateComponents = NSCalendar.currentCalendar().components(
+                [.Day, .Hour, .Minute, .Second], fromDate: dueDate)
+            dateComponents.second = 0
+            let fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
+		    notification.fireDate = NSDate(timeIntervalSinceNow: 5)
 		    notification.timeZone = .defaultTimeZone()
 		    notification.alertBody = alertMessage
 		    notification.soundName = UILocalNotificationDefaultSoundName
+            notification.alertAction = "Youqu"
+            notification.alertTitle = "Nimabi"
 		    let identifier = "\(name)\(type)\(phoneNumber)"
 		    notification.userInfo = ["itemID": identifier]
 		    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+		    print("NImabi")
 	    }
     }
 

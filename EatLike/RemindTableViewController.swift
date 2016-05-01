@@ -48,8 +48,20 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     lazy var notificationSettings: UIUserNotificationSettings = {
         let category = UIMutableUserNotificationCategory()
         category.identifier = "com.jxau.queen"
+
+        let notificationAction = UIMutableUserNotificationAction()
+        notificationAction.identifier = "Justsaveworld"
+        notificationAction.title = "Save World"
+        notificationAction.activationMode = .Background
+        notificationAction.authenticationRequired = false
+        notificationAction.destructive = true
+
+        category.setActions([notificationAction], forContext: .Default)
+        category.setActions([notificationAction], forContext: .Minimal)
+
         var ns = Set<UIMutableUserNotificationCategory>(arrayLiteral: category)
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: ns)
+
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound, .Badge], categories: ns)
 
         return notificationSettings
     }()
