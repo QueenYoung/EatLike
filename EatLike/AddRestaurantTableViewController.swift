@@ -12,20 +12,22 @@ class AddRestaurantTableViewController: UITableViewController,
                                         UIImagePickerControllerDelegate,
                                         UINavigationControllerDelegate,
                                         UITextFieldDelegate {
+    // MARK: - Property
     var isUpdate = false
 
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var locationTextField: UITextField!
-	@IBOutlet weak var typeTextField: UITextField!
+    @IBOutlet weak var categaryLabel: UILabel!
 	@IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var noteTextField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var datePicker: UIDatePicker!
-	
-    @IBOutlet weak var dateStackView: UIStackView!
+
+
 	var newRestaurant: Restaurant!
+
+    // MARK: View Controller
 	override func viewDidLoad() {
 		super.viewDidLoad()
         if newRestaurant != nil {
@@ -52,17 +54,22 @@ class AddRestaurantTableViewController: UITableViewController,
 		// Dispose of any resources that can be recreated.
 	}
 
+
+    // MARK: Table View Delegate
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if indexPath.row == 0 {
             showImagePicker()
-        } else if indexPath.row == 5 {
-            tableView.beginUpdates()
-          
-            tableView.endUpdates()
         }
 
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
+
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ChooseCategary" {
+            
+        }
+    }
 
     // MARK: - ImagePicker Delegate Methods
     func showImagePicker() {
@@ -123,9 +130,15 @@ class AddRestaurantTableViewController: UITableViewController,
         }
     }
 
+    @IBAction func updateCategary(sender: UIStoryboardSegue) {
+        let categaryTVC = sender.sourceViewController as! ChooseCategaryTableViewController
+        categaryLabel.text = categaryTVC.choosedCategary
+        categaryLabel.textColor = .blackColor()
+    }
+
 	@IBAction func saveNewRestaurant(sender: UIButton) {
         let name = nameTextField.text!
-        let type = typeTextField.text!
+        let type = categaryLabel.text!
         let location = locationTextField.text!
 
         // 如果 name type 或者 location 有一个没有填, 则提示用户
@@ -180,9 +193,7 @@ class AddRestaurantTableViewController: UITableViewController,
 		if nameTextField.isFirstResponder() {
 			locationTextField.becomeFirstResponder()
         } else if locationTextField.isFirstResponder() {
-			typeTextField.becomeFirstResponder()
-		} else if typeTextField.isFirstResponder() {
-			phoneTextField.becomeFirstResponder()
+			categaryLabel.becomeFirstResponder()
 		} else if noteTextField.isFirstResponder() {
             noteTextField.resignFirstResponder()
 		}
@@ -213,12 +224,13 @@ class AddRestaurantTableViewController: UITableViewController,
         imageView.image        = UIImage(data: newRestaurant.image!)
         nameTextField.text     = newRestaurant.name
         locationTextField.text = newRestaurant.location
-        typeTextField.text     = newRestaurant.type
+        categaryLabel.text     = newRestaurant.type
         phoneTextField.text    = newRestaurant.phoneNumber
         noteTextField.text     = newRestaurant.note
         isUpdate               = true
 
         imageView.contentMode = .ScaleAspectFill
+        categaryLabel.textColor = .blackColor()
     }
 
 
@@ -226,7 +238,7 @@ class AddRestaurantTableViewController: UITableViewController,
 
         let name     = nameTextField.text!
         let location = locationTextField.text!
-        let type     = typeTextField.text!
+        let type     = categaryLabel.text!
         // 返回的是 NSData 类型, 刚好可以初始化
         let image    = imageView.image.flatMap { UIImagePNGRepresentation($0) }
         let phone    = phoneTextField.text!

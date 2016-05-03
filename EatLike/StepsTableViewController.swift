@@ -10,8 +10,10 @@ import UIKit
 import MapKit
 class StepsTableViewController: UITableViewController {
 
-    var steps = 1
     var routeSteps = [MKRouteStep]()
+    var count: Int {
+        return routeSteps.count
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,9 +28,23 @@ class StepsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return routeSteps.count / 5 + 1
+    }
+
+    override func tableView(tableView: UITableView,
+                            titleForHeaderInSection section: Int) -> String? {
+        return "\(section + 1)"
+    }
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return routeSteps.count
+        let totalSections = numberOfSectionsInTableView(tableView)
+        if section < totalSections - 1 {
+            return 5
+        } else {
+            return routeSteps.count - 5 * section
+        }
     }
 
 
@@ -36,55 +52,12 @@ class StepsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("StepCell", forIndexPath: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = "\(steps): " + routeSteps[indexPath.row].instructions
-        steps += 1
+        cell.textLabel?.text = routeSteps[indexPath.row].instructions
         return cell
     }
 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

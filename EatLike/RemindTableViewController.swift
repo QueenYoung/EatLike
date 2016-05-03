@@ -45,6 +45,7 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         return formatter
     }()
 
+    // configufe notification setting
     lazy var notificationSettings: UIUserNotificationSettings = {
         let category = UIMutableUserNotificationCategory()
         category.identifier = "com.jxau.queen"
@@ -61,10 +62,11 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
 
         var ns = Set<UIMutableUserNotificationCategory>(arrayLiteral: category)
 
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound, .Badge], categories: ns)
+        let notificationSettings = UIUserNotificationSettings   (forTypes: [.Alert, .Sound, .Badge], categories: ns)
 
         return notificationSettings
     }()
+
 
     @IBAction func dateValueChanged(sender: UIDatePicker) {
         dueDate = sender.date
@@ -73,14 +75,22 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBAction func remindToggled(sender: UISwitch) {
         messageField.resignFirstResponder()
-
+        let indexPath = NSIndexPath(forRow: 1, inSection: 1)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
         if sender.on {
             UIApplication.sharedApplication()
                 .registerUserNotificationSettings(notificationSettings)
+            cell.userInteractionEnabled = true
+        } else {
+            if isPickerVisual {
+                hideDatePicker()
+            }
+            cell.userInteractionEnabled = false
         }
         needRemind = sender.on
     }
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -103,7 +113,6 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }

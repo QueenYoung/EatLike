@@ -38,7 +38,7 @@ class RestaurantTableViewController: UITableViewController,
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        //		navigationController?.hidesBarsOnSwipe = true
+        navigationController?.hidesBarsOnSwipe = true
     }
 
 
@@ -289,6 +289,11 @@ class RestaurantTableViewController: UITableViewController,
         searchController.searchBar.becomeFirstResponder()
     }
 
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+
 
     // MARK: - Help Methods
     private func filterRestaurant(search: String) {
@@ -298,7 +303,6 @@ class RestaurantTableViewController: UITableViewController,
             searchedRestaurants = restaurants.filter { $0.location.rangeOfString(search, options: .CaseInsensitiveSearch) != nil }
         }
     }
-
 
 
     func addNotesViewToCell(cell: RestaurantTableViewCell) {

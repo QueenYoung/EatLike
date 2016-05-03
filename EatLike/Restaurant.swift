@@ -53,7 +53,7 @@ extension Restaurant {
                 [.Day, .Hour, .Minute, .Second], fromDate: dueDate)
             dateComponents.second = 0
             let fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
-		    notification.fireDate = NSDate(timeIntervalSinceNow: 5)
+		    notification.fireDate = fixedDate
 		    notification.timeZone = .defaultTimeZone()
 		    notification.alertBody = alertMessage
 		    notification.soundName = UILocalNotificationDefaultSoundName

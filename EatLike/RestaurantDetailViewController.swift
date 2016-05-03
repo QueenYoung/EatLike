@@ -45,7 +45,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         // 进入 detail 视图的时候,关闭 hide on swipe 功能.
-        //		navigationController?.hidesBarsOnSwipe = false
+        navigationController?.hidesBarsOnSwipe = false
     }
 
     override func didReceiveMemoryWarning() {

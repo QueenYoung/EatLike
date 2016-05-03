@@ -13,6 +13,7 @@ class AboutTableViewController: UITableViewController,
                                 MFMailComposeViewControllerDelegate {
     let links = ["http://user.qzone.qq.com/593969406/main/",
                  "https://github.com/QueenYoung/EatLike/"]
+
     var mailCompose: MFMailComposeViewController!
     override func viewDidLoad() {
 	    super.viewDidLoad()
@@ -32,7 +33,7 @@ class AboutTableViewController: UITableViewController,
         switch indexPath.section {
         case 0 where indexPath.row == 0:
             if let url = NSURL(string: "http://www.apple.com/itunes/charts/paid-apps/") {
-                let safari = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
+                let safari = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
                 presentViewController(safari, animated: true, completion: nil)
             }
         case 1 where indexPath.row != 2:
@@ -42,7 +43,6 @@ class AboutTableViewController: UITableViewController,
             }
         case 1:
             sendEmail()
-
         default:
             break
         }
