@@ -81,6 +81,8 @@ class RestaurantTableViewController: UITableViewController,
         self.tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
         searchController.delegate = self
+
+        print(restaurants.first!.keyString)
     }
 
     // 用来显示引导界面
@@ -103,7 +105,6 @@ class RestaurantTableViewController: UITableViewController,
     // MARK: - Table View Datasource Methods
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -157,11 +158,12 @@ class RestaurantTableViewController: UITableViewController,
         // TODO: 根据 textView 的文本长度动态设置大小.
         tableView.beginUpdates()
         if cell.stackView.arrangedSubviews.contains(noteView) {
-            removeNotesView(cell)
+            cell.removeNoteView(noteView)
         } else {
-            addNotesViewToCell(cell)
+            cell.addNoteView(noteView)
             noteTextView.text = restaurants[indexPath.row].note
         }
+        cell.thumbnailImageView.layoutIfNeeded()
         tableView.endUpdates()
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
@@ -201,9 +203,10 @@ class RestaurantTableViewController: UITableViewController,
             [unowned self] (action, indexPath) in
             guard let managedObjectContext =
                 (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext else { return }
+            let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
             let restaurantToDelete =
                 self.fetchResultController.objectAtIndexPath(indexPath) as! Restaurant
-
+            cache.removeImage(self.restaurants[indexPath.row].keyString)
             managedObjectContext.deleteObject(restaurantToDelete)
             guard let _ = try? managedObjectContext.save() else { return }
         }
@@ -305,7 +308,7 @@ class RestaurantTableViewController: UITableViewController,
     }
 
 
-    func addNotesViewToCell(cell: RestaurantTableViewCell) {
+    /* func addNotesViewToCell(cell: RestaurantTableViewCell) {
 
         let stack = cell.stackView
         noteView.heightAnchor.constraintEqualToConstant(notesViewHeight - 48).active = true
@@ -317,7 +320,7 @@ class RestaurantTableViewController: UITableViewController,
         let stack = cell.stackView
         stack.removeArrangedSubview(noteView)
         noteView.removeFromSuperview()
-    }
+    } */
     // 当字体类型改变的时候，调用
 
     @objc private func onTextSizeChange(notification: NSNotification) {

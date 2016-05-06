@@ -73,6 +73,18 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         dateLabel.text = dateFormatter.stringFromDate(dueDate)
     }
 
+    private func turnCellStatus(cell: UITableViewCell, enable: Bool) {
+        if enable {
+            cell.backgroundColor = .whiteColor()
+            cell.textLabel?.textColor = .blackColor()
+            cell.userInteractionEnabled = true
+        } else {
+            cell.userInteractionEnabled = false
+            cell.backgroundColor = .clearColor()
+            cell.textLabel?.textColor = cell.detailTextLabel?.textColor
+        }
+    }
+
     @IBAction func remindToggled(sender: UISwitch) {
         messageField.resignFirstResponder()
         let indexPath = NSIndexPath(forRow: 1, inSection: 1)
@@ -80,13 +92,12 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         if sender.on {
             UIApplication.sharedApplication()
                 .registerUserNotificationSettings(notificationSettings)
-            cell.userInteractionEnabled = true
         } else {
             if isPickerVisual {
                 hideDatePicker()
             }
-            cell.userInteractionEnabled = false
         }
+        self.turnCellStatus(cell, enable: sender.on)
         needRemind = sender.on
     }
 
@@ -115,6 +126,16 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
+    }
+
+    override func tableView(
+        tableView: UITableView, willDisplayCell
+        cell: UITableViewCell,
+        forRowAtIndexPath indexPath: NSIndexPath) {
+
+        if indexPath.section == 1 && indexPath.row == 1 {
+            turnCellStatus(cell, enable: needRemind)
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -24,6 +24,7 @@ class AddRestaurantTableViewController: UITableViewController,
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
 
+    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
 
 	var newRestaurant: Restaurant!
 
@@ -31,10 +32,7 @@ class AddRestaurantTableViewController: UITableViewController,
 	override func viewDidLoad() {
 		super.viewDidLoad()
         if newRestaurant != nil {
-            navigationItem.leftBarButtonItem = navigationItem.backBarButtonItem
-            navigationController?.interactivePopGestureRecognizer?.enabled = true
             configeRestaurantInformation()
-	        imageView.image = UIImage(data: newRestaurant.image!)
         } else {
             nameTextField.becomeFirstResponder()
             saveButton.hidden = true
@@ -78,7 +76,7 @@ class AddRestaurantTableViewController: UITableViewController,
         // Never don't forget!!!!!!!!
         imagePicker.delegate = self
         if !canMakePicture {
-            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.sourceType = .SavedPhotosAlbum
             self.presentViewController(imagePicker, animated: true, completion: nil)
         } else {
             // 如果可以后置照相机的话, 再询问使用哪一种
@@ -108,6 +106,10 @@ class AddRestaurantTableViewController: UITableViewController,
     }
 
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // 如果是修改图片的话, 就删除之前的缓存.
+        if newRestaurant != nil {
+            cache.removeImage(newRestaurant.keyString)
+        }
 		imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
 		imageView.contentMode = .ScaleAspectFill
 		imageView.clipsToBounds = true
@@ -120,7 +122,7 @@ class AddRestaurantTableViewController: UITableViewController,
 	}
 
     // MARK: - IBAction
-    @IBAction func unwindSavaCapture(sender: UIStoryboardSegue) {
+    @IBAction func unwindFromCamera(sender: UIStoryboardSegue) {
         if let capturePhoto = sender.sourceViewController as? CapturePhotoViewController {
             if let image = capturePhoto.image {
                 imageView.image = image
@@ -175,6 +177,7 @@ class AddRestaurantTableViewController: UITableViewController,
 			return
 		}
 
+		dismissViewControllerAnimated(true, completion: nil)
         if isUpdate {
             performSegueWithIdentifier("unwindToDetailView", sender: self)
         } else {
@@ -203,8 +206,10 @@ class AddRestaurantTableViewController: UITableViewController,
 	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
 		guard textField === phoneTextField else { return true }
         // 过滤那些不是数字的所有输入, 即使是粘贴也不行.
-		let decimalSet = NSCharacterSet.decimalDigitCharacterSet()
+		let decimalSet = NSMutableCharacterSet.decimalDigitCharacterSet()
 		let typeSet = NSCharacterSet(charactersInString: string)
+        decimalSet.addCharactersInString("-")
+
 		var phone = phoneTextField.text!
 
 		guard decimalSet.isSupersetOfSet(typeSet) else { return false }
@@ -221,7 +226,7 @@ class AddRestaurantTableViewController: UITableViewController,
 	}
 
     private func configeRestaurantInformation() {
-        imageView.image        = UIImage(data: newRestaurant.image!)
+        imageView.image        = cache.imageForKey(newRestaurant.keyString)
         nameTextField.text     = newRestaurant.name
         locationTextField.text = newRestaurant.location
         categaryLabel.text     = newRestaurant.type
@@ -240,7 +245,7 @@ class AddRestaurantTableViewController: UITableViewController,
         let location = locationTextField.text!
         let type     = categaryLabel.text!
         // 返回的是 NSData 类型, 刚好可以初始化
-        let image    = imageView.image.flatMap { UIImagePNGRepresentation($0) }
+        let image    = imageView.image.flatMap { UIImageJPEGRepresentation($0, 0.6) }
         let phone    = phoneTextField.text!
         let note     = noteTextField.text!
 
@@ -250,5 +255,9 @@ class AddRestaurantTableViewController: UITableViewController,
         newRestaurant.image       = image
         newRestaurant.phoneNumber = phone
         newRestaurant.note        = note
+        newRestaurant.keyString   = NSUUID().UUIDString
+
+        cache.setImage(newRestaurant.image!, key: newRestaurant.keyString)
     }
+
 }

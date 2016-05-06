@@ -21,6 +21,7 @@ class Restaurant: NSManagedObject {
     
     @NSManaged var dueDate: NSDate!
     @NSManaged var alertMessage: String
+    @NSManaged var keyString: String
 }
 
 
@@ -49,10 +50,12 @@ extension Restaurant {
 	    } else if dueDate.compare(NSDate()) == .OrderedDescending {
 		    let notification = UILocalNotification()
             // fix some bug
+            // 这个可选集合必须包括所有需要用到的时间 Unit, 否则默认都是0
             let dateComponents = NSCalendar.currentCalendar().components(
-                [.Day, .Hour, .Minute, .Second], fromDate: dueDate)
+                [.Day, .Hour, .Minute, .Second, .Month, .Year], fromDate: dueDate)
             dateComponents.second = 0
             let fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
+            print(fixedDate)
 		    notification.fireDate = fixedDate
 		    notification.timeZone = .defaultTimeZone()
 		    notification.alertBody = alertMessage

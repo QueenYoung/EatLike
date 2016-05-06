@@ -12,6 +12,7 @@ class DiscoverViewController: UIViewController,
                               UICollectionViewDataSource,
                               UICollectionViewDelegate {
 
+    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var backgroundBlurImage: UIImageView!
 
@@ -51,7 +52,7 @@ class DiscoverViewController: UIViewController,
         super.viewDidLoad()
         backgroundBlurImage.image = UIImage(named: "posatelier")
         getBlurView(backgroundBlurImage, style: .Dark)
-//        getBlurView(headView, style: .Dark)
+        setCacheForImage()
         // 把背景设为透明色的, 否则是黑的一片
         collectionView.backgroundColor = UIColor.clearColor()
     }
@@ -79,25 +80,19 @@ class DiscoverViewController: UIViewController,
         return cell
     }
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-    }
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("Start")
         if segue.identifier == "modalFriend" {
-            print("medium 1")
-            // 因为是通过 button 来完成 segue 的, 所以无法直接调用 collectionView 的方法来获取 indexPath
-            let indexPoint: CGPoint = self.view.convertPoint(self.collectionView.center, toView: self.collectionView)
-            let indexPathNow = collectionView.indexPathForItemAtPoint(indexPoint)
+//            let indexPoint: CGPoint = self.view.convertPoint(self.collectionView.center, toView: self.collectionView)
+//            let indexPathNow = collectionView.indexPathForItemAtPoint(indexPoint)
+            let indexPathNow = collectionView.indexPathsForSelectedItems()?.first!
             if let index = indexPathNow {
-                print("medium 2")
                 let DetailUN = segue.destinationViewController as! UINavigationController
                 let detailVC = DetailUN.topViewController as! FriendRestaurantViewController
                 detailVC.friendData = discovers[index.row]
             }
         }
-        print("End")
     }
 
     // Unwind Segue
@@ -146,5 +141,16 @@ class DiscoverViewController: UIViewController,
         cell.configure(restaurant)
     }
 
+    private func setCacheForImage() {
+        discovers.forEach { discover in
+            let _ = UIImageJPEGRepresentation(discover.authorImage!, 0.6).map {
+                cache.setImage($0, key: discover.authorImageKey)
+            }
+
+            let _ = UIImageJPEGRepresentation(discover.detailImage!, 0.6).map {
+                cache.setImage($0, key: discover.detailImageKey)
+            }
+        }
+    }
 }
 

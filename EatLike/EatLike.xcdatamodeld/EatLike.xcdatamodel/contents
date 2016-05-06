@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15F28b" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F28b" minimumToolsVersion="Xcode 7.0">
     <entity name="Restaurant" representedClassName=".Restaurant" syncable="YES">
         <attribute name="alertMessage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="keyString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="needRemind" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -13,6 +14,6 @@
         <attribute name="userRate" optional="YES" attributeType="Integer 32" minValueString="0" maxValueString="5" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Restaurant" positionX="-63" positionY="-18" width="128" height="193"/>
+        <element name="Restaurant" positionX="-63" positionY="-18" width="128" height="210"/>
     </elements>
 </model>

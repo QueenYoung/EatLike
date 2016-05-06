@@ -19,6 +19,8 @@ class DiscoverRestaurants {
 
     var detailImage: UIImage?
     var authorImage: UIImage?
+    let detailImageKey: String
+    let authorImageKey: String
 
 
     init(restaurantName: String, userName: String, foodName: String,
@@ -28,11 +30,13 @@ class DiscoverRestaurants {
         self.name = restaurantName
         self.userName       = userName
         self.type           = type
-        self.detailImage  = image
+        self.detailImage    = image
         self.price          = price
         self.isLike         = isLike
         self.authorImage    = userImage
         self.likesTotal     = likes
         self.foodName       = foodName
+        self.detailImageKey = NSUUID().UUIDString
+        self.authorImageKey = NSUUID().UUIDString
     }
 }

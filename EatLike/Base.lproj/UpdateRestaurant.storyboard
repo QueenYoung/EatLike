@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F28b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYy-rE-Sx6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F31a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYy-rE-Sx6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -145,11 +145,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="56" id="UHT-CV-lhQ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="UHT-CV-lhQ">
                                         <rect key="frame" x="0.0" y="352" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UHT-CV-lhQ" id="Rcn-q1-MGg">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurant_category_icon" translatesAutoresizingMaskIntoConstraints="NO" id="xMf-WH-THT">
@@ -159,7 +159,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant Categary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sx0-AZ-aeg">
-                                                    <rect key="frame" x="49" y="12" width="510" height="28"/>
+                                                    <rect key="frame" x="49" y="12" width="543" height="28"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -310,6 +310,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="capture:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="CML-A1-h8g"/>
+                                    <segue destination="v7p-hh-ayC" kind="unwind" unwindAction="unwindFromCamera:" id="V8g-yy-CFH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgz-d5-4LJ">
@@ -319,6 +320,7 @@
                                 </state>
                                 <connections>
                                     <action selector="cancel:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="uxg-cD-UhH"/>
+                                    <action selector="dismiss:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="ybG-wE-4f7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -337,10 +339,11 @@
                     <connections>
                         <outlet property="cameraButton" destination="i2F-cs-MQo" id="gIV-33-7Km"/>
                         <outlet property="cancelButton" destination="cgz-d5-4LJ" id="od5-Nt-zZM"/>
-                        <segue destination="zzw-rE-fon" kind="show" identifier="ShowCaptureImage" id="ctW-7a-ac4"/>
+                        <segue destination="zzw-rE-fon" kind="show" identifier="unwindBack" id="ctW-7a-ac4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cau-jO-kT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="v7p-hh-ayC" userLabel="Exit" sceneMemberID="exit"/>
                 <swipeGestureRecognizer direction="down" id="6UX-TZ-jV2">
                     <connections>
                         <action selector="swipeSwitchCameraGesture:" destination="Gvq-Wq-ixl" id="Fgy-AE-t7v"/>
@@ -631,6 +634,6 @@
         <image name="restaurant_category_icon" width="24" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Mad-FJ-OY0"/>
+        <segue reference="N0M-4F-TlN"/>
     </inferredMetricsTieBreakers>
 </document>

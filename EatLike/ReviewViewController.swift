@@ -20,6 +20,8 @@ class ReviewViewController: UIViewController {
     private let ratingButtonTitles = [
         "Boring", "Meh", "It's OK", "Like It", "Fantastical"
     ]
+    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
+
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -43,7 +45,7 @@ class ReviewViewController: UIViewController {
 
 		let blur = UIBlurEffect(style: .Dark)
 		let blurView = UIVisualEffectView(effect: blur)
-        backgroundViewImage.image = UIImage(data: restaurant.image!)
+        backgroundViewImage.image = cache.imageForKey(restaurant.keyString)
 		// Setting the frame of the blur
 		blurView.frame = view.frame
 		backgroundViewImage.addSubview(blurView)
@@ -64,6 +66,11 @@ class ReviewViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.navigationBar.tintColor = .whiteColor()
+    }
+    
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(true)
 		// 因为这个方法晚于 load 方法运行, 所以通过在 load 中设置开始状态
@@ -89,6 +96,7 @@ class ReviewViewController: UIViewController {
     @IBAction func submitRate(sender: UIBarButtonItem) {
         currentUserRating = starsStackView.arrangedSubviews.count
         restaurant.userRate = currentUserRating
+        navigationController?.popViewControllerAnimated(true)
         performSegueWithIdentifier("unwindToDetailView", sender: nil)
     }
 
@@ -107,6 +115,7 @@ class ReviewViewController: UIViewController {
     private func showStarCount(totalStarCount: Int, animated: Bool = true) {
         let starsToChange = totalStarCount - starsStackView.arrangedSubviews.count
 
+        // 提高评价
         if starsToChange > 0 {
             for _ in 1...starsToChange {
                 let starImage = UIImageView(image: UIImage(named: "rating_star"))
@@ -115,6 +124,7 @@ class ReviewViewController: UIViewController {
                 starImage.frame.origin = CGPoint(x: starsStackView.frame.width, y: 0)
                 starsStackView.addArrangedSubview(starImage)
             }
+        // 降低评价
         } else if starsToChange < 0 {
             let starsToRemove = abs(starsToChange)
 

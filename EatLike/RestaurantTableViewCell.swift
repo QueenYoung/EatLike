@@ -36,10 +36,11 @@ class RestaurantTableViewCell: UITableViewCell {
 	}
 
     func configure(data: Restaurant) {
+        let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
         nameLabel.text = data.name
         LocationLabel.text = data.location
         TypeLabel.text = data.type
-        thumbnailImageView.image = UIImage(data: data.image!)
+        thumbnailImageView.image = cache.imageForKey(data.keyString)
         updateLabelPerferredFont()
 
         /* 给 缩略图添加圆角效果
@@ -50,4 +51,15 @@ class RestaurantTableViewCell: UITableViewCell {
         // cell.thumbnailImageView.clipsToBounds = true
 
     }
+
+    func addNoteView(noteview: UIView) {
+        noteview.heightAnchor.constraintEqualToConstant(80).active = true
+        stackView.addArrangedSubview(noteview)
+    }
+
+    func removeNoteView(noteView: UIView) {
+        stackView.removeArrangedSubview(noteView)
+        noteView.removeFromSuperview()
+    }
+
 }

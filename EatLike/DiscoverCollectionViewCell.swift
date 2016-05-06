@@ -13,21 +13,23 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var likesTotal: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userThumbImage: UIImageView!
-    @IBOutlet weak var restaurantImageButton: UIButton!
+    @IBOutlet weak var restaurantImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var headView: UIView!
 
     func configure(restaurant: DiscoverRestaurants) {
+        let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
         priceLabel.text = "¥ \(restaurant.price)"
         likesTotal.text = String(restaurant.likesTotal)
         nameLabel.text  = restaurant.name
         userNameLabel.text = restaurant.userName
-        userThumbImage.image = restaurant.authorImage
-        restaurantImageButton.setImage(restaurant.detailImage, forState: .Normal)
+        userThumbImage.image = cache.imageForKey(restaurant.authorImageKey)
+        restaurantImage.image = cache.imageForKey(restaurant.detailImageKey)
         userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
         // 加上圆角效果 and Blur
         getBlurView(headView, style: .Dark)
         layer.cornerRadius = 6.0
+
     }
 
     func changeLikeTotal(add: Bool) {

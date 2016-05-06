@@ -15,7 +15,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
     @IBOutlet var tableView: UITableView!
 
     var restaurant: Restaurant!
-
+    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
     enum CustomSegueIdentifier: String {
         case ReviewNavigationController
         case ModalMapView
@@ -29,12 +29,11 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationController?.navigationBar
             .setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage.init()
         navigationController?.interactivePopGestureRecognizer?.enabled = true
-        restaurantImageView.image = UIImage(data: restaurant.image!)
+        restaurantImageView.image = cache.imageForKey(restaurant.keyString)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
     }
 
@@ -46,6 +45,12 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         super.viewWillAppear(true)
         // 进入 detail 视图的时候,关闭 hide on swipe 功能.
         navigationController?.hidesBarsOnSwipe = false
+        navigationController?.navigationBar.tintColor = .whiteColor()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationController?.navigationBar.tintColor = .blueColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,9 +67,9 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             as? AddRestaurantTableViewController {
             let newRest = editVC.newRestaurant
             // TODO: 谷歌怎么 判断两个图片是否相同.
-            //	if !restaurant.image!.isEqualToData(newRest.image!) {
-            restaurantImageView.image = UIImage(data: newRest.image!)
-            // }
+            if !restaurant.image!.isEqualToData(newRest.image!) {
+                restaurantImageView.image = UIImage(data: newRest.image!)
+            }
             // TODO: 写一个函数, 判断 restaurant 的哪些属性被修改了.
             restaurant = editVC.newRestaurant
             tableView.reloadData()
@@ -177,7 +182,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         let indexpath = NSIndexPath(forRow: 3, inSection: 0)
         let cell = tableView.cellForRowAtIndexPath(indexpath)
         cell?.detailTextLabel!.text = String(count: count, repeatedValue: Character("★"))
-        cell?.detailTextLabel?.textColor = .yellowColor()
+        cell?.detailTextLabel?.textColor = UIColor(red: 1, green: 180/255.0, blue: 0, alpha: 1.0)
     }
 
     @IBAction func cancel(sender: UIBarButtonItem) {

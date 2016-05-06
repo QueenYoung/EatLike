@@ -88,11 +88,12 @@ class CameraViewController: UIViewController {
         captureSession.commitConfiguration()
     }
 
-
-    @IBAction func cancel(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(sender: UIButton) {
+        dismissViewControllerAnimated(true, completion: {
+            [unowned self] _ in
+            self.performSegueWithIdentifier("unwindBack", sender: nil)
+        })
     }
-
 
     func configureZoom(isOut: Bool) {
         guard let zoomFactor = currentDevice?.videoZoomFactor else { return }

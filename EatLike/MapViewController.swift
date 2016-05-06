@@ -18,9 +18,9 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     var chooseTransportType = MKDirectionsTransportType.Walking
     var currentRoutes: MKRoute?
 
-    var status = CLLocationManager.authorizationStatus() {
-        didSet {
-            if oldValue == .Denied {
+    /* var status = CLLocationManager.authorizationStatus() {
+        willSet {
+            if newValue == .Denied {
                 let alert = UIAlertController(title: "Can't get location", message:
                     "You can open the direciton authorized", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
@@ -29,11 +29,13 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
                     UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
                 }))
                 presentViewController(alert, animated: true, completion: nil)
-            } else if oldValue == .AuthorizedWhenInUse {
+            } else if newValue == .AuthorizedWhenInUse {
                 mapView.showsUserLocation = true
+                mapView.addOverlay(
+                    MKCircle(centerCoordinate: mapView.centerCoordinate, radius: 1000))
             }
         }
-    }
+    } */
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
         // Do any additional setup after loading the view.
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
-        /* let status = CLLocationManager.authorizationStatus()
+        let status = CLLocationManager.authorizationStatus()
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
             mapView.showsUserLocation = true
         } else if status == .Denied {
@@ -53,16 +55,15 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
                 UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
             }))
             presentViewController(alert, animated: true, completion: nil)
-        } */
+        }
 
-        transportSegument.addTarget(self, action: #selector(MapViewController.getMyLocation), forControlEvents: .ValueChanged)
+        transportSegument.addTarget(self, action: #selector(getMyLocation), forControlEvents: .ValueChanged)
         // 分别让地图显示指南针，交通信息和比例
         mapView.showsCompass = true
         mapView.showsTraffic = true
         mapView.showsScale = true
         mapView.showsBuildings = true
 
-        navigationController?.navigationBar.tintColor = UIColor.blueColor()
 
     }
 
@@ -125,7 +126,8 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     @IBAction func showNearby() {
         let searchRequest = MKLocalSearchRequest()
         searchRequest.naturalLanguageQuery = restaurant.type
-        searchRequest.region = mapView.region
+        let region = MKCoordinateRegion(center: mapView.centerCoordinate, span: MKCoordinateSpanMake(0.02, 0.02))
+        searchRequest.region = region
 
         let localSearch = MKLocalSearch(request: searchRequest)
         localSearch.startWithCompletionHandler {
@@ -151,16 +153,20 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
+
     private func createAnnotation() {
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(restaurant.location) {
             [unowned self] placemarks, error in
             if error != nil {
                 print(error)
+                self.reinputLocation()
                 return
             }
 
-            guard let location = placemarks?.first?.location else { return }
+            guard let location = placemarks?.first?.location else {
+                return
+            }
             self.currentRestaurantPlacemark = placemarks!.first! as CLPlacemark
             let annotation = MKPointAnnotation()
             annotation.title = self.restaurant.name
@@ -205,7 +211,6 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let render = MKPolylineRenderer(overlay: overlay)
         render.strokeColor = chooseTransportType == .Walking ? .blueColor() : UIColor.yellowColor()
-
         render.lineWidth = 4.0
 
         return render
@@ -227,5 +232,30 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
                 stepsTC.routeSteps = route
             }
         }
+    }
+
+    private func reinputLocation() {
+        let alertView = UIAlertController(title: "Location Error!", message: "please input a collect location", preferredStyle: .Alert)
+        alertView.addTextFieldWithConfigurationHandler {
+            textField in
+            textField.placeholder = "Apple Inc."
+        }
+
+        alertView.addAction(UIAlertAction(title: "OK", style: .Default) {
+            _ in
+            let inputContent = alertView.textFields!.first!
+            if inputContent.text!.isEmpty {
+                self.restaurant.location = inputContent.placeholder!
+            } else {
+                self.restaurant.location = inputContent.text!
+            }
+            self.createAnnotation()
+            })
+
+        alertView.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            _ in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        self.presentViewController(alertView, animated: true, completion: nil)
     }
 }
