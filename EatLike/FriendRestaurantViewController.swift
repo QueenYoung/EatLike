@@ -16,18 +16,18 @@ class FriendRestaurantViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var dackButton: UIButton!
 
-    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
     var friendData: DiscoverRestaurants!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        detailImageView.image = cache.imageForKey(friendData.detailImageKey)
-        userImageView.image = cache.imageForKey(friendData.authorImageKey)
+
+        detailImageView.image = friendData.detailImage
+        userImageView.image = friendData.authorImage
 
         authorLabel.text = String(friendData.userName)
         authorLabel.text?.appendContentsOf(" | \(friendData.foodName)")
-        textViewWithFont(descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
+        dackButton.alpha = 0.0
+        descriptionTextView.alpha = 0.0
 
     }
 
@@ -36,9 +36,24 @@ class FriendRestaurantViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        dackButton.alpha = 1.0
+        springScaleFrom(dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
+        spring(0.4) {
+            self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
+            self.descriptionTextView.alpha = 1.0
+        }
+    }
+
+    @IBAction func cancel(sender: UIButton) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
     private func textViewWithFont(textView: UITextView, fontName: String, fontSize: CGFloat, lineSpacing: CGFloat) {
         let font = UIFont(name: fontName, size: fontSize)
+        textView.text = friendData.note
         let text = textView.text
 
         let paragraphStyle = NSMutableParagraphStyle()
@@ -50,6 +65,17 @@ class FriendRestaurantViewController: UIViewController {
 
         textView.attributedText = attributedString
     }
+
+    private func springScaleFrom (view: UIView, x: CGFloat, y: CGFloat, scaleX: CGFloat, scaleY: CGFloat) {
+        let translation = CGAffineTransformMakeTranslation(x, y)
+        let scale = CGAffineTransformMakeScale(scaleX, scaleY)
+        view.transform = CGAffineTransformConcat(translation, scale)
+
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: {
+            view.transform = CGAffineTransformIdentity
+            }, completion: nil)
+    }
+
 
     override func prefersStatusBarHidden() -> Bool {
         return true

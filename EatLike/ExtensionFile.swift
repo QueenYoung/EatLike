@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 public func call(telphone: String, isAlert: Bool = true) -> UIAlertController? {
     let number = String(telphone.characters.filter { $0 != "-" })
     let url = NSURL(string: "tel://" + number)
@@ -40,3 +39,18 @@ public func getBlurView(view: UIView, style: UIBlurEffectStyle) {
     view.insertSubview(blurView, atIndex: 0)
 }
 
+public func spring(duration: NSTimeInterval, delay: NSTimeInterval = 0, animations: () -> Void) {
+    UIView.animateWithDuration(
+        duration,
+        delay: 0,
+        usingSpringWithDamping: 0.7,
+        initialSpringVelocity: 0.7,
+        options: [],
+        animations: animations,
+        completion: nil)
+}
+
+
+public func delay(delay: Double, closure: () -> Void) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
+}

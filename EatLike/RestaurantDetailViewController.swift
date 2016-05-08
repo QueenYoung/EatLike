@@ -9,19 +9,13 @@
 import UIKit
 
 class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
-                                      UITableViewDelegate, SegueType {
+                                      UITableViewDelegate {
 
     @IBOutlet weak var restaurantImageView: UIImageView!
     @IBOutlet var tableView: UITableView!
 
     var restaurant: Restaurant!
     let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
-    enum CustomSegueIdentifier: String {
-        case ReviewNavigationController
-        case ModalMapView
-        case ShowReminded
-        case EditRestaurant
-    }
 
     // MARK: - View Controller
     override func viewDidLoad() {
@@ -32,25 +26,18 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         navigationController?.navigationBar
             .setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage.init()
-        navigationController?.interactivePopGestureRecognizer?.enabled = true
         restaurantImageView.image = cache.imageForKey(restaurant.keyString)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-    }
-
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         // 进入 detail 视图的时候,关闭 hide on swipe 功能.
         navigationController?.hidesBarsOnSwipe = false
-        navigationController?.navigationBar.tintColor = .whiteColor()
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
-        navigationController?.navigationBar.tintColor = .blueColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,23 +46,20 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
     }
 
     @IBAction func unwindToDetail(segue: UIStoryboardSegue) {
-        if let ratingVC = segue.sourceViewController as? ReviewViewController {
-            restaurant = ratingVC.restaurant
+        // 突然发现 因为都是引用类型, 根本不需要使用将 sourceView 的 属性
+        // 赋值给当前视图的属性
+        // 我完全是在做无用功啊!  不过这样下次可以试下使用 结构体咯.
+        let sourceViewController = segue.sourceViewController
+        if sourceViewController is ReviewViewController {
             let count = Int(restaurant.userRate.intValue)
             configureStarColor(count)
-        } else if let editVC = segue.sourceViewController
-            as? AddRestaurantTableViewController {
-            let newRest = editVC.newRestaurant
-            // TODO: 谷歌怎么 判断两个图片是否相同.
-            if !restaurant.image!.isEqualToData(newRest.image!) {
-                restaurantImageView.image = UIImage(data: newRest.image!)
-            }
-            // TODO: 写一个函数, 判断 restaurant 的哪些属性被修改了.
-            restaurant = editVC.newRestaurant
+        } else if sourceViewController is AddRestaurantTableViewController {
+            restaurantImageView.image = cache.imageForKey(restaurant.keyString)
             tableView.reloadData()
-        } else if let remindVC = segue.sourceViewController as? RemindTableViewController {
-            restaurant = remindVC.restaurant
+        } else if sourceViewController is RemindTableViewController {
             restaurant.scheduleNotification()
+        } else if  sourceViewController is MapViewController {
+            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
         }
 
         guard let managedObjectContext =
@@ -89,7 +73,8 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segueIdentifierForSegue(segue) {
         case .EditRestaurant:
-            let editVc = segue.destinationViewController as! AddRestaurantTableViewController
+            let editNV = segue.destinationViewController as! UINavigationController
+            let editVc = editNV.topViewController as! AddRestaurantTableViewController
             editVc.newRestaurant = restaurant
         case .ShowReminded:
             let remindVC = segue.destinationViewController as! RemindTableViewController
@@ -145,7 +130,6 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 
         let row = indexPath.row
 
-
         var cell = tableView.dequeueReusableCellWithIdentifier("NormalCell")!
         cell.textLabel?.textColor = .blueColor()
         cell.textLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
@@ -190,6 +174,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
     }
 }
 
+// MARK: - Protocol extension
 protocol SegueType {
     associatedtype CustomSegueIdentifier: RawRepresentable
 }
@@ -208,4 +193,11 @@ extension SegueType where Self: UIViewController, CustomSegueIdentifier.RawValue
     }
 }
 
-
+extension RestaurantDetailViewController: SegueType {
+    enum CustomSegueIdentifier: String {
+        case ReviewNavigationController
+        case ModalMapView
+        case ShowReminded
+        case EditRestaurant
+    }
+}

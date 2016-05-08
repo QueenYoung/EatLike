@@ -9,7 +9,7 @@
 import UIKit
 
 class ReviewViewController: UIViewController {
-	@IBOutlet weak var backgroundViewImage: UIImageView!
+    @IBOutlet weak var backgroundViewImage: UIImageView!
     @IBOutlet weak var starsStackView: UIStackView!
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var ratingButtons: [UIButton]!
@@ -27,8 +27,8 @@ class ReviewViewController: UIViewController {
         return .LightContent
     }
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         currentUserRating = restaurant.userRate.integerValue
         questionLabel.text = "\(restaurant.name)"
 
@@ -43,12 +43,12 @@ class ReviewViewController: UIViewController {
             }
         }
 
-		let blur = UIBlurEffect(style: .Dark)
-		let blurView = UIVisualEffectView(effect: blur)
+        let blur = UIBlurEffect(style: .Dark)
+        let blurView = UIVisualEffectView(effect: blur)
         backgroundViewImage.image = cache.imageForKey(restaurant.keyString)
-		// Setting the frame of the blur
-		blurView.frame = view.frame
-		backgroundViewImage.addSubview(blurView)
+        // Setting the frame of the blur
+        blurView.frame = view.frame
+        backgroundViewImage.addSubview(blurView)
 
         // animated inital status
         ratingStackView.axis = .Vertical
@@ -59,22 +59,19 @@ class ReviewViewController: UIViewController {
 
         questionLabel.transform = CGAffineTransformMakeTranslation(-300, 0)
 
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.navigationBar.tintColor = .whiteColor()
     }
-    
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(true)
-		// 因为这个方法晚于 load 方法运行, 所以通过在 load 中设置开始状态
-		// 在这个方法中设置结束状态,并启动弹性动画.
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        // 因为这个方法晚于 load 方法运行, 所以通过在 load 中设置开始状态
+        // 在这个方法中设置结束状态,并启动弹性动画.
 
         UIView.animateWithDuration(0.5, delay: 0.0,
                                    usingSpringWithDamping: 0.5,
@@ -90,7 +87,7 @@ class ReviewViewController: UIViewController {
             self.starsStackView.hidden = false
             self.starsStackView.layer.transform = CATransform3DIdentity
             }, completion: nil)
-	}
+    }
 
 
     @IBAction func submitRate(sender: UIBarButtonItem) {
@@ -124,7 +121,7 @@ class ReviewViewController: UIViewController {
                 starImage.frame.origin = CGPoint(x: starsStackView.frame.width, y: 0)
                 starsStackView.addArrangedSubview(starImage)
             }
-        // 降低评价
+            // 降低评价
         } else if starsToChange < 0 {
             let starsToRemove = abs(starsToChange)
 
@@ -143,7 +140,7 @@ class ReviewViewController: UIViewController {
             })
         }
     }
-
+    
     private func ratingForButtonTitle(buttonTitle: String) -> Int {
         guard let index = ratingButtonTitles.indexOf(buttonTitle) else {
             fatalError("Rating not found")

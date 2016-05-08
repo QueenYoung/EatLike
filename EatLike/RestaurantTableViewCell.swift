@@ -9,31 +9,31 @@
 import UIKit
 
 class RestaurantTableViewCell: UITableViewCell {
-	@IBOutlet weak var nameLabel: UILabel!
-	@IBOutlet weak var LocationLabel: UILabel!
-	@IBOutlet weak var TypeLabel: UILabel!
-	@IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var LocationLabel: UILabel!
+    @IBOutlet weak var TypeLabel: UILabel!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
 
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		// Initialization code
-	}
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
 
-	override func setSelected(selected: Bool, animated: Bool) {
-		super.setSelected(selected, animated: animated)
-		// Configure the view for the selected state
-	}
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+    }
 
-	func updateLabelPerferredFont() {
-		let headFont = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-		let captionFont = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)
-		let subFont = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
+    func updateLabelPerferredFont() {
+        let headFont = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        let captionFont = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)
+        let subFont = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
 
-		nameLabel.font = headFont
-		LocationLabel.font = subFont
-		TypeLabel.font = captionFont
-	}
+        nameLabel.font = headFont
+        LocationLabel.font = subFont
+        TypeLabel.font = captionFont
+    }
 
     func configure(data: Restaurant) {
         let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
@@ -61,5 +61,5 @@ class RestaurantTableViewCell: UITableViewCell {
         stackView.removeArrangedSubview(noteView)
         noteView.removeFromSuperview()
     }
-
+    
 }

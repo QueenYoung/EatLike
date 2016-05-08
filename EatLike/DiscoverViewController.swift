@@ -8,58 +8,78 @@
 
 import UIKit
 
-class DiscoverViewController: UIViewController,
-                              UICollectionViewDataSource,
-                              UICollectionViewDelegate {
+class DiscoverViewController: UIViewController {
+    @IBOutlet weak var backgroundBlurImage: UIImageView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var restaurantLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var likesTotalLabel: UILabel!
+    @IBOutlet weak var buttonStackView: UIStackView!
+    @IBOutlet weak var restaurantImageButton: UIButton!
+    @IBOutlet weak var dialogView: UIView!
 
-    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
-    @IBOutlet var collectionView: UICollectionView!
-    @IBOutlet var backgroundBlurImage: UIImageView!
+    var animator : UIDynamicAnimator!
+    var attachmentBehavior : UIAttachmentBehavior!
+    var gravityBehaviour : UIGravityBehavior!
+    var snapBehavior : UISnapBehavior!
+    var isAnimated = false
 
-    private var discovers: [DiscoverRestaurants] = [
+    lazy private var discovers = [
         DiscoverRestaurants(
-            restaurantName: "红旗酒楼",
+            name: "Red Flag",
             userName: "Mark",
-            foodName: "Litte cake",
-            type: "酒店",
-            image: UIImage(named: "bourkestreetbakery"),
-            price: 50,
-            rating: "Very good",
-            userImage: UIImage(named: "avatar"),
-            likes: 90),
+            foodName: "Chicken Eight",
+            category: "Hotel",
+            isLike: false,
+            note: "Very Good",
+            likesTotal: 90,
+            detailImage: UIImage(named: "grahamavenuemeats")!,
+            authorImage: UIImage(named: "avatar4")!),
 
         DiscoverRestaurants(
-            restaurantName: "桃花",
-            userName: "Queen",
-            foodName: "Big food",
-            type: "Caffce",
-            image: UIImage(named: "cafelore"),
-            price: 20,
-            rating: "It's very fantastical",
-            userImage: UIImage(named: "avatar2"),
-            likes: 10),
+            name: "Yellow Books",
+            userName: "Your Father",
+            foodName: "CatShits",
+            category: "oo",
+            isLike: false,
+            note: "你他妈的就是一个傻逼, 我日你麻痹",
+            likesTotal: 39,
+            detailImage: UIImage(named: "petiteoyster")!,
+            authorImage: UIImage(named: "avatar")!)
     ]
+    var index = 0
 
     @IBAction func callRestaurant(sender: UIButton) {
         let string = sender.titleLabel?.text
         presentViewController(call(string!)!, animated: true, completion: nil)
     }
 
-    // TODO: 目前只是完成了对所有 button 的唯一一个可以变红色
-    // 应该保证每一个 cell 有独立的 status
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundBlurImage.image = UIImage(named: "posatelier")
+        if isAnimated {
+            dialogView.alpha = 0
+        }
+        configureView()
         getBlurView(backgroundBlurImage, style: .Dark)
-        setCacheForImage()
-        // 把背景设为透明色的, 否则是黑的一片
-        collectionView.backgroundColor = UIColor.clearColor()
+        getBlurView(headerView, style: .Dark)
+
+        animator = UIDynamicAnimator(referenceView: view)
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        tabBarController?.tabBar.hidden = false
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        tabBarController?.tabBar.hidden = false
+
+        if isAnimated {
+            animatedView()
+            isAnimated = false
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,56 +87,68 @@ class DiscoverViewController: UIViewController,
         // Dispose of any resources that can be recreated.
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return discovers.count
-    }
-
-    func collectionView(collectionView: UICollectionView,
-                        cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
-            "Cell", forIndexPath: indexPath) as! DiscoverCollectionViewCell
-
-        configureCell(cell, index: indexPath.row)
-        return cell
-    }
-
-
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "modalFriend" {
-//            let indexPoint: CGPoint = self.view.convertPoint(self.collectionView.center, toView: self.collectionView)
-//            let indexPathNow = collectionView.indexPathForItemAtPoint(indexPoint)
-            let indexPathNow = collectionView.indexPathsForSelectedItems()?.first!
-            if let index = indexPathNow {
-                let DetailUN = segue.destinationViewController as! UINavigationController
-                let detailVC = DetailUN.topViewController as! FriendRestaurantViewController
-                detailVC.friendData = discovers[index.row]
-            }
-        }
-    }
-
-    // Unwind Segue
-    @IBAction func cancelToHome(segue: UIStoryboardSegue) {
-        let source = segue.sourceViewController as! FriendRestaurantViewController
-        let index = collectionView.indexPathsForSelectedItems()?.first
-
-        if let index = index {
-            discovers[index.row] = source.friendData
+            let nav = segue.destinationViewController as! UINavigationController
+            let friendVC = nav.topViewController as! FriendRestaurantViewController
+            friendVC.friendData = discovers[index]
         }
     }
 
 
     // MARK: Action
-    @IBAction func imageButtonDidPressed(sender: UIButton) {
 
+    @IBAction func handlerPanGesture(sender: UIPanGestureRecognizer) {
+        let myView = dialogView
+        let location = sender.locationInView(view)
+        let boxLocation = sender.locationInView(dialogView)
+
+        if sender.state == UIGestureRecognizerState.Began {
+            if snapBehavior != nil {
+                animator.removeBehavior(snapBehavior)
+            }
+
+            // 添加钟摆效果并且计算偏移量, 摆动终点就是手指停留的位置
+            let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(myView.bounds), boxLocation.y - CGRectGetMidY(myView.bounds));
+            attachmentBehavior = UIAttachmentBehavior(item: myView, offsetFromCenter: centerOffset, attachedToAnchor: location)
+            attachmentBehavior.frequency = 0.0
+
+            animator.addBehavior(attachmentBehavior)
+        }
+        else if sender.state == UIGestureRecognizerState.Changed {
+            attachmentBehavior.anchorPoint = location
+        }
+        else if sender.state == UIGestureRecognizerState.Ended {
+            animator.removeBehavior(attachmentBehavior)
+
+            let translation = sender.translationInView(view)
+            // 如果是向下移动超过了 100 点, 就移除所有之前的行为, 附加重力效果
+            // 并且开始刷新界面
+            if translation.y > 100 {
+                animator.removeAllBehaviors()
+
+                let gravity = UIGravityBehavior(items: [dialogView])
+                gravity.gravityDirection = CGVectorMake(0, 10)
+                animator.addBehavior(gravity)
+
+                // 使用线程刷新
+                delay(0.3) {
+                    self.refreshView()
+                }
+            } else {
+                // otherwise 添加晃动动作
+                snapBehavior = UISnapBehavior(item: myView, snapToPoint: view.center)
+                animator.addBehavior(snapBehavior)
+            }
+        }
     }
 
     @IBAction func likeButtonDidPressed(sender: UIButton) {
-        let tintColor = sender.tintColor
+        /* let tintColor = sender.tintColor
         let indexPath = getCurrentIndexPath()
         guard let index = indexPath else { return }
         let row = index.row
-        let currentCell = collectionView.cellForItemAtIndexPath(index) as! DiscoverCollectionViewCell
         if tintColor == UIColor.blueColor() {
             discovers[row].likesTotal += 1
             sender.tintColor = UIColor.redColor()
@@ -125,32 +157,48 @@ class DiscoverViewController: UIViewController,
             discovers[row].likesTotal -= 1
             sender.tintColor = UIColor.blueColor()
             currentCell.changeLikeTotal(false)
-        }
+        } */
     }
 
 // MARK: - Helper Function
-    private func getCurrentIndexPath() -> NSIndexPath? {
-        let indexPoint: CGPoint = self.view.convertPoint(
-            self.collectionView.center, toView: self.collectionView)
-        let indexPath = collectionView.indexPathForItemAtPoint(indexPoint)
-        return indexPath
-    }
 
-    private func configureCell(cell: DiscoverCollectionViewCell, index: Int) {
-        let restaurant = discovers[index]
-        cell.configure(restaurant)
-    }
-
-    private func setCacheForImage() {
-        discovers.forEach { discover in
-            let _ = UIImageJPEGRepresentation(discover.authorImage!, 0.6).map {
-                cache.setImage($0, key: discover.authorImageKey)
-            }
-
-            let _ = UIImageJPEGRepresentation(discover.detailImage!, 0.6).map {
-                cache.setImage($0, key: discover.detailImageKey)
-            }
+    private func refreshView() {
+        index += 1
+        if index == discovers.count {
+            index = 0
         }
+
+        animator.removeAllBehaviors()
+        snapBehavior = UISnapBehavior(item: dialogView, snapToPoint: view.center)
+        attachmentBehavior.anchorPoint = view.center
+
+        dialogView.center = view.center
+        isAnimated = true
+        viewDidAppear(true)
+        configureView()
+    }
+
+    private func animatedView() {
+        let scale = CGAffineTransformMakeScale(0.5, 0.5)
+        let translate = CGAffineTransformMakeTranslation(0, -200)
+        dialogView.transform = CGAffineTransformConcat(scale, translate)
+        spring(0.5, delay: 0.2) {
+            self.dialogView.transform = CGAffineTransformIdentity
+        }
+    }
+
+    private func configureView() {
+        let restaurant = discovers[index]
+        backgroundBlurImage.image = restaurant.detailImage
+        userImageView.image = restaurant.authorImage
+        restaurantImageButton.setImage(
+            restaurant.detailImage, forState: .Normal)
+        restaurantLabel.text = restaurant.foodName
+        likesTotalLabel.text = "\(restaurant.likesTotal)"
+        userNameLabel.text = restaurant.userName
+        userNameLabel.text?.appendContentsOf(" | \(restaurant.name)")
+
+        dialogView.alpha = 1
     }
 }
 

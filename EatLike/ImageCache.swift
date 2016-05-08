@@ -14,7 +14,6 @@ struct ImageCache {
     func setImage(imagedata: NSData, key: String) {
         // 先把需要缓存的对象, 写入缓存区
         caches.setObject(imagedata, forKey: key)
-
         // 同时将对象写入 App 的 Document 中
         let imageURL = imageURLForKey(key)
         imagedata.writeToURL(imageURL, atomically: true)

@@ -8,55 +8,28 @@
 
 import UIKit
 import MapKit
-class MapViewController: UIViewController, MKMapViewDelegate  {
+class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var transportSegument: UISegmentedControl!
-    lazy var locationManager = CLLocationManager()
+    lazy var locationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        manager.delegate = self
+        return manager
+    }()
+
     // restaurant 的位置标记
-    var currentRestaurantPlacemark: CLPlacemark!
+    var currentLocation: CLLocationCoordinate2D?
+    var currentRestaurantPlacemark: CLPlacemark?
     var restaurant: Restaurant!
     var chooseTransportType = MKDirectionsTransportType.Walking
     var currentRoutes: MKRoute?
-
-    /* var status = CLLocationManager.authorizationStatus() {
-        willSet {
-            if newValue == .Denied {
-                let alert = UIAlertController(title: "Can't get location", message:
-                    "You can open the direciton authorized", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "GO!", style: .Default, handler: {
-                    _ in
-                    UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-                }))
-                presentViewController(alert, animated: true, completion: nil)
-            } else if newValue == .AuthorizedWhenInUse {
-                mapView.showsUserLocation = true
-                mapView.addOverlay(
-                    MKCircle(centerCoordinate: mapView.centerCoordinate, radius: 1000))
-            }
-        }
-    } */
 
     override func viewDidLoad() {
         super.viewDidLoad()
         createAnnotation()
         // Do any additional setup after loading the view.
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
-        let status = CLLocationManager.authorizationStatus()
-        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-            mapView.showsUserLocation = true
-        } else if status == .Denied {
-            let alert = UIAlertController(title: "Can't get location", message:
-                "You can open the direciton authorized", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "GO!", style: .Default, handler: {
-                _ in
-                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-            }))
-            presentViewController(alert, animated: true, completion: nil)
-        }
-
+        getAuthorization()
         transportSegument.addTarget(self, action: #selector(getMyLocation), forControlEvents: .ValueChanged)
         // 分别让地图显示指南针，交通信息和比例
         mapView.showsCompass = true
@@ -83,50 +56,15 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 
         transportSegument.hidden = false
 
-        // Set the source and destination of the route
-        func setRoute() -> MKDirectionsRequest{
-            let directionRequest = MKDirectionsRequest()
-            directionRequest.source = MKMapItem.mapItemForCurrentLocation()
-            let destinationPlacemark = MKPlacemark(placemark: currentRestaurantPlacemark)
-            directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
-            directionRequest.transportType = chooseTransportType
-            return directionRequest
-        }
         let directionRequest = setRoute()
-
-        // Calculate the direction
-        func calculateDirection(directionRequest: MKDirectionsRequest) {
-            let directions = MKDirections(request: directionRequest)
-            directions.calculateDirectionsWithCompletionHandler {
-                routeResponse, routeError in
-                if routeError != nil {
-                    print("Error: \(routeError!.localizedFailureReason), \(routeError?.localizedDescription)")
-                } else {
-                    // 获得 Apple 服务器发来的路线数据.一般情况下只会发送一个
-                    // 但是在 requestsAlternateRoutes 设置为 true 的情况下, 就会返回多个.
-                    // 之后再给通过添加 overlay 把路线添加的地图上.
-                    // 不过需要注意的是, 还需要设置 overlay 的属性才行, 否则虽然会显示, 但是看不到
-                    let route = routeResponse?.routes.first
-                    // 为之后 segue 操作做准备.
-                    self.currentRoutes = route
-                    self.mapView.removeOverlays(self.mapView.overlays)
-                    self.mapView.addOverlay(route!.polyline, level: .AboveRoads)
-                    // 获得路径的矩形视图, 自动缩放. 以获得更加完美的显示效果, 而不要手动拖动和缩放.
-                    let rect = route?.polyline.boundingMapRect
-                    if let rect = rect {
-                        self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
-                    }
-                }
-            }
-
-        }
         calculateDirection(directionRequest)
     }
 
     @IBAction func showNearby() {
         let searchRequest = MKLocalSearchRequest()
         searchRequest.naturalLanguageQuery = restaurant.type
-        let region = MKCoordinateRegion(center: mapView.centerCoordinate, span: MKCoordinateSpanMake(0.02, 0.02))
+        // 获得当前地图中心, 方圆 5 公里的区域
+        let region = MKCoordinateRegionMakeWithDistance(mapView.centerCoordinate, 5000, 5000)
         searchRequest.region = region
 
         let localSearch = MKLocalSearch(request: searchRequest)
@@ -152,33 +90,23 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
 
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("", sender: nil)
     }
 
-    private func createAnnotation() {
-        let geoCoder = CLGeocoder()
-        geoCoder.geocodeAddressString(restaurant.location) {
-            [unowned self] placemarks, error in
-            if error != nil {
-                print(error)
-                self.reinputLocation()
-                return
-            }
 
-            guard let location = placemarks?.first?.location else {
-                return
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showNavigationSteps" {
+            let stepsTC = segue.destinationViewController as! StepsTableViewController
+            if let route = currentRoutes?.steps {
+                stepsTC.routeSteps = route
             }
-            self.currentRestaurantPlacemark = placemarks!.first! as CLPlacemark
-            let annotation = MKPointAnnotation()
-            annotation.title = self.restaurant.name
-            annotation.subtitle = self.restaurant.type
-            annotation.coordinate = location.coordinate
-
-            self.mapView.showAnnotations([annotation], animated: true)
-            self.mapView.selectAnnotation(annotation, animated: true)
         }
     }
 
-    // MARK: - MapView Delegate Method
+}
+
+// MARK: - MapView Delegate Method
+extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "My Pin"
 
@@ -224,14 +152,59 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
             performSegueWithIdentifier("showNavigationSteps", sender: self)
         }
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showNavigationSteps" {
-            let stepsTC = segue.destinationViewController as! StepsTableViewController
-            if let route = currentRoutes?.steps {
-                stepsTC.routeSteps = route
+
+}
+
+// MARK: - Helper Methods
+extension MapViewController {
+    private func getAuthorization() {
+        let status = CLLocationManager.authorizationStatus()
+        if status == .AuthorizedWhenInUse {
+            locationManager.requestLocation()
+            mapView.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+
+    // Set the source and destination of the route
+    private func setRoute() -> MKDirectionsRequest? {
+        let directionRequest = MKDirectionsRequest()
+        directionRequest.source = MKMapItem.mapItemForCurrentLocation()
+
+        guard let currentRestaurantPlacemark = currentRestaurantPlacemark else { return nil }
+        let destinationPlacemark = MKPlacemark(placemark: currentRestaurantPlacemark)
+        directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
+        directionRequest.transportType = chooseTransportType
+        return directionRequest
+    }
+
+    // Calculate the direction
+    private func calculateDirection(directionRequest: MKDirectionsRequest?) {
+        guard let directionRequest = directionRequest else { return }
+        let directions = MKDirections(request: directionRequest)
+        directions.calculateDirectionsWithCompletionHandler {
+            routeResponse, routeError in
+            if routeError != nil {
+                print("Error: \(routeError!.localizedFailureReason), \(routeError?.localizedDescription)")
+            } else {
+                // 获得 Apple 服务器发来的路线数据.一般情况下只会发送一个
+                // 但是在 requestsAlternateRoutes 设置为 true 的情况下, 就会返回多个.
+                // 之后再给通过添加 overlay 把路线添加的地图上.
+                // 不过需要注意的是, 还需要设置 overlay 的属性才行, 否则虽然会显示, 但是看不到
+                let route = routeResponse?.routes.first
+                // 为之后 segue 操作做准备.
+                self.currentRoutes = route
+                self.mapView.removeOverlays(self.mapView.overlays)
+                self.mapView.addOverlay(route!.polyline, level: .AboveRoads)
+                // 获得路径的矩形视图, 自动缩放. 以获得更加完美的显示效果, 而不要手动拖动和缩放.
+                let rect = route?.polyline.boundingMapRect
+                if let rect = rect {
+                    self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
+                }
             }
         }
+
     }
 
     private func reinputLocation() {
@@ -258,4 +231,58 @@ class MapViewController: UIViewController, MKMapViewDelegate  {
         }))
         self.presentViewController(alertView, animated: true, completion: nil)
     }
+
+    
+    private func createAnnotation() {
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(restaurant.location) {
+            [unowned self] placemarks, error in
+            if error != nil {
+                print(error)
+                self.reinputLocation()
+                return
+            }
+
+            guard let location = placemarks?.first?.location else {
+                return
+            }
+            self.currentRestaurantPlacemark = placemarks!.first! as CLPlacemark
+            let annotation = MKPointAnnotation()
+            annotation.title = self.restaurant.name
+            annotation.subtitle = self.restaurant.type
+            annotation.coordinate = location.coordinate
+
+            self.mapView.showAnnotations([annotation], animated: true)
+            self.mapView.selectAnnotation(annotation, animated: true)
+        }
+    }
 }
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            locationManager.requestLocation()
+        } else if status == .Denied || status == .Restricted {
+            let alert = UIAlertController(title: "Can't get location", message:
+                "You can open the direciton authorized", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "GO!", style: .Default, handler: {
+                _ in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }))
+            presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLocation = locations.first?.coordinate
+        /* guard let currentLocation = currentLocation else { return }
+        let overlay = MKCircle(centerCoordinate: currentLocation, radius: 1000)
+        mapView.addOverlay(overlay) */
+    }
+
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Error finding location \(error.localizedDescription)")
+    }
+}
+

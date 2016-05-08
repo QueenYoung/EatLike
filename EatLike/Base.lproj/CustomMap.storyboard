@@ -36,7 +36,7 @@
                     <navigationItem key="navigationItem" id="aKT-ui-dxk">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vyK-6e-HOZ">
                             <connections>
-                                <action selector="cancel" destination="DXo-X0-eqf" id="wqf-WO-mSe"/>
+                                <segue destination="rH4-xE-bAd" kind="unwind" unwindAction="unwindToDetail:" id="3sx-2b-6NH"/>
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" momentary="YES" id="vi8-iH-Rsd">
@@ -67,6 +67,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JIp-7G-m9G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="rH4-xE-bAd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2075" y="2274"/>
         </scene>

@@ -27,7 +27,6 @@
 		969641E21C992ED3006B6A09 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 969641E11C992ED3006B6A09 /* MapKit.framework */; };
 		96A87F601C983667006BAA9C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A87F5F1C983667006BAA9C /* MapViewController.swift */; };
 		96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */; };
-		96B5644C1CC3A26D008638BD /* ScaleSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B5644B1CC3A26D008638BD /* ScaleSegue.swift */; };
 		96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */; };
 		96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801001CB283F9003BC85E /* DiscoverViewController.swift */; };
 		96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */; };
@@ -66,7 +65,6 @@
 		969641E11C992ED3006B6A09 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		96A87F5F1C983667006BAA9C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
-		96B5644B1CC3A26D008638BD /* ScaleSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScaleSegue.swift; path = ../ScaleSegue.swift; sourceTree = "<group>"; };
 		96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 		96C801001CB283F9003BC85E /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverRestaurants.swift; sourceTree = "<group>"; };
@@ -185,7 +183,6 @@
 		96B564441CC1D050008638BD /* DiscoverTab */ = {
 			isa = PBXGroup;
 			children = (
-				96B5644B1CC3A26D008638BD /* ScaleSegue.swift */,
 				96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */,
 				96C801001CB283F9003BC85E /* DiscoverViewController.swift */,
 				96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */,
@@ -311,7 +308,6 @@
 				9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */,
 				96E6E9091CA1912F00D33EB9 /* WalkthroughContentViewController.swift in Sources */,
 				9692D2811CB8B765006D5CEF /* ExtensionFile.swift in Sources */,
-				96B5644C1CC3A26D008638BD /* ScaleSegue.swift in Sources */,
 				969641E01C984832006B6A09 /* AddRestaurantTableViewController.swift in Sources */,
 				96275E6F1C93099F00E90E2E /* RestaurantTableViewCell.swift in Sources */,
 				967430C51CCE66D100D206C9 /* StepsTableViewController.swift in Sources */,
@@ -478,7 +474,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = EatLike/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Queen.jxau.EatLike;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -493,7 +489,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = EatLike/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Queen.jxau.EatLike;
 				PRODUCT_NAME = "$(TARGET_NAME)";

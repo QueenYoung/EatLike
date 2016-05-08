@@ -15,6 +15,7 @@ class RestaurantTableViewController: UITableViewController,
                                      UISearchControllerDelegate {
     // MARK: - Normal Properties
     var fetchResultController: NSFetchedResultsController!
+
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         //	搜索的时候，背景不会模糊。如果使用的不是另一个独立的视图，需要赋值为 false， 否则无法点击搜索的值
@@ -39,6 +40,8 @@ class RestaurantTableViewController: UITableViewController,
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.hidesBarsOnSwipe = true
+        let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = barColor
     }
 
 
@@ -81,8 +84,6 @@ class RestaurantTableViewController: UITableViewController,
         self.tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
         searchController.delegate = self
-
-        print(restaurants.first!.keyString)
     }
 
     // 用来显示引导界面
@@ -96,6 +97,8 @@ class RestaurantTableViewController: UITableViewController,
     //            presentViewController(pageViewController, animated: true, completion: nil)
     //        }
     //    }
+
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -287,7 +290,6 @@ class RestaurantTableViewController: UITableViewController,
         }
     }
 
-
     func didPresentSearchController(searchController: UISearchController) {
         searchController.searchBar.becomeFirstResponder()
     }
@@ -307,22 +309,6 @@ class RestaurantTableViewController: UITableViewController,
         }
     }
 
-
-    /* func addNotesViewToCell(cell: RestaurantTableViewCell) {
-
-        let stack = cell.stackView
-        noteView.heightAnchor.constraintEqualToConstant(notesViewHeight - 48).active = true
-        noteView.clipsToBounds = true
-        stack.addArrangedSubview(noteView)
-    }
-
-    func removeNotesView(cell: RestaurantTableViewCell) {
-        let stack = cell.stackView
-        stack.removeArrangedSubview(noteView)
-        noteView.removeFromSuperview()
-    } */
-    // 当字体类型改变的时候，调用
-
     @objc private func onTextSizeChange(notification: NSNotification) {
         tableView.reloadData()
         print("DJ")
@@ -336,7 +322,6 @@ class RestaurantTableViewController: UITableViewController,
         searchController.active = true
     }
 }
-
 
 // MARK: - extension partion
 private extension Selector {

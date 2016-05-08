@@ -283,7 +283,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="tVK-BV-qgf">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="H9U-17-Gr3" kind="presentation" identifier="EditRestaurant" id="L0a-fL-gP2"/>
+                                <segue destination="UQC-bV-gQc" kind="presentation" identifier="EditRestaurant" modalTransitionStyle="flipHorizontal" id="WaJ-NZ-VLW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -298,7 +298,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1g2-8D-Eqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3625" y="845"/>
+            <point key="canvasLocation" x="3609" y="850"/>
         </scene>
         <!--Remind-->
         <scene sceneID="Afc-YA-cTi">
@@ -705,6 +705,6 @@
         <image name="rating_star" width="48" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="L0a-fL-gP2"/>
+        <segue reference="WaJ-NZ-VLW"/>
     </inferredMetricsTieBreakers>
 </document>

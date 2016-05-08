@@ -7,36 +7,47 @@
 //
 
 import UIKit
-class DiscoverRestaurants {
-    var name           = ""
-    var userName       = ""
-    var foodName       = ""
-    var type           = ""
-    var price          = 0
-    var isLike         = false
-    var rating         = ""
-    var likesTotal     = 0
 
-    var detailImage: UIImage?
-    var authorImage: UIImage?
+class DiscoverRestaurants {
+    let name: String
+    let userName: String
+    let foodName: String
+    let category: String
+    let note: String
+    let detailImage: UIImage?
+    let authorImage: UIImage?
+
+    var likesTotal: Int
+    var isLike  = false
     let detailImageKey: String
     let authorImageKey: String
 
+    init(name: String, userName: String, foodName: String, category: String,
+         isLike: Bool, note: String, likesTotal: Int, detailImage: UIImage,
+         authorImage: UIImage) {
+        self.name = name
+        self.userName = userName
+        self.foodName = foodName
+        self.category = category
+        self.isLike = isLike
+        self.note = note
+        self.likesTotal = likesTotal
+        detailImageKey = NSUUID().UUIDString
+        authorImageKey = NSUUID().UUIDString
+        self.detailImage = detailImage
+        self.authorImage = authorImage
 
-    init(restaurantName: String, userName: String, foodName: String,
-         type: String, image: UIImage?,
-         price: Int, isLike: Bool = false, rating: String = "",
-         userImage: UIImage?, likes: Int) {
-        self.name = restaurantName
-        self.userName       = userName
-        self.type           = type
-        self.detailImage    = image
-        self.price          = price
-        self.isLike         = isLike
-        self.authorImage    = userImage
-        self.likesTotal     = likes
-        self.foodName       = foodName
-        self.detailImageKey = NSUUID().UUIDString
-        self.authorImageKey = NSUUID().UUIDString
+        /* cache.setImage(
+            UIImageJPEGRepresentation(detailImage, 0.6)!, key: detailImageKey)
+        cache.setImage(
+            UIImageJPEGRepresentation(authorImage, 0.6)!, key: authorImageKey) */
+    }
+
+    func updateLike(inc: Bool) {
+        if inc {
+            likesTotal += 1
+        } else {
+            likesTotal -= 1
+        }
     }
 }

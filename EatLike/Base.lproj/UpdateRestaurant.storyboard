@@ -27,56 +27,13 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoalbum" translatesAutoresizingMaskIntoConstraints="NO" id="E1L-ep-puK">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="239"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfT-dy-G0r">
-                                                    <rect key="frame" x="20" y="28" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="hR7-6r-XVW"/>
-                                                        <constraint firstAttribute="width" constant="32" id="tJM-vE-x4X"/>
-                                                    </constraints>
-                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <state key="normal" image="close"/>
-                                                    <connections>
-                                                        <action selector="cancel" destination="RYy-rE-Sx6" eventType="touchUpInside" id="VDP-rj-ltw"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RxV-MK-pl1">
-                                                    <rect key="frame" x="552" y="28" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="32y-6K-Wdm"/>
-                                                        <constraint firstAttribute="width" constant="32" id="7Cp-oU-aWU"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <state key="normal" title="Save" image="add_icon"/>
-                                                    <connections>
-                                                        <action selector="saveNewRestaurant:" destination="RYy-rE-Sx6" eventType="touchUpInside" id="jP3-4G-zdp"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="RxV-MK-pl1" firstAttribute="trailing" secondItem="T88-pq-weU" secondAttribute="trailingMargin" id="1eY-WO-Zjr"/>
-                                                <constraint firstItem="RxV-MK-pl1" firstAttribute="leading" secondItem="E1L-ep-puK" secondAttribute="trailing" constant="-51" id="5QY-rq-osw"/>
-                                                <constraint firstItem="RxV-MK-pl1" firstAttribute="top" secondItem="T88-pq-weU" secondAttribute="topMargin" constant="20" id="9Py-BG-T6b"/>
                                                 <constraint firstAttribute="trailing" secondItem="E1L-ep-puK" secondAttribute="trailing" id="9jq-Y0-37H"/>
-                                                <constraint firstItem="lfT-dy-G0r" firstAttribute="baseline" secondItem="RxV-MK-pl1" secondAttribute="baseline" constant="15" id="JPi-2k-hrc"/>
-                                                <constraint firstItem="lfT-dy-G0r" firstAttribute="leading" secondItem="T88-pq-weU" secondAttribute="leadingMargin" constant="12" id="Lfe-uT-9xI"/>
-                                                <constraint firstItem="RxV-MK-pl1" firstAttribute="top" secondItem="T88-pq-weU" secondAttribute="topMargin" constant="20" id="MGm-tA-PkR"/>
-                                                <constraint firstItem="RxV-MK-pl1" firstAttribute="trailing" secondItem="T88-pq-weU" secondAttribute="trailingMargin" constant="-8" id="Y4r-CF-7VL"/>
-                                                <constraint firstItem="lfT-dy-G0r" firstAttribute="top" secondItem="T88-pq-weU" secondAttribute="topMargin" constant="20" id="aXK-FF-71c"/>
                                                 <constraint firstItem="E1L-ep-puK" firstAttribute="leading" secondItem="T88-pq-weU" secondAttribute="leading" id="lj5-Bo-f46"/>
-                                                <constraint firstItem="RxV-MK-pl1" firstAttribute="leading" secondItem="E1L-ep-puK" secondAttribute="trailing" constant="-30" id="r9Q-Pp-lxP"/>
                                                 <constraint firstItem="E1L-ep-puK" firstAttribute="top" secondItem="T88-pq-weU" secondAttribute="top" id="rYI-Cc-xkX"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="E1L-ep-puK" secondAttribute="bottom" constant="-8" id="wA2-0N-SHC"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="JPi-2k-hrc"/>
-                                                    <exclude reference="1eY-WO-Zjr"/>
-                                                    <exclude reference="5QY-rq-osw"/>
-                                                    <exclude reference="9Py-BG-T6b"/>
-                                                    <exclude reference="r9Q-Pp-lxP"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
@@ -266,14 +223,12 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="backButton" destination="lfT-dy-G0r" id="Awa-yt-tct"/>
                         <outlet property="categaryLabel" destination="sx0-AZ-aeg" id="Mgu-j3-8Vl"/>
                         <outlet property="imageView" destination="E1L-ep-puK" id="xr7-Hh-TX0"/>
                         <outlet property="locationTextField" destination="h6M-I8-MRg" id="Kmw-I7-qvG"/>
                         <outlet property="nameTextField" destination="Wch-Q7-OOi" id="bEH-FD-pdh"/>
                         <outlet property="noteTextField" destination="Ceo-uh-cnY" id="AN2-kH-z5R"/>
                         <outlet property="phoneTextField" destination="eCX-uE-KdP" id="8Ne-sX-ekd"/>
-                        <outlet property="saveButton" destination="RxV-MK-pl1" id="eoX-ES-WcF"/>
                         <segue destination="25c-uv-4uP" kind="unwind" identifier="unwindToDetailView" unwindAction="unwindToDetail:" id="cPn-h3-MKn"/>
                         <segue destination="25c-uv-4uP" kind="unwind" identifier="unwindToHomeView" unwindAction="unwindToHome:" id="TQP-rR-paZ"/>
                         <segue destination="Gvq-Wq-ixl" kind="presentation" identifier="ShowCamera" id="N0M-4F-TlN"/>
@@ -624,9 +579,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add_icon" width="64" height="64"/>
         <image name="add_restaurant_name_icon" width="27" height="28"/>
-        <image name="close" width="84" height="84"/>
         <image name="contact_number" width="25" height="23"/>
         <image name="location_icon" width="25" height="25"/>
         <image name="notes_icon" width="23" height="23"/>
@@ -636,4 +589,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="N0M-4F-TlN"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
