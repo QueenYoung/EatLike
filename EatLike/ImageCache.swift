@@ -53,7 +53,8 @@ struct ImageCache {
     }
 
     private func imageURLForKey(key: String) -> NSURL {
-        let documentDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let documentDirectory = NSFileManager.defaultManager()
+            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         let document = documentDirectory.first!
 
         return document.URLByAppendingPathComponent(key)

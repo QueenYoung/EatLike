@@ -186,7 +186,7 @@
         <!--View Controller-->
         <scene sceneID="dKh-hg-jSI">
             <objects>
-                <viewController id="VMB-is-N2H" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Second View" id="VMB-is-N2H" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fAb-mJ-r48"/>
                         <viewControllerLayoutGuide type="bottom" id="RLf-ow-az6"/>
@@ -195,10 +195,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c3H-wx-ghX">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c3H-wx-ghX">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l0e-di-pe7">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l0e-di-pe7">
                                 <rect key="frame" x="20" y="49" width="560" height="502"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="30" id="jGd-Gj-Fbn">
                                     <size key="itemSize" width="280" height="380"/>
@@ -365,8 +365,8 @@
                             <constraint firstItem="c3H-wx-ghX" firstAttribute="leading" secondItem="hot-3o-fTo" secondAttribute="leading" id="C3r-TF-x0u"/>
                             <constraint firstItem="c3H-wx-ghX" firstAttribute="top" secondItem="hot-3o-fTo" secondAttribute="top" id="CYL-cH-Jai"/>
                             <constraint firstItem="l0e-di-pe7" firstAttribute="centerY" secondItem="hot-3o-fTo" secondAttribute="centerY" id="F2p-40-kvx"/>
-                            <constraint firstItem="RLf-ow-az6" firstAttribute="top" secondItem="l0e-di-pe7" secondAttribute="bottom" id="N0b-SV-FEV"/>
-                            <constraint firstItem="RLf-ow-az6" firstAttribute="top" secondItem="c3H-wx-ghX" secondAttribute="bottom" id="Uf0-66-M79"/>
+                            <constraint firstItem="RLf-ow-az6" firstAttribute="top" secondItem="l0e-di-pe7" secondAttribute="bottom" constant="49" id="N0b-SV-FEV"/>
+                            <constraint firstItem="RLf-ow-az6" firstAttribute="top" secondItem="c3H-wx-ghX" secondAttribute="bottom" constant="49" id="Uf0-66-M79"/>
                             <constraint firstItem="l0e-di-pe7" firstAttribute="centerX" secondItem="hot-3o-fTo" secondAttribute="centerX" id="fZd-d4-AKy"/>
                             <constraint firstItem="l0e-di-pe7" firstAttribute="leading" secondItem="hot-3o-fTo" secondAttribute="leadingMargin" id="kgU-zf-t6A"/>
                         </constraints>

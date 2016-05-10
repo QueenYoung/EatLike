@@ -128,6 +128,7 @@ class DiscoverViewController: UIViewController {
             if translation.y > 100 {
                 animator.removeAllBehaviors()
 
+                // 添加重力效果
                 let gravity = UIGravityBehavior(items: [dialogView])
                 gravity.gravityDirection = CGVectorMake(0, 10)
                 animator.addBehavior(gravity)

@@ -204,7 +204,20 @@ extension MapViewController {
                 }
             }
         }
+    }
 
+    private func showLocationRequiredAlert() {
+        let alertController = UIAlertController(title: "Location Access Required",
+                                                message: "Location access is required to fetch the weather for your current location.", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+
+        let appSettingsAction = UIAlertAction(title: "App Settings", style: .Default) { action in
+            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        }
+        alertController.addAction(appSettingsAction)
+
+        presentViewController(alertController, animated: true, completion: nil)
     }
 
     private func reinputLocation() {
@@ -237,6 +250,7 @@ extension MapViewController {
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(restaurant.location) {
             [unowned self] placemarks, error in
+            // 如果不能成功定位, 就调用 警告框要求重新输入正确的地理位置
             if error != nil {
                 print(error)
                 self.reinputLocation()
@@ -246,6 +260,7 @@ extension MapViewController {
             guard let location = placemarks?.first?.location else {
                 return
             }
+
             self.currentRestaurantPlacemark = placemarks!.first! as CLPlacemark
             let annotation = MKPointAnnotation()
             annotation.title = self.restaurant.name
@@ -260,17 +275,15 @@ extension MapViewController {
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+        switch status {
+        case .NotDetermined:
+            print("Location authorization not determined")
+        case .AuthorizedAlways, .AuthorizedWhenInUse:
             locationManager.requestLocation()
-        } else if status == .Denied || status == .Restricted {
-            let alert = UIAlertController(title: "Can't get location", message:
-                "You can open the direciton authorized", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "GO!", style: .Default, handler: {
-                _ in
-                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-            }))
-            presentViewController(alert, animated: true, completion: nil)
+            mapView.showsUserLocation = true
+        case .Denied, .Restricted:
+            mapView.showsUserLocation = false
+            showLocationRequiredAlert()
         }
     }
 
