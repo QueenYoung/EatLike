@@ -37,7 +37,6 @@ class MapViewController: UIViewController {
         mapView.showsScale = true
         mapView.showsBuildings = true
 
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,8 +62,8 @@ class MapViewController: UIViewController {
     @IBAction func showNearby() {
         let searchRequest = MKLocalSearchRequest()
         searchRequest.naturalLanguageQuery = restaurant.type
-        // 获得当前地图中心, 方圆 5 公里的区域
-        let region = MKCoordinateRegionMakeWithDistance(mapView.centerCoordinate, 5000, 5000)
+        // 获得当前地图中心, 方圆 2 公里的区域
+        let region = MKCoordinateRegionMakeWithDistance(mapView.centerCoordinate, 2000, 2000)
         searchRequest.region = region
 
         let localSearch = MKLocalSearch(request: searchRequest)
@@ -108,14 +107,14 @@ class MapViewController: UIViewController {
 // MARK: - MapView Delegate Method
 extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        let identifier = "My Pin"
+        let identifier = "ShopPinDetailView"
 
         if annotation is MKUserLocation {
             return nil
         }
 
         // 和 Cell 一样, 也通过重用队列中的 Annotation 来节省内存
-        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
 
         // 如果队列中不存在可重用的， 则重新创建
         if annotationView == nil {
@@ -123,14 +122,19 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.canShowCallout = true
         }
 
-        annotationView?.tintColor = UIColor.blueColor()
 
         // 只为自己的 restaurant 创建额外的信息.
         if annotation.title! == restaurant.name {
-            let leftIconView = UIImageView(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
+            /* let leftIconView = UIImageView(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
             leftIconView.image = UIImage(data: restaurant.image!)
             annotationView?.leftCalloutAccessoryView = leftIconView
-            annotationView?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) */
+            // 通过 nib 文件创建直接创建 UIView
+            let detailView = (UINib(nibName: identifier, bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView) as! MapPinView
+            detailView.restaurant = restaurant
+            detailView.currentRestaurantPlacemark = currentRestaurantPlacemark
+            annotationView?.detailCalloutAccessoryView = detailView
+            annotationView?.pinTintColor = MKPinAnnotationView.greenPinColor()
         }
 
         return annotationView

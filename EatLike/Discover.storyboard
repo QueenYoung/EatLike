@@ -595,6 +595,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-mR-MXf">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="240" id="2IJ-GB-DQI"/>
                                             <constraint firstAttribute="width" constant="600" id="68Q-Pw-55h"/>
@@ -618,6 +619,9 @@
                                                 <exclude reference="zgs-g7-ftl"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="SyI-V1-G4V" appends="YES" id="OJ6-Nk-txc"/>
+                                        </connections>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4if-AJ-sbp">
                                         <rect key="frame" x="20" y="260" width="560" height="40"/>
@@ -727,6 +731,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q8v-ZI-xy4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="SyI-V1-G4V">
+                    <connections>
+                        <action selector="swipeDownToDismissView:" destination="0Gc-x5-4JT" id="SsD-Jp-N46"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5110" y="733"/>
         </scene>

@@ -77,6 +77,11 @@ class FriendRestaurantViewController: UIViewController {
     }
 
 
+    @IBAction func swipeDownToDismissView(sender: UISwipeGestureRecognizer) {
+        UIView.animateWithDuration(0.2) {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
     override func prefersStatusBarHidden() -> Bool {
         return true
     }

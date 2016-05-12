@@ -172,18 +172,13 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         let imagePicker = UIImagePickerController()
         // Never don't forget!!!!!!!!
         imagePicker.delegate = self
-        if !canMakePicture {
-            imagePicker.sourceType = .SavedPhotosAlbum
-            self.presentViewController(imagePicker, animated: true, completion: nil)
-        } else {
-            operationForRealDevices(imagePicker)
-        }
+        operationForRealDevices(imagePicker, isRealDevice: canMakePicture)
     }
 
-    private func operationForRealDevices(imagePicker: UIImagePickerController) {
+    private func operationForRealDevices(imagePicker: UIImagePickerController, isRealDevice: Bool) {
         // 如果可以后置照相机的话, 再询问使用哪一种
-        let actionSheet = UIAlertController(title: "Select Image",
-                                            message: "Which way you want to use",
+        let actionSheet = UIAlertController(title: "\n\n\n\n",
+                                            message: nil,
                                             preferredStyle: .ActionSheet)
         let pictureAction = UIAlertAction(title: "Saved Pictures", style: .Default) {
             [unowned self] _ in
@@ -192,16 +187,28 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
 
-        let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
-            [unowned self] _ in
-            //                    imagePicker.sourceType = .Camera
-            //                    self.presentViewController(imagePicker, animated: true, completion: nil)
-            self.performSegueWithIdentifier("ShowCamera", sender: self)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .Horizontal
+        let preview = UICollectionView(frame: CGRect(
+            x: 5.0, y: 5.0,
+            width: actionSheet.view.bounds.size.width - 5.0 * 6, height: 100),
+                                       collectionViewLayout: layout)
+
+        preview.backgroundColor = .redColor()
+        actionSheet.view.addSubview(preview)
+
+        if isRealDevice {
+            let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
+                [unowned self] _ in
+                //                    imagePicker.sourceType = .Camera
+                //                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                self.performSegueWithIdentifier("ShowCamera", sender: self)
+            }
+            actionSheet.addAction(cameraAction)
         }
 
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         actionSheet.addAction(pictureAction)
-        actionSheet.addAction(cameraAction)
         presentViewController(actionSheet, animated: true, completion: nil)
     }
 

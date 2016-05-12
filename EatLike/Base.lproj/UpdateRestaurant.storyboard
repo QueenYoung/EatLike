@@ -523,7 +523,7 @@
                     <navigationItem key="navigationItem" id="ZMB-71-dl7">
                         <barButtonItem key="leftBarButtonItem" title="Again" id="zmz-rc-U93">
                             <connections>
-                                <segue destination="Gvq-Wq-ixl" kind="presentation" modalTransitionStyle="flipHorizontal" id="Mad-FJ-OY0"/>
+                                <action selector="recapture:" destination="6WJ-rG-oJe" id="I03-qC-uzT"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="JX1-KL-J7a">
@@ -586,8 +586,5 @@
         <image name="photoalbum" width="84" height="84"/>
         <image name="restaurant_category_icon" width="24" height="28"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="N0M-4F-TlN"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
