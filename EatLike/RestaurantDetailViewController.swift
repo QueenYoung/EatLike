@@ -149,7 +149,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
             cell.textLabel?.text = "Review"
             if count == 0 {
-                cell.detailTextLabel?.text = "Touch me to review the food"
+                cell.detailTextLabel?.text = String(count: 5, repeatedValue: Character("★"))
                 cell.detailTextLabel?.textColor = UIColor.lightGrayColor()
             } else {
                 cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("★"))

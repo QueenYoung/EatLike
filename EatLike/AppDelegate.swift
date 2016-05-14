@@ -16,12 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mailCompose: MFMailComposeViewController!
     var imageCache = ImageCache()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
-        // Override point for customization after application launch.
-        // 设置导航栏的颜色和字体, 对全局有效
-        // 这个可以设置全局的导航栏的风格为 明亮. 或者通过 preferedStatusBarStyle 改变
-        // 不过需要去项目文件中, 添加一个键, 并设置为 NO
-        UINavigationBar.appearance().barTintColor = barColor
+//        let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
+//        UINavigationBar.appearance().barTintColor = barColor
         UINavigationBar.appearance().tintColor = .whiteColor()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         if let barFont = UIFont(name: "Avenir-Light", size: 24) {

@@ -10,8 +10,6 @@ import UIKit
 import CoreData
 class AddRestaurantTableViewController: UITableViewController {
     // MARK: - Property
-    var isUpdate = false
-
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
@@ -19,10 +17,22 @@ class AddRestaurantTableViewController: UITableViewController {
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var noteTextField: UITextField!
 
+    var isUpdate = false
+
+    lazy var collectionLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .Horizontal
+        layout.minimumLineSpacing = 4.0
+        layout.itemSize = CGSize(width: 100, height: 92)
+        return layout
+    }()
+
+    var previews = [PreviewCollectionViewController]()
+
     let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
 
     var newRestaurant: Restaurant!
-    // MARK: View Controller
+    // MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         if newRestaurant != nil {
@@ -32,7 +42,6 @@ class AddRestaurantTableViewController: UITableViewController {
             nameTextField.becomeFirstResponder()
             title = "New Restaurant"
         }
-
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -46,7 +55,7 @@ class AddRestaurantTableViewController: UITableViewController {
     }
 
 
-    // MARK: Table View Delegate
+    // MARK: - Table View Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             showImagePicker()
@@ -67,10 +76,14 @@ class AddRestaurantTableViewController: UITableViewController {
         }
     }
 
+    // unwind 回来并更新 category
     @IBAction func updateCategary(sender: UIStoryboardSegue) {
         let categaryTVC = sender.sourceViewController as! ChooseCategaryTableViewController
         categaryLabel.text = categaryTVC.choosedCategary
         categaryLabel.textColor = .blackColor()
+        if phoneTextField.text!.isEmpty {
+            phoneTextField.becomeFirstResponder()
+        }
     }
 
     @IBAction func saveNewRestaurant(sender: UIButton) {
@@ -149,16 +162,22 @@ class AddRestaurantTableViewController: UITableViewController {
         let image    = imageView.image.flatMap { UIImageJPEGRepresentation($0, 0.6) }
         let phone    = phoneTextField.text!
         let note     = noteTextField.text!
-        
+
+        print(newRestaurant.keyString)
+
+        // 把 keyString 的默认值设为了 none. 说明这个一个新的数据.
+        if newRestaurant.keyString == "none" {
+            newRestaurant.keyString = NSUUID().UUIDString
+        }
+
+        cache.setImage(image!, key: newRestaurant.keyString)
+
         newRestaurant.name        = name
         newRestaurant.location    = location
         newRestaurant.type        = type
         newRestaurant.image       = image
         newRestaurant.phoneNumber = phone
         newRestaurant.note        = note
-        newRestaurant.keyString   = NSUUID().UUIDString
-        
-        cache.setImage(newRestaurant.image!, key: newRestaurant.keyString)
     }
     
 }
@@ -167,6 +186,7 @@ class AddRestaurantTableViewController: UITableViewController {
 // MARK: - ImagePicker Delegate Methods
 extension AddRestaurantTableViewController:
 UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
     private func showImagePicker() {
         let canMakePicture = UIImagePickerController.isCameraDeviceAvailable(.Rear)
         let imagePicker = UIImagePickerController()
@@ -187,15 +207,12 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
 
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .Horizontal
-        let preview = UICollectionView(frame: CGRect(
-            x: 5.0, y: 5.0,
-            width: actionSheet.view.bounds.size.width - 5.0 * 6, height: 100),
-                                       collectionViewLayout: layout)
-
-        preview.backgroundColor = .redColor()
-        actionSheet.view.addSubview(preview)
+        let previewController = PreviewCollectionViewController(collectionViewLayout: collectionLayout)
+        previewController.delegate = self
+        let view = UIView(frame: CGRect(x: 4, y: 4, width: 290, height: 96))
+        previews.append(previewController)
+        view.addSubview(previewController.view)
+        actionSheet.view.addSubview(view)
 
         if isRealDevice {
             let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
@@ -217,6 +234,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         if newRestaurant != nil {
             cache.removeImage(newRestaurant.keyString)
         }
+
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
@@ -237,7 +255,7 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
         if nameTextField.isFirstResponder() {
             locationTextField.becomeFirstResponder()
         } else if locationTextField.isFirstResponder() {
-            categaryLabel.becomeFirstResponder()
+            performSegueWithIdentifier("ChooseCategary", sender: nil)
         } else if noteTextField.isFirstResponder() {
             noteTextField.resignFirstResponder()
         }
@@ -251,18 +269,47 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
         let typeSet = NSCharacterSet(charactersInString: string)
         decimalSet.addCharactersInString("-")
 
+        let count = phoneTextField.text?.characters.filter { $0 != "-" }.count
         var phone = phoneTextField.text!
 
         guard decimalSet.isSupersetOfSet(typeSet) else { return false }
 
-        if phone.characters.count >= 7 {
+        if count == 4 && phone[3] != "-" {
+            phone.insert("-", atIndex: phone.startIndex.advancedBy(3, limit: phone.endIndex))
+        }
+
+        if count == 7 && phone[7] != "-" {
+            phone.insert("-", atIndex: phone.startIndex.advancedBy(8, limit: phone.endIndex))
+            // 因为会清楚 - 的原因, 所以在重新生成 - 的时候, 同时生成第三位的
             if phone[3] != "-" {
-                phone.insert("-", atIndex: phone.startIndex.advancedBy(3))
-                phone.insert("-", atIndex: phone.startIndex.advancedBy(8))
+                phone.insert("-", atIndex: phone.startIndex.advancedBy(3, limit: phone.endIndex))
             }
+        }
+
+        // 如果电话号码已经11位, 并且输入的是数字的话, 则返回 false
+        // 因为非数字已经被排序, 现在能输入的之后 删除键. 通过 Int(stirng) 来判断输入的是数字还是删除
+        if count >= 11 && Int(string) != nil {
+            if phone[3] != "-" {
+                phone.insert("-", atIndex: phone.startIndex.advancedBy(3, limit: phone.endIndex))
+                phone.insert("-", atIndex: phone.startIndex.advancedBy(8, limit: phone.endIndex))
+            } else {
+                return false
+            }
+        // 在电话号码小于 10 位的时候, 清除 -
+        } else if count <= 10 && Int(string) == nil {
+            phone = phone.characters.split("-").map(String.init).joinWithSeparator("")
         }
 
         phoneTextField.text = phone
         return true
+    }
+}
+
+extension AddRestaurantTableViewController: PreviewSelectable {
+    func imageBeSelected(selectedImage image: UIImage) {
+        imageView.image = image
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

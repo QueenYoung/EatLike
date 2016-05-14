@@ -40,8 +40,9 @@ class RestaurantTableViewController: UITableViewController,
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.hidesBarsOnSwipe = true
-        let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
-        UINavigationBar.appearance().barTintColor = barColor
+//        let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
+//        UINavigationBar.appearance().barTintColor = barColor
+        UINavigationBar.appearance().tintColor = .whiteColor()
     }
 
 
