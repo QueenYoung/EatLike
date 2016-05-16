@@ -194,10 +194,11 @@ class RestaurantTableViewController: UITableViewController,
 
     // 创建自定义的滑动动作，并且最后将它们作为数组返回
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let restaurant = self.restaurants[indexPath.row]
         let shareAction = UITableViewRowAction(style: .Default, title: "Share") {
             [unowned self] (action, indexPath) in
-            if let image = self.restaurants[indexPath.row].image {
-                let defaultText = "Just check in \(self.restaurants[indexPath.row].name)"
+            if let image = restaurant.image {
+                let defaultText = "Just check in \(restaurant.name)"
                 let activity = UIActivityViewController(activityItems: [image, defaultText], applicationActivities: nil)
                 self.presentViewController(activity, animated: true, completion: nil)
             }
@@ -210,16 +211,15 @@ class RestaurantTableViewController: UITableViewController,
             let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
             let restaurantToDelete =
                 self.fetchResultController.objectAtIndexPath(indexPath) as! Restaurant
-            cache.removeImage(self.restaurants[indexPath.row].keyString)
+            cache.removeImage(restaurant.keyString)
             managedObjectContext.deleteObject(restaurantToDelete)
             guard let _ = try? managedObjectContext.save() else { return }
         }
 
         let callAction = UITableViewRowAction(style: .Normal, title: "Call") {
-            [unowned self] (action, indexPath) in
-            let telphone = self.restaurants[indexPath.row].phoneNumber
-            guard let phone = telphone else { return }
-            let url = NSURL(string: "tel://" + phone)!
+            (action, indexPath) in
+            let telphone = restaurant.phoneNumber
+            let url = NSURL(string: "tel://" + telphone)!
             UIApplication.sharedApplication().openURL(url)
         }
 
@@ -228,7 +228,11 @@ class RestaurantTableViewController: UITableViewController,
         callAction.backgroundColor = UIColor.greenColor()
 
         // 返回的顺序可能会影响显示的，倒序显示。
-        return [deleteAction, shareAction, callAction]
+        if restaurant.phoneNumber.isEmpty {
+            return [deleteAction, shareAction]
+        } else {
+            return [deleteAction, shareAction, callAction]
+        }
     }
 
 

@@ -377,7 +377,7 @@
             </objects>
             <point key="canvasLocation" x="2802" y="107"/>
         </scene>
-        <!--Discover View Controller-->
+        <!--Show Time-->
         <scene sceneID="y9b-yq-bbO">
             <objects>
                 <viewController id="e3r-rR-TZO" customClass="DiscoverViewController" customModule="EatLike" customModuleProvider="target" sceneMemberID="viewController">
@@ -430,6 +430,9 @@
                                                             <color key="titleColor" red="0.23921568627450979" green="0.25882352941176467" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="titleShadowColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="likeButtonDidPressed:" destination="e3r-rR-TZO" eventType="touchUpInside" id="8Rb-Io-R19"/>
+                                                        </connections>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sjT-Uu-UJs">
                                                         <rect key="frame" x="140" y="0.0" width="140" height="44"/>
@@ -556,12 +559,13 @@
                             <outletCollection property="gestureRecognizers" destination="vTG-pe-i4Y" appends="YES" id="7uY-jq-P91"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="EQh-wa-PQs"/>
+                    <navigationItem key="navigationItem" title="Show Time" id="EQh-wa-PQs"/>
                     <connections>
                         <outlet property="backgroundBlurImage" destination="pMb-A1-jKl" id="5wZ-he-OJz"/>
                         <outlet property="buttonStackView" destination="guL-mY-3hi" id="RHz-xu-Xqc"/>
                         <outlet property="dialogView" destination="ZmN-yc-pRH" id="BAD-3s-Gcd"/>
                         <outlet property="headerView" destination="qvf-Th-AJl" id="SQ0-wT-L45"/>
+                        <outlet property="likesButton" destination="T8J-LI-7x0" id="U0W-BT-3VO"/>
                         <outlet property="likesTotalLabel" destination="4OF-hi-qc0" id="oBJ-f9-Fcy"/>
                         <outlet property="restaurantImageButton" destination="59p-fZ-Frl" id="6UT-4x-gBZ"/>
                         <outlet property="restaurantLabel" destination="dpE-xS-Zeq" id="6Vq-9B-hJx"/>
@@ -619,9 +623,6 @@
                                                 <exclude reference="zgs-g7-ftl"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="SyI-V1-G4V" appends="YES" id="OJ6-Nk-txc"/>
-                                        </connections>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4if-AJ-sbp">
                                         <rect key="frame" x="20" y="260" width="560" height="40"/>
@@ -731,11 +732,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q8v-ZI-xy4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="SyI-V1-G4V">
-                    <connections>
-                        <action selector="swipeDownToDismissView:" destination="0Gc-x5-4JT" id="SsD-Jp-N46"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5110" y="733"/>
         </scene>
@@ -770,7 +766,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" toolbarHidden="NO" id="eJ1-6N-Mix" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wsc-cP-V2b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

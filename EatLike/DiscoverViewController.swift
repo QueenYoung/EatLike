@@ -17,6 +17,7 @@ class DiscoverViewController: UIViewController {
     @IBOutlet weak var likesTotalLabel: UILabel!
     @IBOutlet weak var buttonStackView: UIStackView!
     @IBOutlet weak var restaurantImageButton: UIButton!
+    @IBOutlet weak var likesButton: UIButton!
     @IBOutlet weak var dialogView: UIView!
 
     var animator : UIDynamicAnimator!
@@ -50,31 +51,35 @@ class DiscoverViewController: UIViewController {
     ]
     var index = 0
 
-    @IBAction func callRestaurant(sender: UIButton) {
-        let string = sender.titleLabel?.text
-        presentViewController(call(string!)!, animated: true, completion: nil)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         if isAnimated {
             dialogView.alpha = 0
         }
+
         configureView()
         getBlurView(backgroundBlurImage, style: .Dark)
         getBlurView(headerView, style: .Dark)
-
         animator = UIDynamicAnimator(referenceView: view)
+
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         tabBarController?.tabBar.hidden = false
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
 
+        // 来控制是否需要额外的动画.
         if isAnimated {
             animatedView()
             isAnimated = false
@@ -88,6 +93,10 @@ class DiscoverViewController: UIViewController {
     }
 
     // MARK: - Navigation
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .Default
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "modalFriend" {
             let nav = segue.destinationViewController as! UINavigationController
@@ -146,19 +155,18 @@ class DiscoverViewController: UIViewController {
     }
 
     @IBAction func likeButtonDidPressed(sender: UIButton) {
-        /* let tintColor = sender.tintColor
-        let indexPath = getCurrentIndexPath()
-        guard let index = indexPath else { return }
-        let row = index.row
-        if tintColor == UIColor.blueColor() {
-            discovers[row].likesTotal += 1
-            sender.tintColor = UIColor.redColor()
-            currentCell.changeLikeTotal(true)
+        let currentRestaurant = discovers[index]
+        let isLiked = currentRestaurant.isLike
+        if isLiked {
+            currentRestaurant.isLike = false
+            currentRestaurant.likesTotal -= 1
+            sender.tintColor = .blueColor()
         } else {
-            discovers[row].likesTotal -= 1
-            sender.tintColor = UIColor.blueColor()
-            currentCell.changeLikeTotal(false)
-        } */
+            currentRestaurant.isLike = true
+            currentRestaurant.likesTotal += 1
+            sender.tintColor = .redColor()
+        }
+        likesTotalLabel.text = "\(currentRestaurant.likesTotal)"
     }
 
 // MARK: - Helper Function
@@ -175,8 +183,8 @@ class DiscoverViewController: UIViewController {
 
         dialogView.center = view.center
         isAnimated = true
-        viewDidAppear(true)
         configureView()
+        viewDidAppear(true)
     }
 
     private func animatedView() {
@@ -198,8 +206,17 @@ class DiscoverViewController: UIViewController {
         likesTotalLabel.text = "\(restaurant.likesTotal)"
         userNameLabel.text = restaurant.userName
         userNameLabel.text?.appendContentsOf(" | \(restaurant.name)")
-
+        updateLikeButtonColor()
         dialogView.alpha = 1
     }
+
+    private func updateLikeButtonColor() {
+        if discovers[index].isLike {
+            likesButton.tintColor = .redColor()
+        } else {
+            likesButton.tintColor = .blueColor()
+        }
+    }
+
 }
 

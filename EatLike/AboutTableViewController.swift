@@ -17,12 +17,7 @@ class AboutTableViewController: UITableViewController,
     var mailCompose: MFMailComposeViewController!
     override func viewDidLoad() {
 	    super.viewDidLoad()
-	    // Uncomment the following line to preserve selection between presentations
-	    // self.clearsSelectionOnViewWillAppear = false
-
-	    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-	    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-	    tableView.estimatedRowHeight = 44
+	    tableView.estimatedRowHeight = 64
         tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         mailCompose = (UIApplication.sharedApplication().delegate as? AppDelegate)?.mailCompose
@@ -55,10 +50,11 @@ class AboutTableViewController: UITableViewController,
             mailCompose.mailComposeDelegate = self
             mailCompose.setSubject("Feedback")
             mailCompose.setToRecipients(["c6swift@gmail.com"])
-            let mailContent = "I am user of your App"
+            let mailContent = "I am the user of your App"
             mailCompose.setMessageBody(mailContent, isHTML: false)
             presentViewController(mailCompose, animated: true, completion: nil)
         } else {
+            // 否则出现一个警告框.
             let alert = UIAlertController(title: "Can't do this", message: "You hadn't set the mail account", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             presentViewController(alert, animated: true, completion: nil)
@@ -68,6 +64,7 @@ class AboutTableViewController: UITableViewController,
 
     }
 
+    // 发送完邮件需要做的事情. 我们就是简单的 dismiss 就可以咯.
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
 
         dismissViewControllerAnimated(true) {

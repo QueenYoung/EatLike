@@ -16,6 +16,7 @@ struct ImageCache {
         caches.setObject(imagedata, forKey: key)
         // 同时将对象写入 App 的 Document 中
         let imageURL = imageURLForKey(key)
+
         imagedata.writeToURL(imageURL, atomically: true)
         print("image is write to \(imageURL.path!)")
     }

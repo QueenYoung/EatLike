@@ -23,11 +23,18 @@ class FriendRestaurantViewController: UIViewController {
 
         detailImageView.image = friendData.detailImage
         userImageView.image = friendData.authorImage
-
         authorLabel.text = String(friendData.userName)
         authorLabel.text?.appendContentsOf(" | \(friendData.foodName)")
-        dackButton.alpha = 0.0
-        descriptionTextView.alpha = 0.0
+        setNeedsStatusBarAppearanceUpdate()
+        delay(0.1) { [unowned self] in
+            self.dackButton.alpha = 0.0
+            self.descriptionTextView.alpha = 0.0
+            
+            let imageSize = CGSize(width: 1, height: 1)
+            self.navigationController?.navigationBar
+                .setBackgroundImage(.withColor(.clearColor(), size: imageSize), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = .withColor(.clearColor(), size: imageSize)
+        }
 
     }
 
@@ -36,12 +43,16 @@ class FriendRestaurantViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+
+    }
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-
         dackButton.alpha = 1.0
         springScaleFrom(dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
-        spring(0.4) {
+        spring(0.5) {
             self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
             self.descriptionTextView.alpha = 1.0
         }
@@ -77,12 +88,19 @@ class FriendRestaurantViewController: UIViewController {
     }
 
 
+    // fixme: 
     @IBAction func swipeDownToDismissView(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(0.2) {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
-    override func prefersStatusBarHidden() -> Bool {
-        return true
+
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
+
+    override func childViewControllerForStatusBarStyle() -> UIViewController? {
+        return navigationController?.topViewController
+    }
+
 }

@@ -283,7 +283,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="tVK-BV-qgf">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="UQC-bV-gQc" kind="presentation" identifier="EditRestaurant" modalTransitionStyle="flipHorizontal" id="WaJ-NZ-VLW"/>
+                                <segue destination="UQC-bV-gQc" kind="presentation" identifier="EditRestaurant" modalTransitionStyle="coverVertical" id="WaJ-NZ-VLW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

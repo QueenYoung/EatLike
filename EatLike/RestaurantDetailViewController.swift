@@ -23,9 +23,6 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
-        navigationController?.navigationBar
-            .setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        navigationController?.navigationBar.shadowImage = UIImage.init()
         restaurantImageView.image = cache.imageForKey(restaurant.keyString)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
     }
@@ -34,10 +31,15 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         super.viewWillAppear(true)
         // 进入 detail 视图的时候,关闭 hide on swipe 功能.
         navigationController?.hidesBarsOnSwipe = false
+//        let size = CGSize(width: 1, height: 1)
+//        navigationController?.navigationBar
+//            .setBackgroundImage(.withColor(.clearColor(), size: size), forBarMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage.init()
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
+        configureAppearance()
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,8 +105,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
                 performSegueWithIdentifier(.ModalMapView, sender: self)
         case 2:
             // will modal a alert view
-            if let phone = restaurant.phoneNumber,
-                let alert = call(phone)  {
+            if let alert = call(restaurant.phoneNumber) {
                 presentViewController(alert, animated: true, completion: nil)
             }
         case 3:
@@ -143,7 +144,11 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             cell.detailTextLabel?.text = restaurant.type
         case 2:
             cell.textLabel?.text = "Phone"
-            cell.detailTextLabel?.text = restaurant.phoneNumber
+            if !restaurant.phoneNumber.isEmpty{
+                cell.detailTextLabel?.text = restaurant.phoneNumber
+            } else {
+                cell.detailTextLabel?.text = "No telphone"
+            }
         case 3:
             let count = Int(restaurant.userRate.intValue)
             cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!

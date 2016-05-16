@@ -56,8 +56,8 @@ class MapPinView: UIView {
 extension MapPinView {
     // MARK: - IBActions
     @IBAction func phoneTapped(sender: UIButton) {
-        if let phone = restaurant.phoneNumber {
-            call(phone, isAlert: false)
+        if !restaurant.phoneNumber.isEmpty {
+            call(restaurant.phoneNumber, isAlert: false)
         }
     }
 

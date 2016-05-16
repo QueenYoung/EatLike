@@ -8,6 +8,7 @@
 
 import UIKit
 public func call(telphone: String, isAlert: Bool = true) -> UIAlertController? {
+    guard !telphone.isEmpty else { return nil }
     let number = String(telphone.characters.filter { $0 != "-" })
     let url = NSURL(string: "tel://" + number)
     
@@ -35,7 +36,8 @@ public func getBlurView(view: UIView, style: UIBlurEffectStyle) {
 
     let blurEffect = UIBlurEffect(style: style)
     let blurView = UIVisualEffectView(effect: blurEffect)
-    blurView.frame = view.bounds
+    blurView.frame = view.frame
+    // 将毛玻璃界面放在最后面.
     view.insertSubview(blurView, atIndex: 0)
 }
 
@@ -53,4 +55,27 @@ public func spring(duration: NSTimeInterval, delay: NSTimeInterval = 0, animatio
 
 public func delay(delay: Double, closure: () -> Void) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
+}
+
+extension UIImage {
+    class func withColor(color: UIColor, size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        let ctx = UIGraphicsGetCurrentContext()
+        color.setFill()
+        CGContextFillRect(ctx, CGRect(origin: .zero, size: size))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
+public func configureAppearance() {
+    let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
+    let navBarAppearance = UINavigationBar.appearance()
+    navBarAppearance.translucent = true
+
+    let imageSize = CGSize(width: 1, height: 1)
+    let backgroundImage = UIImage.withColor(barColor, size: imageSize)
+    navBarAppearance.setBackgroundImage(backgroundImage, forBarMetrics: .Default)
+    navBarAppearance.tintColor = UIColor.whiteColor()
 }

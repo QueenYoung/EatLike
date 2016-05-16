@@ -170,14 +170,15 @@ class AddRestaurantTableViewController: UITableViewController {
             newRestaurant.keyString = NSUUID().UUIDString
         }
 
+        // TODO: 找到一个方法, 不用每次都加缓存.
         cache.setImage(image!, key: newRestaurant.keyString)
 
         newRestaurant.name        = name
         newRestaurant.location    = location
         newRestaurant.type        = type
-        newRestaurant.image       = image
         newRestaurant.phoneNumber = phone
         newRestaurant.note        = note
+        newRestaurant.image       = image
     }
     
 }
@@ -310,6 +311,11 @@ extension AddRestaurantTableViewController: PreviewSelectable {
         imageView.image = image
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
+
+        if !nameTextField.text!.isEmpty {
+            view.endEditing(true)
+        }
+
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

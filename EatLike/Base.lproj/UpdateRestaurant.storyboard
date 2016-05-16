@@ -274,7 +274,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="cancel:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="uxg-cD-UhH"/>
                                     <action selector="dismiss:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="ybG-wE-4f7"/>
                                 </connections>
                             </button>
@@ -294,7 +293,7 @@
                     <connections>
                         <outlet property="cameraButton" destination="i2F-cs-MQo" id="gIV-33-7Km"/>
                         <outlet property="cancelButton" destination="cgz-d5-4LJ" id="od5-Nt-zZM"/>
-                        <segue destination="zzw-rE-fon" kind="show" identifier="unwindBack" id="ctW-7a-ac4"/>
+                        <segue destination="zzw-rE-fon" kind="show" identifier="ShowCaptureImage" id="ctW-7a-ac4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cau-jO-kT2" userLabel="First Responder" sceneMemberID="firstResponder"/>

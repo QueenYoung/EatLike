@@ -12,7 +12,7 @@ class Restaurant: NSManagedObject {
 	@NSManaged var name: String
 	@NSManaged var type: String
 	@NSManaged var location: String
-	@NSManaged var phoneNumber: String?
+	@NSManaged var phoneNumber: String
 	@NSManaged var image: NSData?
 	// 因为 coredata 不存在 Boolean 类型, 所以需要使用 NSNumber
     @NSManaged var note: String

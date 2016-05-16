@@ -90,7 +90,6 @@ class CameraViewController: UIViewController {
 
     @IBAction func dismiss(sender: UIButton) {
         dismissViewControllerAnimated(true, completion: {
-            [unowned self] _ in
             self.performSegueWithIdentifier("unwindBack", sender: nil)
         })
     }

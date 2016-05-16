@@ -16,10 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mailCompose: MFMailComposeViewController!
     var imageCache = ImageCache()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-//        let barColor = UIColor(red: 0xf7/255.0, green: 0x5b/255.0, blue: 0x61/255.0, alpha: 1.0)
-//        UINavigationBar.appearance().barTintColor = barColor
-        UINavigationBar.appearance().tintColor = .whiteColor()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
+        configureAppearance()
         if let barFont = UIFont(name: "Avenir-Light", size: 24) {
             UINavigationBar.appearance().titleTextAttributes =
                 [NSForegroundColorAttributeName: UIColor(red: 0xd7/255.0, green: 0xd7/255.0, blue: 0xd7/255.0, alpha: 1.0),
@@ -56,8 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         // TODO: 通过这个方法可以在软件运行的时候, 显示 alert.
         // 接下来只需要定义一个有意思的就可以.
-        let alert = UIAlertController(title: "Fd", message: nil, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "jl", style: .Default, handler: nil))
+        let alert = UIAlertController(title: "吃饭时间到了!", message: "不愿走路的话, 就叫外卖吧", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
     }
 
