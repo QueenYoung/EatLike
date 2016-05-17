@@ -386,14 +386,14 @@
                         <viewControllerLayoutGuide type="bottom" id="pbJ-1G-TF4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Xez-W2-qdk">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pMb-A1-jKl">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmN-yc-pRH">
-                                <rect key="frame" x="160" y="158" width="280" height="284"/>
+                                <rect key="frame" x="160" y="134" width="280" height="284"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-lK-B0n" userLabel="Dialog Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="284"/>
@@ -743,7 +743,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="rBU-Oy-f7l"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5RZ-Ks-EjM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

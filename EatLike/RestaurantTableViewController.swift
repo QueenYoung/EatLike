@@ -20,7 +20,6 @@ class RestaurantTableViewController: UITableViewController,
         let searchController = UISearchController(searchResultsController: nil)
         //	搜索的时候，背景不会模糊。如果使用的不是另一个独立的视图，需要赋值为 false， 否则无法点击搜索的值
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = true
         searchController.definesPresentationContext = true
         let bar = searchController.searchBar
         bar.placeholder = "Search Restaurants"

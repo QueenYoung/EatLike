@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		960B214E1CEB3348001BEB51 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960B214D1CEB3348001BEB51 /* LocationSearchTable.swift */; };
 		96275E5B1C92E5EF00E90E2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */; };
 		96275E601C92E5EF00E90E2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96275E5E1C92E5EF00E90E2E /* Main.storyboard */; };
 		96275E621C92E5EF00E90E2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96275E611C92E5EF00E90E2E /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		960B214D1CEB3348001BEB51 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		96275E571C92E5EF00E90E2E /* EatLike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatLike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96275E5F1C92E5EF00E90E2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				964B360A1CE4A47C001A8CB2 /* ShopPinDetailView.xib */,
+				960B214D1CEB3348001BEB51 /* LocationSearchTable.swift */,
 				964B360C1CE4AB18001A8CB2 /* MapPinView.swift */,
 				96A87F5F1C983667006BAA9C /* MapViewController.swift */,
 				967430C41CCE66D100D206C9 /* StepsTableViewController.swift */,
@@ -360,6 +363,7 @@
 				967430C51CCE66D100D206C9 /* StepsTableViewController.swift in Sources */,
 				96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */,
 				96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */,
+				960B214E1CEB3348001BEB51 /* LocationSearchTable.swift in Sources */,
 				96E22EE41CDA240C00781CD0 /* ImageCache.swift in Sources */,
 				963BC9351CD8E891002702A7 /* ChooseCategaryTableViewController.swift in Sources */,
 				96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */,

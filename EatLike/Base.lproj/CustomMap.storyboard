@@ -3,9 +3,52 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
+        <!--Location Search Table-->
+        <scene sceneID="9ps-Pq-jgf">
+            <objects>
+                <tableViewController storyboardIdentifier="LocationSearchTable" id="gn6-e0-Erp" customClass="LocationSearchTable" customModule="EatLike" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="HiQ-bS-W33">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" textLabel="OzJ-ID-FbJ" detailTextLabel="M9K-PR-8gp" style="IBUITableViewCellStyleSubtitle" id="NVK-wO-SFr">
+                                <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NVK-wO-SFr" id="WTF-mX-DMR">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OzJ-ID-FbJ">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M9K-PR-8gp">
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="gn6-e0-Erp" id="edh-xL-hYh"/>
+                            <outlet property="delegate" destination="gn6-e0-Erp" id="SZ1-SC-QFU"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ise-oi-2kH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2052" y="1602"/>
+        </scene>
         <!--Map View Controller-->
         <scene sceneID="YyG-Fq-jNh">
             <objects>
@@ -18,50 +61,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8eL-zy-qjJ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8eL-zy-qjJ">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <connections>
                                     <outlet property="delegate" destination="DXo-X0-eqf" id="wXX-zU-LsW"/>
                                 </connections>
                             </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Que-cO-BxE">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem image="location_icon" id="VR5-4o-46P">
+                                        <connections>
+                                            <action selector="getMyLocation" destination="DXo-X0-eqf" id="2mu-Li-1rs"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zjD-Fr-dwk"/>
+                                    <barButtonItem style="plain" id="WjM-JV-K9w">
+                                        <segmentedControl key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" momentary="YES" id="vi8-iH-Rsd">
+                                            <rect key="frame" x="189" y="8" width="222" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="222" id="rdy-rn-1cy"/>
+                                            </constraints>
+                                            <segments>
+                                                <segment title="Walk"/>
+                                                <segment title="Car"/>
+                                            </segments>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Gms-8N-BU7"/>
+                                    <barButtonItem image="Pin" id="mic-H2-4IO">
+                                        <connections>
+                                            <action selector="showNearby:" destination="DXo-X0-eqf" id="FL3-pf-iJg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Que-cO-BxE" firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="3CI-Jg-w8C"/>
                             <constraint firstItem="8eL-zy-qjJ" firstAttribute="leading" secondItem="Y4z-4n-kvm" secondAttribute="leading" id="D5f-4G-P3i"/>
                             <constraint firstItem="o1z-aV-3UL" firstAttribute="top" secondItem="8eL-zy-qjJ" secondAttribute="bottom" id="DC1-6d-abU"/>
+                            <constraint firstItem="Que-cO-BxE" firstAttribute="bottom" secondItem="o1z-aV-3UL" secondAttribute="top" id="KUd-ya-APn"/>
                             <constraint firstItem="8eL-zy-qjJ" firstAttribute="top" secondItem="EgP-SI-XCY" secondAttribute="bottom" id="ZeO-oZ-4yC"/>
                             <constraint firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="jHZ-TD-jzo"/>
+                            <constraint firstItem="Que-cO-BxE" firstAttribute="leading" secondItem="8eL-zy-qjJ" secondAttribute="leading" id="pbM-Le-g9h"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aKT-ui-dxk">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vyK-6e-HOZ">
+                        <barButtonItem key="leftBarButtonItem" image="back_icon" id="vyK-6e-HOZ">
                             <connections>
                                 <segue destination="rH4-xE-bAd" kind="unwind" unwindAction="unwindToDetail:" id="3sx-2b-6NH"/>
                             </connections>
                         </barButtonItem>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" momentary="YES" id="vi8-iH-Rsd">
-                            <rect key="frame" x="220" y="7" width="161" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Walk" width="80"/>
-                                <segment title="Car" width="80"/>
-                            </segments>
-                        </segmentedControl>
-                        <rightBarButtonItems>
-                            <barButtonItem image="User" id="gIf-0f-UOC">
-                                <connections>
-                                    <action selector="getMyLocation" destination="DXo-X0-eqf" id="ccp-ar-Wqn"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="Pin" id="MzK-PM-In7">
-                                <connections>
-                                    <action selector="showNearby" destination="DXo-X0-eqf" id="QJH-mU-SE0"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelBarButton" destination="vyK-6e-HOZ" id="4W1-Mj-PTg"/>
                         <outlet property="mapView" destination="8eL-zy-qjJ" id="DhX-X1-kAL"/>
                         <outlet property="transportSegument" destination="vi8-iH-Rsd" id="Pzj-y3-Pb5"/>
                         <segue destination="4Jw-MH-KDg" kind="show" identifier="showNavigationSteps" id="Y8e-nB-n3H"/>
@@ -131,6 +188,7 @@
     </scenes>
     <resources>
         <image name="Pin" width="24" height="24"/>
-        <image name="User" width="24" height="24"/>
+        <image name="back_icon" width="13" height="24"/>
+        <image name="location_icon" width="25" height="25"/>
     </resources>
 </document>

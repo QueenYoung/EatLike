@@ -11,6 +11,7 @@ import MapKit
 class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var transportSegument: UISegmentedControl!
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
@@ -18,13 +19,20 @@ class MapViewController: UIViewController {
         return manager
     }()
 
-    // restaurant 的位置标记
+    // 用户 的位置标记
     var currentLocation: CLLocationCoordinate2D?
     var currentRestaurantPlacemark: CLPlacemark?
     var restaurant: Restaurant!
+    // 用户选择的导航方式
     var chooseTransportType = MKDirectionsTransportType.Walking
+    // 用于在获得详细的导航路径的参数
     var currentRoutes: MKRoute?
+    // 搜索栏
+    var resultSearchController: UISearchController!
+    var restaurantAnnotation: MKAnnotation!
+    // 只创建一次的 annotation
 
+    // MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         createAnnotation()
@@ -37,6 +45,7 @@ class MapViewController: UIViewController {
         mapView.showsScale = true
         mapView.showsBuildings = true
 
+        configureSearch()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -49,6 +58,7 @@ class MapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // Naviation Methods
     @IBAction func getMyLocation() {
         let segmentIndex = transportSegument.selectedSegmentIndex
         chooseTransportType = { switch segmentIndex {
@@ -64,7 +74,7 @@ class MapViewController: UIViewController {
         calculateDirection(directionRequest)
     }
 
-    @IBAction func showNearby() {
+    @IBAction func showNearby(sender: UIBarButtonItem) {
         let searchRequest = MKLocalSearchRequest()
         searchRequest.naturalLanguageQuery = restaurant.type
         // 获得当前地图中心, 方圆 2 公里的区域
@@ -114,7 +124,8 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "ShopPinDetailView"
 
-        if annotation is MKUserLocation {
+        // 如果是用户自己的位置的话, 忽略
+        if annotation is MKUserLocation || annotation.title! != restaurant.name {
             return nil
         }
 
@@ -127,25 +138,22 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.canShowCallout = true
         }
 
-
-        // 只为自己的 restaurant 创建额外的信息.
-        if annotation.title! == restaurant.name {
             // 通过 nib 文件创建直接创建 UIView
-            let detailView = (UINib(nibName: identifier, bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView) as! MapPinView
-            detailView.delegate = self
-            detailView.restaurant = restaurant
-            detailView.currentRestaurantPlacemark = currentRestaurantPlacemark
-            annotationView?.detailCalloutAccessoryView = detailView
-            annotationView?.pinTintColor = MKPinAnnotationView.greenPinColor()
-        }
-
+        let detailView = (UINib(nibName: identifier, bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView) as! MapPinView
+        detailView.delegate = self
+        detailView.restaurant = restaurant
+        detailView.currentRestaurantPlacemark = currentRestaurantPlacemark
+        annotationView?.detailCalloutAccessoryView = detailView
+        annotationView?.pinTintColor = MKPinAnnotationView.greenPinColor()
+        restaurantAnnotation = annotation
+        
         return annotationView
     }
 
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let render = MKPolylineRenderer(overlay: overlay)
         render.strokeColor = chooseTransportType == .Walking ? .blueColor() : UIColor.yellowColor()
-        render.lineWidth = 4.0
+        render.lineWidth = 8.0
 
         return render
     }
@@ -306,6 +314,7 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 
+// MARK: Protocol Extension
 extension MapViewController: Navigationable {
     func getNavigationRoute() {
         if currentRoutes == nil {
@@ -317,3 +326,47 @@ extension MapViewController: Navigationable {
         }
     }
 }
+
+extension MapViewController: HandleMapSearchDelegate {
+    func configureSearch() {
+        let locationSearchTable = storyboard?
+            .instantiateViewControllerWithIdentifier("LocationSearchTable")
+            as! LocationSearchTable
+        locationSearchTable.mapView = mapView
+//        locationSearchTable.delegate = self
+
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController.searchResultsUpdater = locationSearchTable
+        resultSearchController.hidesNavigationBarDuringPresentation = false
+        definesPresentationContext = true
+
+        let searchBar = resultSearchController!.searchBar
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search for places"
+        navigationItem.titleView = resultSearchController?.searchBar
+    }
+
+    func dropPinZoomIn(placemark: MKPlacemark) {
+
+        // 先移除所有的 annotations
+        mapView.removeAnnotations(mapView.annotations)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemark.coordinate
+        annotation.title = placemark.name
+
+        // 获得城市名和州名
+        if let city = placemark.locality,
+            let state = placemark.subAdministrativeArea {
+            annotation.subtitle = "\(city) \(state)"
+        }
+
+        // 把 restaurant 的 annotation 重新加入
+        mapView.addAnnotations([restaurantAnnotation, annotation])
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegionMake(placemark.coordinate, span)
+        mapView.setRegion(region, animated: true)
+
+        resultSearchController?.searchBar.text = ""
+    }
+}
+
