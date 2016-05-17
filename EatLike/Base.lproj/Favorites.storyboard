@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F31a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="upW-bA-FBi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="upW-bA-FBi">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Restaurant Table View Controller-->
@@ -34,20 +35,12 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="65" id="Cm5-NX-GaX"/>
                                                                 <constraint firstAttribute="height" constant="65" id="CvK-Q8-daZ"/>
-                                                                <constraint firstAttribute="width" constant="66" id="pXB-gP-Yru"/>
-                                                                <constraint firstAttribute="height" constant="66" id="way-rE-CI3"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                     <integer key="value" value="33"/>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
-                                                            <variation key="default">
-                                                                <mask key="constraints">
-                                                                    <exclude reference="pXB-gP-Yru"/>
-                                                                    <exclude reference="way-rE-CI3"/>
-                                                                </mask>
-                                                            </variation>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ThB-vG-cST">
                                                             <rect key="frame" x="73" y="0.0" width="436" height="65"/>
@@ -93,10 +86,10 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="LocationLabel" destination="M6A-na-7S7" id="xXR-8C-zVH"/>
+                                    <outlet property="LocationLabel" destination="M6A-na-7S7" id="oFH-z5-X90"/>
                                     <outlet property="TypeLabel" destination="0N0-iw-DKk" id="E5Y-Ul-jJO"/>
                                     <outlet property="nameLabel" destination="OEm-FQ-jGx" id="FE3-qc-yLh"/>
-                                    <outlet property="stackView" destination="n4G-IH-jY7" id="f3s-zO-t13"/>
+                                    <outlet property="stackView" destination="n4G-IH-jY7" id="Ha8-DV-MUi"/>
                                     <outlet property="thumbnailImageView" destination="QlZ-Qd-FZE" id="b3f-1m-BQG"/>
                                 </connections>
                             </tableViewCell>
@@ -140,10 +133,10 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2eL-6Y-Iyj">
                                     <rect key="frame" x="0.0" y="24" width="584" height="88"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="1" green="0.49803921569999998" blue="0.0" alpha="0.8111260776" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                 </textView>
                             </subviews>
                         </stackView>
@@ -177,6 +170,7 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cafeloisl" translatesAutoresizingMaskIntoConstraints="NO" id="5bX-Eh-PLP">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="244" id="1Ha-lm-wI1"/>
                                             <constraint firstAttribute="height" constant="240" id="Lv7-hD-DBp"/>
@@ -190,6 +184,9 @@
                                                 <exclude reference="iZP-Uf-Z0q"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="zZG-b6-UNi" appends="YES" id="k0g-5B-a4T"/>
+                                        </connections>
                                     </imageView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zTq-zQ-aAV">
                                         <rect key="frame" x="0.0" y="240" width="600" height="315"/>
@@ -294,9 +291,15 @@
                         <segue destination="3Zn-8d-FuY" kind="show" identifier="ShowReminded" id="V1W-qJ-NZO"/>
                         <segue destination="0b3-fE-Rl7" kind="show" identifier="ReviewNavigationController" id="huP-R9-8bp"/>
                         <segue destination="8Aq-pb-6z5" kind="presentation" identifier="ModalMapView" id="5zx-KZ-BJQ"/>
+                        <segue destination="9Qm-xF-KZV" kind="presentation" identifier="ScaleImage" customClass="DropSegue" customModule="EatLike" customModuleProvider="target" id="fDd-fg-ove"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1g2-8D-Eqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="zZG-b6-UNi">
+                    <connections>
+                        <action selector="tapGestureImageForDetail:" destination="a45-Kn-y6U" id="vh7-Qp-ZQT"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3609" y="850"/>
         </scene>
@@ -443,7 +446,7 @@
                     </tableViewCellContentView>
                 </tableViewCell>
             </objects>
-            <point key="canvasLocation" x="4411" y="850"/>
+            <point key="canvasLocation" x="4463" y="918"/>
         </scene>
         <!--Rate-->
         <scene sceneID="ZvN-dS-MxM">
@@ -596,7 +599,7 @@
         <!--Favorite-->
         <scene sceneID="AdC-VG-shh">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="upW-bA-FBi" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBarsOnSwipe="YES" id="upW-bA-FBi" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorite" image="favorite" id="0TA-Ou-Koj"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -638,7 +641,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OxN-Ol-yRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3382" y="-136"/>
+            <point key="canvasLocation" x="3478" y="-143"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Me5-6o-i4O">
@@ -695,7 +698,48 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bDv-vD-q75" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4367" y="-136"/>
+            <point key="canvasLocation" x="4042.5" y="-246"/>
+        </scene>
+        <!--Detail Image Controller-->
+        <scene sceneID="EXP-Ak-ZeZ">
+            <objects>
+                <viewController id="9Qm-xF-KZV" customClass="DetailImageController" customModule="EatLike" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LfQ-zZ-Wbx"/>
+                        <viewControllerLayoutGuide type="bottom" id="k57-Zm-Eh1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nxd-P4-Cnj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gas-Cx-i8C">
+                                <rect key="frame" x="0.0" y="141" width="600" height="300"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="iUh-5i-a08" appends="YES" id="bBf-p1-8GK"/>
+                                </connections>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" secondItem="Gas-Cx-i8C" secondAttribute="height" multiplier="2" id="1lV-T4-Od3"/>
+                            <constraint firstAttribute="trailing" secondItem="Gas-Cx-i8C" secondAttribute="trailing" id="Ahe-CY-etl"/>
+                            <constraint firstItem="Gas-Cx-i8C" firstAttribute="leading" secondItem="nxd-P4-Cnj" secondAttribute="leading" id="Y57-3t-0YY"/>
+                            <constraint firstItem="Gas-Cx-i8C" firstAttribute="top" secondItem="LfQ-zZ-Wbx" secondAttribute="bottom" constant="121" id="rcR-zW-LN1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="Gas-Cx-i8C" id="lRc-2H-c4D"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bGT-EY-mJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="iUh-5i-a08">
+                    <connections>
+                        <action selector="tapGestureToReturn:" destination="9Qm-xF-KZV" id="SrY-b0-Sfr"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4286" y="243"/>
         </scene>
     </scenes>
     <resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F31a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -34,17 +34,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aKT-ui-dxk">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vyK-6e-HOZ">
                             <connections>
                                 <segue destination="rH4-xE-bAd" kind="unwind" unwindAction="unwindToDetail:" id="3sx-2b-6NH"/>
                             </connections>
                         </barButtonItem>
-                        <segmentedControl key="titleView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" momentary="YES" id="vi8-iH-Rsd">
-                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" momentary="YES" id="vi8-iH-Rsd">
+                            <rect key="frame" x="220" y="7" width="161" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="Walk"/>
-                                <segment title="Car"/>
+                                <segment title="Walk" width="80"/>
+                                <segment title="Car" width="80"/>
                             </segments>
                         </segmentedControl>
                         <rightBarButtonItems>

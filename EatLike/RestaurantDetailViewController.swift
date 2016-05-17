@@ -86,6 +86,9 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             let mapViewNC = segue.destinationViewController as! UINavigationController
             let mapView = mapViewNC.topViewController as! MapViewController
             mapView.restaurant = restaurant
+        case .ScaleImage:
+            let scaleVC = segue.destinationViewController as! DetailImageController
+            scaleVC.image = restaurantImageView.image
         default:
             break
         }
@@ -204,5 +207,39 @@ extension RestaurantDetailViewController: SegueType {
         case ModalMapView
         case ShowReminded
         case EditRestaurant
+        case ScaleImage
+    }
+}
+
+extension RestaurantDetailViewController {
+    @IBAction func tapGestureImageForDetail(sender: UITapGestureRecognizer) {
+        performSegueWithIdentifier(.ScaleImage, sender: nil)
+        print(#function)
+    }
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if touches.count == 1 {
+            performSegueWithIdentifier(.ScaleImage, sender: nil)
+            print(#function)
+        }
+    }
+}
+
+class DetailImageController: UIViewController {
+    @IBOutlet weak var imageView: UIImageView!
+    var image: UIImage!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        imageView.image = image
+    }
+
+    @IBAction func tapGestureToReturn(sender: UITapGestureRecognizer) {
+//        dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if touches.count == 1 {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 }

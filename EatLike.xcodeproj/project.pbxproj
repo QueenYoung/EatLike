@@ -39,6 +39,10 @@
 		96D1B21C1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D1B21B1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift */; };
 		96E22EE41CDA240C00781CD0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E22EE31CDA240C00781CD0 /* ImageCache.swift */; };
 		96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */; };
+		96E3CE6C1CEAD9220008822D /* ScaleSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */; };
+		96E3CE6E1CEAD9B10008822D /* DropSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE6D1CEAD9B10008822D /* DropSegue.swift */; };
+		96E3CE701CEAD9B90008822D /* SwipeSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE6F1CEAD9B90008822D /* SwipeSegue.swift */; };
+		96E3CE721CEADA810008822D /* FadeSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE711CEADA810008822D /* FadeSegue.swift */; };
 		96E6E9091CA1912F00D33EB9 /* WalkthroughContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E6E9081CA1912F00D33EB9 /* WalkthroughContentViewController.swift */; };
 		96E6E90B1CA192A600D33EB9 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E6E90A1CA192A600D33EB9 /* WalkthroughPageViewController.swift */; };
 		96E6E90F1CA278A900D33EB9 /* about.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96E6E90D1CA278A900D33EB9 /* about.storyboard */; };
@@ -82,6 +86,10 @@
 		96D1B21B1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageCollectionViewController.swift; sourceTree = "<group>"; };
 		96E22EE31CDA240C00781CD0 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = EatLike/ImageCache.swift; sourceTree = "<group>"; };
 		96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRestaurantViewController.swift; sourceTree = "<group>"; };
+		96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleSegue.swift; sourceTree = "<group>"; };
+		96E3CE6D1CEAD9B10008822D /* DropSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSegue.swift; sourceTree = "<group>"; };
+		96E3CE6F1CEAD9B90008822D /* SwipeSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeSegue.swift; sourceTree = "<group>"; };
+		96E3CE711CEADA810008822D /* FadeSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeSegue.swift; sourceTree = "<group>"; };
 		96E6E9081CA1912F00D33EB9 /* WalkthroughContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughContentViewController.swift; sourceTree = "<group>"; };
 		96E6E90A1CA192A600D33EB9 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		96E6E90E1CA278A900D33EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/about.storyboard; sourceTree = "<group>"; };
@@ -102,6 +110,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		960B214C1CEAE494001BEB51 /* Segue Class */ = {
+			isa = PBXGroup;
+			children = (
+				96E3CE711CEADA810008822D /* FadeSegue.swift */,
+				96E3CE6D1CEAD9B10008822D /* DropSegue.swift */,
+				96E3CE6F1CEAD9B90008822D /* SwipeSegue.swift */,
+				96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */,
+			);
+			name = "Segue Class";
+			sourceTree = "<group>";
+		};
 		96275E4E1C92E5EF00E90E2E = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +199,7 @@
 		96B564421CC1D019008638BD /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				960B214C1CEAE494001BEB51 /* Segue Class */,
 				96275E5E1C92E5EF00E90E2E /* Main.storyboard */,
 				96E6E9121CA2792500D33EB9 /* Favorites.storyboard */,
 				963BC9361CD8F27E002702A7 /* UpdateRestaurant.storyboard */,
@@ -329,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96E3CE721CEADA810008822D /* FadeSegue.swift in Sources */,
 				964B36101CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift in Sources */,
 				96275E6D1C92E96100E90E2E /* RestaurantTableViewController.swift in Sources */,
 				9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */,
@@ -345,6 +366,8 @@
 				966571641CD2EB120096EE01 /* CameraViewController.swift in Sources */,
 				96D1B21C1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift in Sources */,
 				96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */,
+				96E3CE701CEAD9B90008822D /* SwipeSegue.swift in Sources */,
+				96E3CE6C1CEAD9220008822D /* ScaleSegue.swift in Sources */,
 				96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */,
 				96E6E90B1CA192A600D33EB9 /* WalkthroughPageViewController.swift in Sources */,
 				964B360D1CE4AB18001A8CB2 /* MapPinView.swift in Sources */,
@@ -352,6 +375,7 @@
 				96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */,
 				96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */,
 				96F7DD181CABA1D60042707E /* AboutTableViewController.swift in Sources */,
+				96E3CE6E1CEAD9B10008822D /* DropSegue.swift in Sources */,
 				96F7DD1A1CABA7900042707E /* FeedbackWebViewController.swift in Sources */,
 				96275E5B1C92E5EF00E90E2E /* AppDelegate.swift in Sources */,
 				966571661CD2EB250096EE01 /* CapturePhotoViewController.swift in Sources */,

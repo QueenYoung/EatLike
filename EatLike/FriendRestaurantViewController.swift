@@ -21,20 +21,14 @@ class FriendRestaurantViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = friendData.foodName
         detailImageView.image = friendData.detailImage
         userImageView.image = friendData.authorImage
         authorLabel.text = String(friendData.userName)
-        authorLabel.text?.appendContentsOf(" | \(friendData.foodName)")
-        setNeedsStatusBarAppearanceUpdate()
-        delay(0.1) { [unowned self] in
-            self.dackButton.alpha = 0.0
-            self.descriptionTextView.alpha = 0.0
-            
-            let imageSize = CGSize(width: 1, height: 1)
-            self.navigationController?.navigationBar
-                .setBackgroundImage(.withColor(.clearColor(), size: imageSize), forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = .withColor(.clearColor(), size: imageSize)
-        }
+        authorLabel.text?.appendContentsOf(" | \(friendData.name)")
+
+        self.dackButton.alpha = 0.0
+        self.descriptionTextView.alpha = 0.0
 
     }
 
@@ -50,57 +44,59 @@ class FriendRestaurantViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        dackButton.alpha = 1.0
-        springScaleFrom(dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
-        spring(0.5) {
-            self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
-            self.descriptionTextView.alpha = 1.0
+        delay(0.2) {
+            self.dackButton.alpha = 1.0
+            self.springScaleFrom(self.dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
+            spring(0.5) {
+                self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
+                self.descriptionTextView.alpha = 1.0
+            }
         }
     }
-
+    
     @IBAction func cancel(sender: UIButton) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     private func textViewWithFont(textView: UITextView, fontName: String, fontSize: CGFloat, lineSpacing: CGFloat) {
         let font = UIFont(name: fontName, size: fontSize)
         textView.text = friendData.note
         let text = textView.text
-
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
-
+        
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
         attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, attributedString.length))
-
+        
         textView.attributedText = attributedString
     }
-
+    
     private func springScaleFrom (view: UIView, x: CGFloat, y: CGFloat, scaleX: CGFloat, scaleY: CGFloat) {
         let translation = CGAffineTransformMakeTranslation(x, y)
         let scale = CGAffineTransformMakeScale(scaleX, scaleY)
         view.transform = CGAffineTransformConcat(translation, scale)
-
+        
         UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: {
             view.transform = CGAffineTransformIdentity
             }, completion: nil)
     }
-
-
+    
+    
     // fixme: 
     @IBAction func swipeDownToDismissView(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(0.2) {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
-
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
-
+    
     override func childViewControllerForStatusBarStyle() -> UIViewController? {
         return navigationController?.topViewController
     }
-
+    
 }

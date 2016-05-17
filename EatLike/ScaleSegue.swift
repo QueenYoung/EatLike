@@ -1,26 +1,31 @@
-//
-//  ScaleSegue.swift
-//  EatLike
-//
-//  Created by Queen Y on 16/4/17.
-//  Copyright © 2016年 Queen. All rights reserved.
-//
 
 import UIKit
 
-class ScaleSegue: UIStoryboardSegue, UIViewControllerTransitioningDelegate {
+class ScaleSegue: UIStoryboardSegue {
+
     override func perform() {
         destinationViewController.transitioningDelegate = self
         super.perform()
     }
+}
 
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+extension ScaleSegue: UIViewControllerTransitioningDelegate {
+    func animationControllerForPresentedController(
+        presented: UIViewController,
+        presentingController presenting: UIViewController,
+        sourceController source: UIViewController)
+        -> UIViewControllerAnimatedTransitioning? {
+
         return ScalePresentAnimator()
     }
 
-//    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return ScaleDismissAnimator()
-//    }
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return ScaleDismissAnimator()
+    }
+}
+
+protocol ViewScaleable {
+    var scaleView:UIView { get }
 }
 
 class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
@@ -48,9 +53,8 @@ class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         // 3. Set up the initial state for the animation
         var startFrame = CGRect.zero
-        if let fromViewController = fromViewController as? ScaleImageable {
+        if let fromViewController = fromViewController as? ViewScaleable {
             startFrame = fromViewController.scaleView.frame
-//            startFrame.origin.y -= fromViewController.scaleView.frame.height
         } else {
             print("Warning: Controller \(fromViewController) does not conform to ViewScaleable")
         }
@@ -80,13 +84,60 @@ class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
 
+        // Get the transition context to- controller and view
+        var toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
 
+        if let toNC = toViewController as? UINavigationController {
+            if let controller = toNC.topViewController {
+                toViewController = controller
+            }
+        }
+
+        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+
+        // Add the to- view to the transition context
+        if let fromView = fromView,
+            toView = toView {
+            transitionContext.containerView()?.insertSubview(toView, belowSubview:fromView)
+        }
+
+        // Set up the inital state for the animation
+        toView?.alpha = 0.0
+
+        // Work out the final frame for the animation
+        var finalFrame = CGRect.zero
+        if let toViewController = toViewController as? ViewScaleable {
+            finalFrame = toViewController.scaleView.frame
+        } else {
+            print("Warning: Controller \(toViewController) does not conform to ViewScaleable")
+        }
+
+        // Perform the animation
+        let duration = transitionDuration(transitionContext)
+
+        UIView.animateWithDuration(duration, animations: {
+            fromView?.frame = finalFrame
+            fromView?.layoutIfNeeded()
+            toView?.alpha = 1.0
+            }, completion: {
+                finished in
+                // Clean up the transition context
+                transitionContext.completeTransition(true)
+        })
     }
 }
 
-protocol ScaleImageable {
-    var scaleView: UIView { get }
+extension RestaurantDetailViewController: ViewScaleable {
+    var scaleView: UIView {
+        return restaurantImageView
+    }
 }
 
+extension DetailImageController: ViewScaleable {
+    var scaleView: UIView {
+        return imageView
+    }
+}
 

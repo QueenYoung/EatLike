@@ -10,12 +10,14 @@ import UIKit
 import MapKit
 import Contacts
 class MapPinView: UIView {
-
+    weak var delegate: Navigationable?
     @IBOutlet weak var reaingStackView: UIStackView!
     @IBOutlet weak var restaurantNote: UILabel!
     @IBOutlet weak var departureLabel: UILabel!
     @IBOutlet weak var arrivalLabel: UILabel!
     @IBOutlet weak var timeStackView: UIStackView!
+    @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var timeButton: UIButton!
 
     lazy var dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
@@ -30,6 +32,9 @@ class MapPinView: UIView {
                 restaurantNote.text = restaurant.note
             }
             updateRating()
+            if restaurant.phoneNumber.isEmpty {
+                callButton.enabled = false
+            }
         }
     }
 
@@ -56,9 +61,7 @@ class MapPinView: UIView {
 extension MapPinView {
     // MARK: - IBActions
     @IBAction func phoneTapped(sender: UIButton) {
-        if !restaurant.phoneNumber.isEmpty {
-            call(restaurant.phoneNumber, isAlert: false)
-        }
+        call(restaurant.phoneNumber, isAlert: false)
     }
 
     @IBAction func transitTapped(sender: UIButton) {
@@ -71,12 +74,19 @@ extension MapPinView {
         if timeStackView.hidden {
             animatedView(timeStackView, hidden: false)
             animatedView(restaurantNote, hidden: true)
+            timeButton.setImage(UIImage(named: "cafetransit_icon_time_on"), forState: .Normal)
             requestTransitTimes()
         } else {
             animatedView(timeStackView, restaurantNote, hidden: true)
             animatedView(restaurantNote, hidden: false)
+            timeButton.setImage(UIImage(named: "cafetransit_icon_time_off"), forState: .Normal)
         }
     }
+
+    @IBAction func navigationButtonTapped(sender: UIButton) {
+        delegate?.getNavigationRoute()
+    }
+
     // MARK: - Helper Methods
     private func animatedView(view: UIView..., hidden: Bool) {
         UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: [], animations: {
@@ -111,4 +121,8 @@ extension MapPinView {
         let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
         mapItem.openInMapsWithLaunchOptions(launchOptions)
     }
+}
+
+protocol Navigationable: class {
+    func getNavigationRoute()
 }

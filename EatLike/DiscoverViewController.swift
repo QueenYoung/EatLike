@@ -26,7 +26,7 @@ class DiscoverViewController: UIViewController {
     var snapBehavior : UISnapBehavior!
     var isAnimated = false
 
-    lazy private var discovers = [
+    private var discovers = [
         DiscoverRestaurants(
             name: "Red Flag",
             userName: "Mark",
@@ -62,17 +62,21 @@ class DiscoverViewController: UIViewController {
         getBlurView(headerView, style: .Dark)
         animator = UIDynamicAnimator(referenceView: view)
 
+        let imageSize = CGSize(width: 1, height: 1)
+        self.navigationController?.navigationBar
+            .setBackgroundImage(.withColor(.clearColor(), size: imageSize), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = .withColor(.clearColor(), size: imageSize)
+        
+        view.insertSubview(backgroundBlurImage, atIndex: 0)
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
-
         UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        tabBarController?.tabBar.hidden = false
         UIApplication.sharedApplication().statusBarStyle = .Default
     }
 

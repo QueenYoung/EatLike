@@ -89,9 +89,10 @@ class CameraViewController: UIViewController {
     }
 
     @IBAction func dismiss(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: {
+        /* dismissViewControllerAnimated(true, completion: {
             self.performSegueWithIdentifier("unwindBack", sender: nil)
-        })
+        }) */
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
     func configureZoom(isOut: Bool) {

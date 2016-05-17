@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F31a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYy-rE-Sx6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RYy-rE-Sx6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -251,6 +251,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgz-d5-4LJ">
+                                <rect key="frame" x="532" y="535" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismiss:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="ybG-wE-4f7"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2F-cs-MQo">
                                 <rect key="frame" x="270" y="520" width="60" height="60"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -266,15 +275,6 @@
                                 <connections>
                                     <action selector="capture:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="CML-A1-h8g"/>
                                     <segue destination="v7p-hh-ayC" kind="unwind" unwindAction="unwindFromCamera:" id="V8g-yy-CFH"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgz-d5-4LJ">
-                                <rect key="frame" x="532" y="535" width="48" height="30"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="dismiss:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="ybG-wE-4f7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -293,7 +293,7 @@
                     <connections>
                         <outlet property="cameraButton" destination="i2F-cs-MQo" id="gIV-33-7Km"/>
                         <outlet property="cancelButton" destination="cgz-d5-4LJ" id="od5-Nt-zZM"/>
-                        <segue destination="zzw-rE-fon" kind="show" identifier="ShowCaptureImage" id="ctW-7a-ac4"/>
+                        <segue destination="zzw-rE-fon" kind="presentation" identifier="ShowCaptureImage" id="ctW-7a-ac4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cau-jO-kT2" userLabel="First Responder" sceneMemberID="firstResponder"/>

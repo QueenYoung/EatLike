@@ -30,7 +30,7 @@ class RestaurantTableViewController: UITableViewController,
         return searchController
     }()
 
-    let notesViewHeight: CGFloat = 128
+//    let notesViewHeight: CGFloat = 128
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet var noteView: UIView!
     var restaurants:[Restaurant] = []
@@ -163,11 +163,13 @@ class RestaurantTableViewController: UITableViewController,
         tableView.beginUpdates()
         if cell.stackView.arrangedSubviews.contains(noteView) {
             cell.removeNoteView(noteView)
+            cell.thumbnailImageView.hidden = false
         } else {
             cell.addNoteView(noteView)
             noteTextView.text = restaurants[indexPath.row].note
+            cell.thumbnailImageView.hidden = true
         }
-        cell.thumbnailImageView.layoutIfNeeded()
+        cell.setNeedsLayout()
         tableView.endUpdates()
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }

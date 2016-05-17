@@ -43,7 +43,6 @@ extension Restaurant {
 	    if !needRemind.boolValue {
 		    let existingNotification = scheduledNotifications()
 		    if let exist = existingNotification {
-			    print("nimabi")
 			    UIApplication.sharedApplication().cancelLocalNotification(exist)
 			    return
 		    }
@@ -61,7 +60,7 @@ extension Restaurant {
 		    notification.alertBody = alertMessage
 		    notification.soundName = UILocalNotificationDefaultSoundName
             notification.alertAction = "Youqu"
-            notification.alertTitle = "Nimabi"
+            notification.alertTitle = "Message comes from \(name)"
 		    let identifier = "\(name)\(type)\(phoneNumber)"
 		    notification.userInfo = ["itemID": identifier]
 		    UIApplication.sharedApplication().scheduleLocalNotification(notification)

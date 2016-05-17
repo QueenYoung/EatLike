@@ -193,6 +193,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         let imagePicker = UIImagePickerController()
         // Never don't forget!!!!!!!!
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         operationForRealDevices(imagePicker, isRealDevice: canMakePicture)
     }
 
@@ -210,7 +211,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
         let previewController = PreviewCollectionViewController(collectionViewLayout: collectionLayout)
         previewController.delegate = self
-        let view = UIView(frame: CGRect(x: 4, y: 4, width: 290, height: 96))
+        let width = self.view.frame.width
+        let view = UIView(frame: CGRect(x: 4, y: 4, width: width - 30, height: 96))
         previews.append(previewController)
         view.addSubview(previewController.view)
         actionSheet.view.addSubview(view)
@@ -218,9 +220,9 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         if isRealDevice {
             let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
                 [unowned self] _ in
-                //                    imagePicker.sourceType = .Camera
-                //                    self.presentViewController(imagePicker, animated: true, completion: nil)
-                self.performSegueWithIdentifier("ShowCamera", sender: self)
+                imagePicker.sourceType = .Camera
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+//                self.performSegueWithIdentifier("ShowCamera", sender: self)
             }
             actionSheet.addAction(cameraAction)
         }
@@ -231,11 +233,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        // 如果是修改图片的话, 就删除之前的缓存.
-        if newRestaurant != nil {
-            cache.removeImage(newRestaurant.keyString)
-        }
-
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true

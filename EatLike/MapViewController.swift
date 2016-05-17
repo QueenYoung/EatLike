@@ -39,6 +39,11 @@ class MapViewController: UIViewController {
 
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        mapView.showsUserLocation = false
+        locationManager.stopUpdatingLocation()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -125,12 +130,9 @@ extension MapViewController: MKMapViewDelegate {
 
         // 只为自己的 restaurant 创建额外的信息.
         if annotation.title! == restaurant.name {
-            /* let leftIconView = UIImageView(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
-            leftIconView.image = UIImage(data: restaurant.image!)
-            annotationView?.leftCalloutAccessoryView = leftIconView
-            annotationView?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) */
             // 通过 nib 文件创建直接创建 UIView
             let detailView = (UINib(nibName: identifier, bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView) as! MapPinView
+            detailView.delegate = self
             detailView.restaurant = restaurant
             detailView.currentRestaurantPlacemark = currentRestaurantPlacemark
             annotationView?.detailCalloutAccessoryView = detailView
@@ -303,3 +305,15 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 }
 
+
+extension MapViewController: Navigationable {
+    func getNavigationRoute() {
+        if currentRoutes == nil {
+            let alert = UIAlertController(title: "You Can't Do This", message: "You should tap the direction button first", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "I will do it", style: .Default, handler: nil))
+            presentViewController(alert, animated: true, completion: nil)
+        } else {
+            performSegueWithIdentifier("showNavigationSteps", sender: self)
+        }
+    }
+}
