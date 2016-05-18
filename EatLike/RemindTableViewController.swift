@@ -73,6 +73,8 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         dateLabel.text = dateFormatter.stringFromDate(dueDate)
     }
 
+    // 在将开关关闭的时候, 单元格的背景色发生变化
+    // 给用户提供更强列的提示
     private func turnCellStatus(cell: UITableViewCell, enable: Bool) {
         if enable {
             cell.backgroundColor = .whiteColor()
@@ -109,6 +111,7 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         datePicker.minimumDate = NSDate()
         datePicker.date = dueDate
         dateLabel.text = dateFormatter.stringFromDate(dueDate)
+        // 如果提醒信息不是空的, 就赋给 messageField
         if !restaurant.alertMessage.isEmpty {
             messageField.text = restaurant.alertMessage
         } else {
@@ -177,6 +180,7 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        // 之前没使用这一步的话
         if indexPath.section == 1 && indexPath.row == 2 {
             return 217.0
         } else {

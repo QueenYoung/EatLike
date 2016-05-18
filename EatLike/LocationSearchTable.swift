@@ -53,18 +53,18 @@ class LocationSearchTable: UITableViewController {
         // put a space between "Washington" and "DC"
         let secondSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? " " : ""
         let addressLine = String(
-            format:"%@%@%@%@%@%@%@",
-            // street number
-            selectedItem.subThoroughfare ?? "",
-            firstSpace,
-            // street name
-            selectedItem.thoroughfare ?? "",
-            comma,
+            format:"%@%@%@%@%@%@",
             // city
             selectedItem.locality ?? "",
             secondSpace,
-            // state
-            selectedItem.administrativeArea ?? ""
+
+            // street number
+            selectedItem.subThoroughfare ?? "",
+            firstSpace,
+
+            // street name
+            selectedItem.thoroughfare ?? "",
+            comma
         )
         return addressLine
     }
@@ -73,6 +73,20 @@ class LocationSearchTable: UITableViewController {
         let selectedItem = matchingItems[indexPath.row].placemark
         delegate?.dropPinZoomIn(selectedItem)
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let setLocationAction = UITableViewRowAction(
+            style: .Destructive, title: "Replace") {
+                _ in
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath)!
+                print(cell.textLabel!.text!)
+                self.delegate?.replaceLocationFor(cell.textLabel!.text!)
+                self.dismissViewControllerAnimated(true, completion: nil)
+        }
+
+        setLocationAction.backgroundColor = .blueColor()
+        return [setLocationAction]
     }
 }
 
@@ -97,4 +111,5 @@ extension LocationSearchTable: UISearchResultsUpdating {
 // MARK: - delefate for map view controller
 protocol HandleMapSearchDelegate: class {
     func dropPinZoomIn(placemark: MKPlacemark)
+    func replaceLocationFor(place: String)
 }

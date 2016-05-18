@@ -102,11 +102,6 @@ class MapViewController: UIViewController {
         }
     }
 
-    @IBAction func cancel() {
-        dismissViewControllerAnimated(true, completion: nil)
-        performSegueWithIdentifier("", sender: nil)
-    }
-
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showNavigationSteps" {
@@ -333,7 +328,7 @@ extension MapViewController: HandleMapSearchDelegate {
             .instantiateViewControllerWithIdentifier("LocationSearchTable")
             as! LocationSearchTable
         locationSearchTable.mapView = mapView
-//        locationSearchTable.delegate = self
+        locationSearchTable.delegate = self
 
         resultSearchController = UISearchController(searchResultsController: locationSearchTable)
         resultSearchController.searchResultsUpdater = locationSearchTable
@@ -365,6 +360,14 @@ extension MapViewController: HandleMapSearchDelegate {
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegionMake(placemark.coordinate, span)
         mapView.setRegion(region, animated: true)
+
+        resultSearchController?.searchBar.text = ""
+    }
+
+    func replaceLocationFor(place: String) {
+        restaurant.location = place
+        mapView.removeAnnotations(mapView.annotations)
+        createAnnotation()
 
         resultSearchController?.searchBar.text = ""
     }

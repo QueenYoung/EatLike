@@ -127,7 +127,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JIp-7G-m9G" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="rH4-xE-bAd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2075" y="2274"/>
+            <point key="canvasLocation" x="2052" y="2260"/>
         </scene>
         <!--Steps Table View Controller-->
         <scene sceneID="eFN-JH-XST">
