@@ -60,7 +60,7 @@ extension Restaurant {
 		    notification.alertBody = alertMessage
 		    notification.soundName = UILocalNotificationDefaultSoundName
             notification.alertAction = "Youqu"
-            notification.alertTitle = "Message comes from \(name)"
+            notification.alertTitle = "\(name)"
 		    let identifier = "\(name)\(type)\(phoneNumber)"
 		    notification.userInfo = ["itemID": identifier]
 		    UIApplication.sharedApplication().scheduleLocalNotification(notification)

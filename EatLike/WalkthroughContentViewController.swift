@@ -13,11 +13,10 @@ class WalkthroughContentViewController: UIViewController {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var contentImageView: UIImageView!
     @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var doneButton: UIButton!
 
     var index     = 0
     var heading   = ""
-    var imageFile = ""
+    var imageFile: UIImage!
     var content   = ""
 
     override func viewDidLoad() {
@@ -25,14 +24,18 @@ class WalkthroughContentViewController: UIViewController {
 
         headingLabel.text       = heading
         contentLabel.text       = content
-        contentImageView.image  = UIImage(named: imageFile)
+        contentLabel.preferredMaxLayoutWidth = 150
+        contentImageView.image  = imageFile
         pageControl.currentPage = index
         // Do any additional setup after loading the view.
 
-        if index >= 0 && index <= 1 {
-            doneButton.hidden = true
-        } else if index == 2 {
-            doneButton.hidden = false
+        if (index == 2) {
+            NSTimer.scheduledTimerWithTimeInterval(
+                2,
+                target: self,
+                selector: #selector(doneButtonTapped),
+                userInfo: nil,
+                repeats: false)
         }
     }
 
@@ -41,7 +44,7 @@ class WalkthroughContentViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func doneButtonTapped(sender: UIButton) {
+    func doneButtonTapped() {
         let save = NSUserDefaults.standardUserDefaults()
         save.setBool(true, forKey: "hasViewedWalkthrough")
         dismissViewControllerAnimated(true, completion: nil)

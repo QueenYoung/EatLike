@@ -26,29 +26,7 @@ class DiscoverViewController: UIViewController {
     var snapBehavior : UISnapBehavior!
     var isAnimated = false
 
-    private var discovers = [
-        DiscoverRestaurants(
-            name: "Red Flag",
-            userName: "Mark",
-            foodName: "Chicken Eight",
-            category: "Hotel",
-            isLike: false,
-            note: "Very Good",
-            likesTotal: 90,
-            detailImage: UIImage(named: "grahamavenuemeats")!,
-            authorImage: UIImage(named: "avatar4")!),
-
-        DiscoverRestaurants(
-            name: "Yellow Books",
-            userName: "Your Father",
-            foodName: "CatShits",
-            category: "oo",
-            isLike: false,
-            note: "你他妈的就是一个傻逼, 我日你麻痹",
-            likesTotal: 39,
-            detailImage: UIImage(named: "petiteoyster")!,
-            authorImage: UIImage(named: "avatar")!)
-    ]
+    private var discovers = getDate()
     var index = 0
 
     override func viewDidLoad() {
@@ -206,10 +184,10 @@ class DiscoverViewController: UIViewController {
         userImageView.image = restaurant.authorImage
         restaurantImageButton.setImage(
             restaurant.detailImage, forState: .Normal)
-        restaurantLabel.text = restaurant.foodName
+        restaurantLabel.text = restaurant.name
         likesTotalLabel.text = "\(restaurant.likesTotal)"
         userNameLabel.text = restaurant.userName
-        userNameLabel.text?.appendContentsOf(" | \(restaurant.name)")
+        userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
         updateLikeButtonColor()
         dialogView.alpha = 1
     }

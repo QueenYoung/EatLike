@@ -214,7 +214,10 @@ extension MapViewController {
             }
         }
     }
-
+    
+    /**
+     在无法获得定位服务的时候调用
+     */
     private func showLocationRequiredAlert() {
         let alertController = UIAlertController(title: "Location Access Required",
                                                 message: "Location access is required to fetch the weather for your current location.", preferredStyle: .Alert)
@@ -229,32 +232,30 @@ extension MapViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
 
+    /**
+     要求改善地理位置的时候使用
+     */
     private func reinputLocation() {
-        let alertView = UIAlertController(title: "Location Error!", message: "please input a collect location", preferredStyle: .Alert)
-        alertView.addTextFieldWithConfigurationHandler {
-            textField in
-            textField.placeholder = "Apple Inc."
-        }
+        let alertView = UIAlertController(
+            title: "Location Error!",
+            message: "You can use search bar to replace your location",
+            preferredStyle: .Alert)
 
-        alertView.addAction(UIAlertAction(title: "OK", style: .Default) {
+        alertView.addAction(UIAlertAction(title: "Replace It", style: .Default) {
             _ in
-            let inputContent = alertView.textFields!.first!
-            if inputContent.text!.isEmpty {
-                self.restaurant.location = inputContent.placeholder!
-            } else {
-                self.restaurant.location = inputContent.text!
-            }
-            self.createAnnotation()
+                self.resultSearchController.active = true
             })
 
-        alertView.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        alertView.addAction(UIAlertAction(title: "Go Back", style: .Cancel, handler: {
             _ in
             self.dismissViewControllerAnimated(true, completion: nil)
         }))
         self.presentViewController(alertView, animated: true, completion: nil)
     }
 
-    
+    /**
+     用来创建一个 **Annotation**, 在刚进入视图或者更新了地理位置后调用
+     */
     private func createAnnotation() {
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(restaurant.location) {
@@ -298,9 +299,6 @@ extension MapViewController: CLLocationManagerDelegate {
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.first?.coordinate
-        /* guard let currentLocation = currentLocation else { return }
-        let overlay = MKCircle(centerCoordinate: currentLocation, radius: 1000)
-        mapView.addOverlay(overlay) */
     }
 
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {

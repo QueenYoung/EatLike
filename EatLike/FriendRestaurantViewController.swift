@@ -21,11 +21,11 @@ class FriendRestaurantViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = friendData.foodName
+        title = friendData.name
         detailImageView.image = friendData.detailImage
         userImageView.image = friendData.authorImage
-        authorLabel.text = String(friendData.userName)
-        authorLabel.text?.appendContentsOf(" | \(friendData.name)")
+        authorLabel.text = friendData.userName
+        authorLabel.text?.appendContentsOf(" 🌚🌝 \(friendData.foodName)")
 
         self.dackButton.alpha = 0.0
         self.descriptionTextView.alpha = 0.0

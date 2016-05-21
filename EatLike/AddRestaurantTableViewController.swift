@@ -209,13 +209,15 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
 
-        let previewController = PreviewCollectionViewController(collectionViewLayout: collectionLayout)
-        previewController.delegate = self
-        let width = self.view.frame.width
-        let view = UIView(frame: CGRect(x: 4, y: 4, width: width - 30, height: 96))
-        previews.append(previewController)
-        view.addSubview(previewController.view)
-        actionSheet.view.addSubview(view)
+        delay(0.0) {
+            let previewController = PreviewCollectionViewController(collectionViewLayout: self.collectionLayout)
+            previewController.delegate = self
+            let width = self.view.frame.width
+            let view = UIView(frame: CGRect(x: 4, y: 4, width: width - 30, height: 96))
+            self.previews.append(previewController)
+            view.addSubview(previewController.view)
+            actionSheet.view.addSubview(view)
+        }
 
         if isRealDevice {
             let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
@@ -253,7 +255,7 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
         if nameTextField.isFirstResponder() {
             locationTextField.becomeFirstResponder()
         } else if locationTextField.isFirstResponder() {
-            performSegueWithIdentifier("ChooseCategary", sender: nil)
+            locationTextField.resignFirstResponder()
         } else if noteTextField.isFirstResponder() {
             noteTextField.resignFirstResponder()
         }

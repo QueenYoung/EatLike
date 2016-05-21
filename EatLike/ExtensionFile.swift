@@ -78,4 +78,25 @@ public func configureAppearance() {
     let backgroundImage = UIImage.withColor(barColor, size: imageSize)
     navBarAppearance.setBackgroundImage(backgroundImage, forBarMetrics: .Default)
     navBarAppearance.tintColor = UIColor.whiteColor()
+    navBarAppearance.shadowImage = .withColor(.clearColor(), size: imageSize)
+}
+
+func getDate() -> [DiscoverRestaurants] {
+let a = NSArray(contentsOfURL:
+        NSBundle.mainBundle().URLForResource(
+            "Preview", withExtension: "plist")!)!
+        as! [[String: AnyObject]]
+
+    return a.map {
+        DiscoverRestaurants(name: $0["name"] as! String,
+            userName: $0["userName"] as! String,
+            foodName: $0["foodName"] as! String,
+            category: $0["category"] as! String,
+            isLike: ($0["isLike"] as! NSNumber).boolValue,
+            note: $0["note"] as! String,
+            likesTotal: $0["likesTotal"] as! Int,
+            detailImage: UIImage(named: $0["detailImage"] as! String)!,
+            authorImage: UIImage(named: $0["authorImage"] as! String)!
+        )
+    }
 }

@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import Contacts
+
 class MapPinView: UIView {
     weak var delegate: Navigationable?
     @IBOutlet weak var reaingStackView: UIStackView!

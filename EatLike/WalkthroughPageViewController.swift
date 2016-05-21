@@ -11,14 +11,17 @@ import UIKit
 class WalkthroughPageViewController: UIPageViewController,
                                      UIPageViewControllerDataSource {
 
-    let pageHeadings = ["Personalize", "Locate", "Discover"]
+    let pageHeadings = ["重温", "发现", "享受"]
     let pageContents = [
-        "Pin your favorite restaurants and create your own food guide",
-        "Search and locate your favorite restaurant on Maps.",
-        "Find restaurant pinned by your friends and other aronud the world"
+        "使用 Eat Like 将你喜欢的每一份食物, 捕捉在这一刻",
+        "重温路上的经过和那迷失的风景",
+        "坐下来, 静静体会这一切的美好."
     ]
+
     let pageImages = [
-        "foodpin-intro-1", "foodpin-intro-2", "foodpin-intro-3"
+        UIImage(named: "Rest"),
+        UIImage(named: "Green"),
+        UIImage(named: "caomei")
     ]
 
     override func viewDidLoad() {
@@ -65,6 +68,10 @@ class WalkthroughPageViewController: UIPageViewController,
         return viewControllerAtIndex(index)
     }
 
+    @objc func turnToMain() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughContentViewController).index
         index -= 1
@@ -75,13 +82,5 @@ class WalkthroughPageViewController: UIPageViewController,
     // MARK: - Delegate Methods
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
         return pageHeadings.count
-    }
-
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        guard let pageController = storyboard?.instantiateViewControllerWithIdentifier("WalkthroughContentViewController") as? WalkthroughContentViewController else {
-            return 0
-        }
-        
-        return pageController.index
     }
 }

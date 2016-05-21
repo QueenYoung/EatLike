@@ -19,8 +19,8 @@ class DiscoverRestaurants {
 
     var likesTotal: Int
     var isLike  = false
-    let detailImageKey: String
-    let authorImageKey: String
+//    let detailImageKey: String
+//    let authorImageKey: String
 
     init(name: String, userName: String, foodName: String, category: String,
          isLike: Bool, note: String, likesTotal: Int, detailImage: UIImage,
@@ -32,15 +32,11 @@ class DiscoverRestaurants {
         self.isLike = isLike
         self.note = note
         self.likesTotal = likesTotal
-        detailImageKey = NSUUID().UUIDString
-        authorImageKey = NSUUID().UUIDString
+//        detailImageKey = NSUUID().UUIDString
+//        authorImageKey = NSUUID().UUIDString
         self.detailImage = detailImage
         self.authorImage = authorImage
 
-        /* cache.setImage(
-            UIImageJPEGRepresentation(detailImage, 0.6)!, key: detailImageKey)
-        cache.setImage(
-            UIImageJPEGRepresentation(authorImage, 0.6)!, key: authorImageKey) */
     }
 
     func updateLike(inc: Bool) {

@@ -25,6 +25,9 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         // 设置状态栏的透明效果
         restaurantImageView.image = cache.imageForKey(restaurant.keyString)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -213,16 +216,18 @@ extension RestaurantDetailViewController: SegueType {
 
 extension RestaurantDetailViewController {
     @IBAction func tapGestureImageForDetail(sender: UITapGestureRecognizer) {
-        performSegueWithIdentifier(.ScaleImage, sender: nil)
-        print(#function)
-    }
-
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if touches.count == 1 {
+        if sender.state == .Ended {
             performSegueWithIdentifier(.ScaleImage, sender: nil)
             print(#function)
         }
     }
+
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if touches.count == 1 {
+            performSegueWithIdentifier(.ScaleImage, sender: nil)
+        }
+    }
+
 }
 
 class DetailImageController: UIViewController {

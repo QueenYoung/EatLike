@@ -15,10 +15,11 @@
 		96275E6D1C92E96100E90E2E /* RestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */; };
 		96275E6F1C93099F00E90E2E /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */; };
 		96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E701C93CE9100E90E2E /* Restaurant.swift */; };
+		9636EFF21CEDE75100EC589D /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9636EFF11CEDE75100EC589D /* NoteViewController.swift */; };
 		963BC9351CD8E891002702A7 /* ChooseCategaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963BC9341CD8E891002702A7 /* ChooseCategaryTableViewController.swift */; };
 		963BC9381CD8F27E002702A7 /* UpdateRestaurant.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 963BC9361CD8F27E002702A7 /* UpdateRestaurant.storyboard */; };
 		9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9645B5931C9D0FAD00C94E35 /* EatLike.xcdatamodeld */; };
-		964B36091CE4A31A001A8CB2 /* PreviewRestaurants.plist in Resources */ = {isa = PBXBuildFile; fileRef = 964B36081CE4A31A001A8CB2 /* PreviewRestaurants.plist */; };
+		964B36091CE4A31A001A8CB2 /* Preview.plist in Resources */ = {isa = PBXBuildFile; fileRef = 964B36081CE4A31A001A8CB2 /* Preview.plist */; };
 		964B360B1CE4A47C001A8CB2 /* ShopPinDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 964B360A1CE4A47C001A8CB2 /* ShopPinDetailView.xib */; };
 		964B360D1CE4AB18001A8CB2 /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964B360C1CE4AB18001A8CB2 /* MapPinView.swift */; };
 		964B36101CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964B360F1CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift */; };
@@ -37,7 +38,6 @@
 		96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */; };
 		96C801071CB28B1C003BC85E /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C801061CB28B1C003BC85E /* Discover.storyboard */; };
 		96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C99E751C95A6D80007849E /* ReviewViewController.swift */; };
-		96D1B21C1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D1B21B1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift */; };
 		96E22EE41CDA240C00781CD0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E22EE31CDA240C00781CD0 /* ImageCache.swift */; };
 		96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */; };
 		96E3CE6C1CEAD9220008822D /* ScaleSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */; };
@@ -63,10 +63,11 @@
 		96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewController.swift; sourceTree = "<group>"; };
 		96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		96275E701C93CE9100E90E2E /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		9636EFF11CEDE75100EC589D /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		963BC9341CD8E891002702A7 /* ChooseCategaryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCategaryTableViewController.swift; sourceTree = "<group>"; };
 		963BC9371CD8F27E002702A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UpdateRestaurant.storyboard; sourceTree = "<group>"; };
 		9645B5941C9D0FAD00C94E35 /* EatLike.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EatLike.xcdatamodel; sourceTree = "<group>"; };
-		964B36081CE4A31A001A8CB2 /* PreviewRestaurants.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PreviewRestaurants.plist; sourceTree = "<group>"; };
+		964B36081CE4A31A001A8CB2 /* Preview.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Preview.plist; sourceTree = "<group>"; };
 		964B360A1CE4A47C001A8CB2 /* ShopPinDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopPinDetailView.xib; sourceTree = "<group>"; };
 		964B360C1CE4AB18001A8CB2 /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		964B360F1CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverRestaurants.swift; sourceTree = "<group>"; };
 		96C801061CB28B1C003BC85E /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		96C99E751C95A6D80007849E /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
-		96D1B21B1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageCollectionViewController.swift; sourceTree = "<group>"; };
 		96E22EE31CDA240C00781CD0 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = EatLike/ImageCache.swift; sourceTree = "<group>"; };
 		96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRestaurantViewController.swift; sourceTree = "<group>"; };
 		96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleSegue.swift; sourceTree = "<group>"; };
@@ -168,9 +168,9 @@
 		964B360E1CE6DCDE001A8CB2 /* Core Pattern */ = {
 			isa = PBXGroup;
 			children = (
+				9636EFF11CEDE75100EC589D /* NoteViewController.swift */,
 				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
 				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
-				96D1B21B1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift */,
 				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
 				96C99E751C95A6D80007849E /* ReviewViewController.swift */,
 				96275E701C93CE9100E90E2E /* Restaurant.swift */,
@@ -232,7 +232,7 @@
 			children = (
 				96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */,
 				96C801001CB283F9003BC85E /* DiscoverViewController.swift */,
-				964B36081CE4A31A001A8CB2 /* PreviewRestaurants.plist */,
+				964B36081CE4A31A001A8CB2 /* Preview.plist */,
 				96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */,
 				96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */,
 			);
@@ -334,7 +334,7 @@
 			files = (
 				96275E651C92E5EF00E90E2E /* LaunchScreen.storyboard in Resources */,
 				96275E621C92E5EF00E90E2E /* Assets.xcassets in Resources */,
-				964B36091CE4A31A001A8CB2 /* PreviewRestaurants.plist in Resources */,
+				964B36091CE4A31A001A8CB2 /* Preview.plist in Resources */,
 				96E6E9141CA2792500D33EB9 /* Favorites.storyboard in Resources */,
 				9665716B1CD388E10096EE01 /* CustomMap.storyboard in Resources */,
 				96E6E90F1CA278A900D33EB9 /* about.storyboard in Resources */,
@@ -368,7 +368,6 @@
 				963BC9351CD8E891002702A7 /* ChooseCategaryTableViewController.swift in Sources */,
 				96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */,
 				966571641CD2EB120096EE01 /* CameraViewController.swift in Sources */,
-				96D1B21C1CE215FE00BF11BA /* PreviewImageCollectionViewController.swift in Sources */,
 				96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */,
 				96E3CE701CEAD9B90008822D /* SwipeSegue.swift in Sources */,
 				96E3CE6C1CEAD9220008822D /* ScaleSegue.swift in Sources */,
@@ -377,6 +376,7 @@
 				964B360D1CE4AB18001A8CB2 /* MapPinView.swift in Sources */,
 				968F2E9C1CD5BF280067D0C4 /* RemindTableViewController.swift in Sources */,
 				96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */,
+				9636EFF21CEDE75100EC589D /* NoteViewController.swift in Sources */,
 				96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */,
 				96F7DD181CABA1D60042707E /* AboutTableViewController.swift in Sources */,
 				96E3CE6E1CEAD9B10008822D /* DropSegue.swift in Sources */,

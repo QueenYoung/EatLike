@@ -13,11 +13,11 @@ private let reuseIdentifier = "Cell"
 class PreviewCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     weak var delegate: PreviewSelectable?
     lazy var pictures = [
+        UIImage(named: "cafedeadend"),
+        UIImage(named: "homei"),
         UIImage(named: "royaloak"),
-        UIImage(named: "wafflewolf"),
-        UIImage(named: "upstate"),
+        UIImage(named: "teakha"),
         UIImage(named: "traif"),
-        UIImage(named: "thaicafe"),
         UIImage(named: "teakha"),
         UIImage(named: "confessional")
     ]

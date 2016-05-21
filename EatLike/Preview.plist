@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>农大第一食堂</string>
+		<key>userName</key>
+		<string>LeoMessi</string>
+		<key>foodName</key>
+		<string>韭菜拌饭</string>
+		<key>category</key>
+		<string>Chinese Food</string>
+		<key>isLike</key>
+		<true/>
+		<key>note</key>
+		<string>作为一个职业球员, 为了始终保持高水平的竞技状态, 我必须吃营养师给我配置的营养套餐.👍 当然味道很好, 但是天天吃的话总会腻, 好在这次来了农大, 尝了一次传说中的中国料理, 有种童年的感觉😍. 我感觉我还能再拿几次金球奖⚽️</string>
+		<key>likesTotal</key>
+		<integer>1000</integer>
+		<key>authorImage</key>
+		<string>leomessi</string>
+		<key>detailImage</key>
+		<string>grahamavenuemeats</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>农大小食堂</string>
+		<key>userName</key>
+		<string>CristianoRonaldo</string>
+		<key>foodName</key>
+		<string>咖喱拌饭</string>
+		<key>category</key>
+		<string>Chinese Food</string>
+		<key>isLike</key>
+		<true/>
+		<key>note</key>
+		<string>听说梅西吃了这个后, 敢说他能再拿金球奖, 我笑了😂😂. 我不过这次刚好来农大玩了一下,  正好去体会一下梅西所谓的美味😉.一句话, 带感p( ^ O ^ )q !!!👏👏</string>
+		<key>likesTotal</key>
+		<integer>888</integer>
+		<key>authorImage</key>
+		<string>cristiano</string>
+		<key>detailImage</key>
+		<string>petiteoyster</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>California Hotel</string>
+		<key>userName</key>
+		<string>neymarjr</string>
+		<key>foodName</key>
+		<string>hhhh</string>
+		<key>category</key>
+		<string>Western</string>
+		<key>isLike</key>
+		<false/>
+		<key>note</key>
+		<string>Nj 🇧🇷 👻 neymarjr Pra quem tem pensamento forte, o impossível é questão de opinião !!! www.neymaroficial.com</string>
+		<key>likesTotal</key>
+		<integer>123</integer>
+		<key>authorImage</key>
+		<string>neymarjr</string>
+		<key>detailImage</key>
+		<string>traif</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Noname </string>
+		<key>userName</key>
+		<string>LuisSuarez</string>
+		<key>foodName</key>
+		<string>Ice Cream</string>
+		<key>category</key>
+		<string>Drink</string>
+		<key>isLike</key>
+		<true/>
+		<key>note</key>
+		<string>I like Ice Cream🍨, I need it to stay the high status. Don&apos;t be worry about falt👊!! Just eat😏</string>
+		<key>likesTotal</key>
+		<integer>1000</integer>
+		<key>authorImage</key>
+		<string>luissuarez9</string>
+		<key>detailImage</key>
+		<string>haighschocolate</string>
+	</dict>
+</array>
+</plist>
