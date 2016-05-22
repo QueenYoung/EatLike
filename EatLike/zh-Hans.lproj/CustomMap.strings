@@ -1,0 +1,15 @@
+/* Class = "UILabel"; text = "Title"; ObjectID = "AEz-wM-Ric"; */
+"AEz-wM-Ric.text" = "Title";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "M9K-PR-8gp"; */
+"M9K-PR-8gp.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "OzJ-ID-FbJ"; */
+"OzJ-ID-FbJ.text" = "Title";
+
+/* Class = "UISegmentedControl"; vi8-iH-Rsd.segmentTitles[0] = "Walk"; ObjectID = "vi8-iH-Rsd"; */
+"vi8-iH-Rsd.segmentTitles[0]" = "步行";
+
+/* Class = "UISegmentedControl"; vi8-iH-Rsd.segmentTitles[1] = "Car"; ObjectID = "vi8-iH-Rsd"; */
+"vi8-iH-Rsd.segmentTitles[1]" = "出租车";
+

@@ -29,6 +29,7 @@ class MapPinView: UIView {
     var currentRestaurantPlacemark: CLPlacemark?
     var restaurant: Restaurant! {
         didSet {
+            restaurantNote.preferredMaxLayoutWidth = 160.0
             if !restaurant.note.isEmpty {
                 restaurantNote.text = restaurant.note
             }
@@ -90,7 +91,7 @@ extension MapPinView {
 
     // MARK: - Helper Methods
     private func animatedView(view: UIView..., hidden: Bool) {
-        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: [], animations: {
+        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: [], animations: {
             _ in
             view.forEach({$0.hidden = hidden})
             }, completion: nil)

@@ -22,7 +22,7 @@ class RestaurantTableViewController: UITableViewController,
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
         let bar = searchController.searchBar
-        bar.placeholder = "Search Restaurants"
+        bar.placeholder = NSLocalizedString("Search Restaurants", comment: "place")
         bar.sizeToFit()
         bar.tintColor = UIColor.whiteColor()
         bar.barTintColor = UIColor(colorLiteralRed: 0xd7/255.0, green: 0xd7/255.0, blue: 0xd7/255.0, alpha: 1.0)
@@ -79,7 +79,7 @@ class RestaurantTableViewController: UITableViewController,
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.title = "Restaurants"
         // 让 tableView 获得可以动态的定义高度.
-        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.estimatedRowHeight = 80
         // 这个属性对于那些系统提供的 Cell 来说是默认属性, 但是对于自定义的类型, 默认值是
         // IB 上的 RowHeight. 需要主动设置
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -93,7 +93,6 @@ class RestaurantTableViewController: UITableViewController,
         self.tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
         searchController.delegate = self
-
 
     }
     
@@ -146,30 +145,14 @@ class RestaurantTableViewController: UITableViewController,
     
     // MARK: - Delegate Methods
     
-    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let detailRestaurantNVC = storyboard!
             .instantiateViewControllerWithIdentifier("restaurantDetailNavigationController")
             as! UINavigationController
         let detailRestaurantVC = detailRestaurantNVC.topViewController as! RestaurantDetailViewController
         detailRestaurantVC.restaurant = restaurants[indexPath.row]
         showViewController(detailRestaurantVC, sender: self)
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? RestaurantTableViewCell else { return }
-        // TODO: 根据 textView 的文本长度动态设置大小.
-        tableView.beginUpdates()
-        if cell.stackView.arrangedSubviews.contains(noteView) {
-            cell.removeNoteView(noteView)
-            cell.thumbnailImageView.hidden = false
-        } else {
-            cell.addNoteView(noteView)
-            noteTextView.text = restaurants[indexPath.row].note
-            cell.thumbnailImageView.hidden = true
-        }
-        tableView.endUpdates()
-        //        performSegueWithIdentifier("popNoteView", sender: cell)
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="EatLike/Base.lproj/CustomMap.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="AEz-wM-Ric.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "AEz-wM-Ric";</note>
+      </trans-unit>
+      <trans-unit id="M9K-PR-8gp.text">
+        <source>Subtitle</source>
+        <target>Subtitle</target>
+        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "M9K-PR-8gp";</note>
+      </trans-unit>
+      <trans-unit id="OzJ-ID-FbJ.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "OzJ-ID-FbJ";</note>
+      </trans-unit>
+      <trans-unit id="vi8-iH-Rsd.segmentTitles[0]">
+        <source>Walk</source>
+        <target>步行</target>
+        <note>Class = "UISegmentedControl"; vi8-iH-Rsd.segmentTitles[0] = "Walk"; ObjectID = "vi8-iH-Rsd";</note>
+      </trans-unit>
+      <trans-unit id="vi8-iH-Rsd.segmentTitles[1]">
+        <source>Car</source>
+        <target>公交</target>
+        <note>Class = "UISegmentedControl"; vi8-iH-Rsd.segmentTitles[1] = "Car"; ObjectID = "vi8-iH-Rsd";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="EatLike/Base.lproj/Favorites.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="0N0-iw-DKk.text">
+        <source>Category</source>
+        <target>分类</target>
+        <note>Class = "UILabel"; text = "Category"; ObjectID = "0N0-iw-DKk";</note>
+      </trans-unit>
+      <trans-unit id="0TA-Ou-Koj.title">
+        <source>Favorite</source>
+        <target>Favorite</target>
+        <note>Class = "UITabBarItem"; title = "Favorite"; ObjectID = "0TA-Ou-Koj";</note>
+      </trans-unit>
+      <trans-unit id="6d1-uc-vQT.title">
+        <source>Remind</source>
+        <target>通知</target>
+        <note>Class = "UINavigationItem"; title = "Remind"; ObjectID = "6d1-uc-vQT";</note>
+      </trans-unit>
+      <trans-unit id="9MK-57-XiC.text">
+        <source>Due Date</source>
+        <target>到期时间</target>
+        <note>Class = "UILabel"; text = "Due Date"; ObjectID = "9MK-57-XiC";</note>
+      </trans-unit>
+      <trans-unit id="44Y-uh-gYI.normalTitle">
+        <source>It's OK</source>
+        <target>还不错</target>
+        <note>Class = "UIButton"; normalTitle = "It's OK"; ObjectID = "44Y-uh-gYI";</note>
+      </trans-unit>
+      <trans-unit id="807-7S-h5K.text">
+        <source>Title</source>
+        <target>标题</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "807-7S-h5K";</note>
+      </trans-unit>
+      <trans-unit id="FkK-OO-Y4a.title">
+        <source>Rate</source>
+        <target>评价</target>
+        <note>Class = "UINavigationItem"; title = "Rate"; ObjectID = "FkK-OO-Y4a";</note>
+      </trans-unit>
+      <trans-unit id="H4E-32-Y5E.text">
+        <source>How would you think of</source>
+        <target>你觉得下面这道菜这样</target>
+        <note>Class = "UILabel"; text = "How would you think of"; ObjectID = "H4E-32-Y5E";</note>
+      </trans-unit>
+      <trans-unit id="He0-aE-DLz.text">
+        <source>捕捉每一个瞬间</source>
+        <target>捕捉每一个瞬间</target>
+        <note>Class = "UILabel"; text = "捕捉每一个瞬间"; ObjectID = "He0-aE-DLz";</note>
+      </trans-unit>
+      <trans-unit id="JTL-Qu-C2E.normalTitle">
+        <source>Meh</source>
+        <target>一般般</target>
+        <note>Class = "UIButton"; normalTitle = "Meh"; ObjectID = "JTL-Qu-C2E";</note>
+      </trans-unit>
+      <trans-unit id="L79-QJ-t9A.text">
+        <source>Reminded</source>
+        <target>提醒</target>
+        <note>Class = "UILabel"; text = "Reminded"; ObjectID = "L79-QJ-t9A";</note>
+      </trans-unit>
+      <trans-unit id="Lan-Ym-nHI.text">
+        <source>Detail</source>
+        <target>详细</target>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "Lan-Ym-nHI";</note>
+      </trans-unit>
+      <trans-unit id="M6A-na-7S7.text">
+        <source>Location</source>
+        <target>地址</target>
+        <note>Class = "UILabel"; text = "Location"; ObjectID = "M6A-na-7S7";</note>
+      </trans-unit>
+      <trans-unit id="OEm-FQ-jGx.text">
+        <source>Name</source>
+        <target>名字</target>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "OEm-FQ-jGx";</note>
+      </trans-unit>
+      <trans-unit id="WWR-Md-aiw.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "WWR-Md-aiw";</note>
+      </trans-unit>
+      <trans-unit id="YHS-Wf-Qs4.normalTitle">
+        <source>Boring</source>
+        <target>无聊</target>
+        <note>Class = "UIButton"; normalTitle = "Boring"; ObjectID = "YHS-Wf-Qs4";</note>
+      </trans-unit>
+      <trans-unit id="aUB-bA-Cot.normalTitle">
+        <source>Fantastical</source>
+        <target>棒极了</target>
+        <note>Class = "UIButton"; normalTitle = "Fantastical"; ObjectID = "aUB-bA-Cot";</note>
+      </trans-unit>
+      <trans-unit id="d4e-my-WaH.normalTitle">
+        <source>Like It</source>
+        <target>喜欢</target>
+        <note>Class = "UIButton"; normalTitle = "Like It"; ObjectID = "d4e-my-WaH";</note>
+      </trans-unit>
+      <trans-unit id="gAu-Hk-g2j.headerTitle">
+        <source>Choose date to notifite</source>
+        <target>选择通知的时间</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Choose date to notifite"; ObjectID = "gAu-Hk-g2j";</note>
+      </trans-unit>
+      <trans-unit id="izT-3a-LTf.placeholder">
+        <source>Type the message</source>
+        <target>填入通知内容</target>
+        <note>Class = "UITextField"; placeholder = "Type the message"; ObjectID = "izT-3a-LTf";</note>
+      </trans-unit>
+      <trans-unit id="kEu-Fo-Lhg.text">
+        <source>Remained</source>
+        <target>Remained</target>
+        <note>Class = "UILabel"; text = "Remained"; ObjectID = "kEu-Fo-Lhg";</note>
+      </trans-unit>
+      <trans-unit id="mgF-2X-1Z0.text">
+        <source>Detail</source>
+        <target>Detail</target>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "mgF-2X-1Z0";</note>
+      </trans-unit>
+      <trans-unit id="nHm-wj-Pt5.title">
+        <source>NImabi</source>
+        <target>NImabi</target>
+        <note>Class = "UINavigationItem"; title = "NImabi"; ObjectID = "nHm-wj-Pt5";</note>
+      </trans-unit>
+      <trans-unit id="tEe-jV-9yk.text">
+        <source>Note:</source>
+        <target>备注:</target>
+        <note>Class = "UILabel"; text = "Note:"; ObjectID = "tEe-jV-9yk";</note>
+      </trans-unit>
+      <trans-unit id="wTH-ip-HMW.text">
+        <source>Detail</source>
+        <target>Detail</target>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "wTH-ip-HMW";</note>
+      </trans-unit>
+      <trans-unit id="xHw-rj-Lp1.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "xHw-rj-Lp1";</note>
+      </trans-unit>
+      <trans-unit id="xqp-uI-9o3.text">
+        <source>wocao</source>
+        <target>wocao</target>
+        <note>Class = "UILabel"; text = "wocao"; ObjectID = "xqp-uI-9o3";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="EatLike/Base.lproj/LaunchScreen.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body/>
+  </file>
+  <file original="EatLike/Base.lproj/Main.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="GUT-GI-Zd4.title">
+        <source>About</source>
+        <target>关于</target>
+        <note>Class = "UITabBarItem"; title = "About"; ObjectID = "GUT-GI-Zd4";</note>
+      </trans-unit>
+      <trans-unit id="RxR-bx-F6L.title">
+        <source>Discover</source>
+        <target>发现</target>
+        <note>Class = "UITabBarItem"; title = "Discover"; ObjectID = "RxR-bx-F6L";</note>
+      </trans-unit>
+      <trans-unit id="oYv-yc-6b1.title">
+        <source>Favorite</source>
+        <target>喜爱</target>
+        <note>Class = "UITabBarItem"; title = "Favorite"; ObjectID = "oYv-yc-6b1";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="EatLike/Base.lproj/UpdateRestaurant.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="99j-0p-iq4.text">
+        <source>Coffee</source>
+        <target>☕️ 咖啡</target>
+        <note>Class = "UILabel"; text = "Coffee"; ObjectID = "99j-0p-iq4";</note>
+      </trans-unit>
+      <trans-unit id="BhR-ox-Oty.text">
+        <source>Fast Food</source>
+        <target>🍲 快餐</target>
+        <note>Class = "UILabel"; text = "Fast Food"; ObjectID = "BhR-ox-Oty";</note>
+      </trans-unit>
+      <trans-unit id="Ceo-uh-cnY.placeholder">
+        <source>Keep my food in your mind (Optional)</source>
+        <target>将这份食物记载在你的心中(可选)</target>
+        <note>Class = "UITextField"; placeholder = "Keep my food in your mind (Optional)"; ObjectID = "Ceo-uh-cnY";</note>
+      </trans-unit>
+      <trans-unit id="Ggk-5m-l1j.text">
+        <source>Western</source>
+        <target>🍽 西餐</target>
+        <note>Class = "UILabel"; text = "Western"; ObjectID = "Ggk-5m-l1j";</note>
+      </trans-unit>
+      <trans-unit id="OZL-Xb-eVp.text">
+        <source>Chinese</source>
+        <target>🍚 中餐</target>
+        <note>Class = "UILabel"; text = "Chinese"; ObjectID = "OZL-Xb-eVp";</note>
+      </trans-unit>
+      <trans-unit id="Q2B-Wd-8ZH.title">
+        <source>Categary</source>
+        <target>分类</target>
+        <note>Class = "UINavigationItem"; title = "Categary"; ObjectID = "Q2B-Wd-8ZH";</note>
+      </trans-unit>
+      <trans-unit id="Q3w-ps-KKf.text">
+        <source>Cold Drinks</source>
+        <target>🍦 冷饮</target>
+        <note>Class = "UILabel"; text = "Cold Drinks"; ObjectID = "Q3w-ps-KKf";</note>
+      </trans-unit>
+      <trans-unit id="Wch-Q7-OOi.placeholder">
+        <source>Restaurant</source>
+        <target>餐厅</target>
+        <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "Wch-Q7-OOi";</note>
+      </trans-unit>
+      <trans-unit id="cgz-d5-4LJ.normalTitle">
+        <source>Cancel</source>
+        <target>取消</target>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "cgz-d5-4LJ";</note>
+      </trans-unit>
+      <trans-unit id="cn5-ck-1Ca.text">
+        <source>Hot Pot</source>
+        <target>🍲 火锅</target>
+        <note>Class = "UILabel"; text = "Hot Pot"; ObjectID = "cn5-ck-1Ca";</note>
+      </trans-unit>
+      <trans-unit id="e7U-cI-DBm.text">
+        <source>Desserts</source>
+        <target>🍩 甜点</target>
+        <note>Class = "UILabel"; text = "Desserts"; ObjectID = "e7U-cI-DBm";</note>
+      </trans-unit>
+      <trans-unit id="eCX-uE-KdP.placeholder">
+        <source>Contact Number (Optional)</source>
+        <target>联系号码(可选)</target>
+        <note>Class = "UITextField"; placeholder = "Contact Number (Optional)"; ObjectID = "eCX-uE-KdP";</note>
+      </trans-unit>
+      <trans-unit id="h6M-I8-MRg.placeholder">
+        <source>Location</source>
+        <target>地理位置</target>
+        <note>Class = "UITextField"; placeholder = "Location"; ObjectID = "h6M-I8-MRg";</note>
+      </trans-unit>
+      <trans-unit id="lVD-I6-mj8.headerTitle">
+        <source>Food</source>
+        <target>食物</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Food"; ObjectID = "lVD-I6-mj8";</note>
+      </trans-unit>
+      <trans-unit id="rt4-Lh-7DJ.headerTitle">
+        <source>Drinks</source>
+        <target>饮品</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Drinks"; ObjectID = "rt4-Lh-7DJ";</note>
+      </trans-unit>
+      <trans-unit id="sx0-AZ-aeg.text">
+        <source>Restaurant Categary</source>
+        <target>餐厅分类</target>
+        <note>Class = "UILabel"; text = "Restaurant Categary"; ObjectID = "sx0-AZ-aeg";</note>
+      </trans-unit>
+      <trans-unit id="wTV-5r-g1f.text">
+        <source>Bars</source>
+        <target>🍺 酒吧</target>
+        <note>Class = "UILabel"; text = "Bars"; ObjectID = "wTV-5r-g1f";</note>
+      </trans-unit>
+      <trans-unit id="zmz-rc-U93.title">
+        <source>Again</source>
+        <target>重试</target>
+        <note>Class = "UIBarButtonItem"; title = "Again"; ObjectID = "zmz-rc-U93";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="EatLike/Base.lproj/about.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="GSN-Jf-Zyg.title">
+        <source>Feedback</source>
+        <target>反馈</target>
+        <note>Class = "UINavigationItem"; title = "Feedback"; ObjectID = "GSN-Jf-Zyg";</note>
+      </trans-unit>
+      <trans-unit id="H9a-CC-NdX.headerTitle">
+        <source>Leave Feedback</source>
+        <target>留下建议</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Leave Feedback"; ObjectID = "H9a-CC-NdX";</note>
+      </trans-unit>
+      <trans-unit id="I2f-eZ-5mD.headerTitle">
+        <source>Follow Us</source>
+        <target>Follow Us</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Follow Us"; ObjectID = "I2f-eZ-5mD";</note>
+      </trans-unit>
+      <trans-unit id="Lk0-yJ-xB0.text">
+        <source>QZone</source>
+        <target>QQ 空间</target>
+        <note>Class = "UILabel"; text = "QZone"; ObjectID = "Lk0-yJ-xB0";</note>
+      </trans-unit>
+      <trans-unit id="Pge-oR-kes.title">
+        <source>More</source>
+        <target>More</target>
+        <note>Class = "UINavigationItem"; title = "More"; ObjectID = "Pge-oR-kes";</note>
+      </trans-unit>
+      <trans-unit id="RUa-Rv-NQe.title">
+        <source>About</source>
+        <target>About</target>
+        <note>Class = "UITabBarItem"; title = "About"; ObjectID = "RUa-Rv-NQe";</note>
+      </trans-unit>
+      <trans-unit id="aUT-Ne-s6C.text">
+        <source>Email</source>
+        <target>Email</target>
+        <note>Class = "UILabel"; text = "Email"; ObjectID = "aUT-Ne-s6C";</note>
+      </trans-unit>
+      <trans-unit id="nW8-YZ-3oB.text">
+        <source>Rate us on App Store</source>
+        <target>通过 App Store 评论我们</target>
+        <note>Class = "UILabel"; text = "Rate us on App Store"; ObjectID = "nW8-YZ-3oB";</note>
+      </trans-unit>
+      <trans-unit id="skV-BT-DNG.text">
+        <source>GitHub</source>
+        <target>GitHub</target>
+        <note>Class = "UILabel"; text = "GitHub"; ObjectID = "skV-BT-DNG";</note>
+      </trans-unit>
+      <trans-unit id="xol-s5-efN.text">
+        <source>Tell us your feedback</source>
+        <target>告诉我们你的反馈</target>
+        <note>Class = "UILabel"; text = "Tell us your feedback"; ObjectID = "xol-s5-efN";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="EatLike/Info.plist" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="EatLike/Localizable.strings" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3.1" build-num="7D1014"/>
+    </header>
+    <body>
+      <trans-unit id="Category">
+        <source>Category</source>
+        <target>分类</target>
+        <note>category</note>
+      </trans-unit>
+      <trans-unit id="Location">
+        <source>Location</source>
+        <target>地理位置</target>
+        <note>location</note>
+      </trans-unit>
+      <trans-unit id="New Restaurant">
+        <source>New Restaurant</source>
+        <target>添加餐厅</target>
+        <note>newrestaurant</note>
+      </trans-unit>
+      <trans-unit id="No phone">
+        <source>No phone</source>
+        <target>没有添加电话</target>
+        <note>nophone</note>
+      </trans-unit>
+      <trans-unit id="Phone">
+        <source>Phone</source>
+        <target>电话</target>
+        <note>phonenumber</note>
+      </trans-unit>
+      <trans-unit id="Review">
+        <source>Review</source>
+        <target>评价</target>
+        <note>review</note>
+      </trans-unit>
+      <trans-unit id="Search Restaurants">
+        <source>Search Restaurants</source>
+        <target>搜索餐厅</target>
+        <note>place</note>
+      </trans-unit>
+      <trans-unit id="Search for places">
+        <source>Search for places</source>
+        <target>搜索地点</target>
+        <note>search</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

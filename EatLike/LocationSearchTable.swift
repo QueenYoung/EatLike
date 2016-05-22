@@ -46,14 +46,14 @@ class LocationSearchTable: UITableViewController {
         let firstSpace = (selectedItem.subThoroughfare != nil &&
             selectedItem.thoroughfare != nil) ? " " : ""
         // put a comma between street and city/state
-        let comma = (selectedItem.subThoroughfare != nil
+        /* let comma = (selectedItem.subThoroughfare != nil
             || selectedItem.thoroughfare != nil) && (
                selectedItem.subAdministrativeArea != nil ||
-               selectedItem.administrativeArea != nil) ? ", " : ""
+               selectedItem.administrativeArea != nil) ? ", " : "" */
         // put a space between "Washington" and "DC"
         let secondSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? " " : ""
         let addressLine = String(
-            format:"%@%@%@%@%@%@",
+            format:"%@%@%@%@%@",
             // city
             selectedItem.locality ?? "",
             secondSpace,
@@ -63,8 +63,8 @@ class LocationSearchTable: UITableViewController {
             firstSpace,
 
             // street name
-            selectedItem.thoroughfare ?? "",
-            comma
+            selectedItem.thoroughfare ?? ""
+//            comma
         )
         return addressLine
     }
@@ -81,7 +81,8 @@ class LocationSearchTable: UITableViewController {
                 _ in
                 let cell = self.tableView.cellForRowAtIndexPath(indexPath)!
                 print(cell.textLabel!.text!)
-                self.delegate?.replaceLocationFor(cell.textLabel!.text!)
+                self.delegate?.replaceLocationFor(
+                    cell.detailTextLabel!.text! +  cell.textLabel!.text!)
                 self.dismissViewControllerAnimated(true, completion: nil)
         }
 

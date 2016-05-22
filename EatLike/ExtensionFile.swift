@@ -81,7 +81,7 @@ public func configureAppearance() {
     navBarAppearance.shadowImage = .withColor(.clearColor(), size: imageSize)
 }
 
-func getDate() -> [DiscoverRestaurants] {
+func getData() -> [DiscoverRestaurants] {
 let a = NSArray(contentsOfURL:
         NSBundle.mainBundle().URLForResource(
             "Preview", withExtension: "plist")!)!

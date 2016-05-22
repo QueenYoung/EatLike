@@ -9,14 +9,14 @@
 import UIKit
 
 class DiscoverViewController: UIViewController {
-    @IBOutlet weak var backgroundBlurImage: UIImageView!
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet var backgroundBlurImage: UIImageView!
+    @IBOutlet var headerView: UIView!
     @IBOutlet weak var restaurantLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var likesTotalLabel: UILabel!
     @IBOutlet weak var buttonStackView: UIStackView!
-    @IBOutlet weak var restaurantImageButton: UIButton!
+    @IBOutlet var restaurantImageButton: UIButton!
     @IBOutlet weak var likesButton: UIButton!
     @IBOutlet weak var dialogView: UIView!
 
@@ -26,7 +26,8 @@ class DiscoverViewController: UIViewController {
     var snapBehavior : UISnapBehavior!
     var isAnimated = false
 
-    private var discovers = getDate()
+    private var discovers = getData()
+
     var index = 0
 
     override func viewDidLoad() {
@@ -75,15 +76,14 @@ class DiscoverViewController: UIViewController {
     }
 
     // MARK: - Navigation
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .Default
-    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "modalFriend" {
             let nav = segue.destinationViewController as! UINavigationController
             let friendVC = nav.topViewController as! FriendRestaurantViewController
-            friendVC.friendData = discovers[index]
+            friendVC.startTime = NSDate()
+            friendVC.friendData = discovers
+            friendVC.index = index
         }
     }
 
@@ -149,6 +149,9 @@ class DiscoverViewController: UIViewController {
             sender.tintColor = .redColor()
         }
         likesTotalLabel.text = "\(currentRestaurant.likesTotal)"
+        // 如果换成结构体的话, 要记得保存会原来的结构, 毕竟是值类型
+        // 但是我发现使用 class 的话加载更快.
+        discovers[index] = currentRestaurant
     }
 
 // MARK: - Helper Function

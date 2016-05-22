@@ -1,0 +1,9 @@
+
+/* Class = "UITabBarItem"; title = "About"; ObjectID = "GUT-GI-Zd4"; */
+"GUT-GI-Zd4.title" = "About";
+
+/* Class = "UITabBarItem"; title = "Discover"; ObjectID = "RxR-bx-F6L"; */
+"RxR-bx-F6L.title" = "Discover";
+
+/* Class = "UITabBarItem"; title = "Favorite"; ObjectID = "oYv-yc-6b1"; */
+"oYv-yc-6b1.title" = "Favorite";

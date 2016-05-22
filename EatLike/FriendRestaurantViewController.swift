@@ -10,26 +10,29 @@ import UIKit
 
 class FriendRestaurantViewController: UIViewController {
 
-    @IBOutlet weak var detailImageView: UIImageView!
+    @IBOutlet var detailImageView: UIImageView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var dackButton: UIButton!
 
-    var friendData: DiscoverRestaurants!
+    var startTime: NSDate!
+    var friendData: [DiscoverRestaurants] = []
+    var index: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = friendData.name
-        detailImageView.image = friendData.detailImage
-        userImageView.image = friendData.authorImage
-        authorLabel.text = friendData.userName
-        authorLabel.text?.appendContentsOf(" 🌚🌝 \(friendData.foodName)")
+        title = friendData[index].name
+        detailImageView.image = friendData[index].detailImage
+        userImageView.image = friendData[index].authorImage
+        authorLabel.text = friendData[index].userName
+        authorLabel.text?.appendContentsOf(" 🌚🌝 \(friendData[index].foodName)")
 
         self.dackButton.alpha = 0.0
         self.descriptionTextView.alpha = 0.0
 
+        print(NSDate().timeIntervalSinceDate(startTime))
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,7 +63,7 @@ class FriendRestaurantViewController: UIViewController {
     
     private func textViewWithFont(textView: UITextView, fontName: String, fontSize: CGFloat, lineSpacing: CGFloat) {
         let font = UIFont(name: fontName, size: fontSize)
-        textView.text = friendData.note
+        textView.text = friendData[index].note
         let text = textView.text
         
         let paragraphStyle = NSMutableParagraphStyle()

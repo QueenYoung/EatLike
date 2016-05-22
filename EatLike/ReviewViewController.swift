@@ -17,15 +17,12 @@ class ReviewViewController: UIViewController {
 
     var restaurant: Restaurant!
     var currentUserRating = 0
-    private let ratingButtonTitles = [
-        "Boring", "Meh", "It's OK", "Like It", "Fantastical"
-    ]
+    private var ratingButtonTitles: [String] {
+        return ratingButtons.map({$0.currentTitle!})
+    }
+
     let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
 
-
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +64,20 @@ class ReviewViewController: UIViewController {
     }
 
 
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBar.setBackgroundImage(
+            UIImage.init(), forBarMetrics: .Default)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        let barColor = UIColor(
+            red: 0xf7/255.0,
+            green: 0x5b/255.0,
+            blue: 0x61/255.0,
+            alpha: 1.0)
+        let back = UIImage.withColor(barColor, size: CGSize(width: 1, height: 1))
+        navigationController?.navigationBar.setBackgroundImage(back, forBarMetrics: .Default)
+    }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)

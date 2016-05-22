@@ -64,7 +64,6 @@ extension Restaurant {
 		    let identifier = "\(name)\(type)\(phoneNumber)"
 		    notification.userInfo = ["itemID": identifier]
 		    UIApplication.sharedApplication().scheduleLocalNotification(notification)
-		    print("NImabi")
 	    }
     }
 

@@ -335,7 +335,7 @@ extension MapViewController: HandleMapSearchDelegate {
 
         let searchBar = resultSearchController!.searchBar
         searchBar.sizeToFit()
-        searchBar.placeholder = "Search for places"
+        searchBar.placeholder = NSLocalizedString("Search for places", comment: "search")
         navigationItem.titleView = resultSearchController?.searchBar
     }
 

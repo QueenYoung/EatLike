@@ -24,7 +24,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
         restaurantImageView.image = cache.imageForKey(restaurant.keyString)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+//        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -37,7 +37,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
 //        let size = CGSize(width: 1, height: 1)
 //        navigationController?.navigationBar
 //            .setBackgroundImage(.withColor(.clearColor(), size: size), forBarMetrics: .Default)
-        navigationController?.navigationBar.shadowImage = UIImage.init()
+//        navigationController?.navigationBar.shadowImage = UIImage.init()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -61,6 +61,10 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         } else if sourceViewController is AddRestaurantTableViewController {
             restaurantImageView.image = cache.imageForKey(restaurant.keyString)
             tableView.reloadData()
+            if navigationItem.title != restaurant.name {
+                navigationItem.title = restaurant.name
+            }
+            return
         } else if sourceViewController is RemindTableViewController {
             restaurant.scheduleNotification()
         } else if  sourceViewController is MapViewController {
@@ -143,22 +147,22 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         cell.detailTextLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         switch row {
         case 0:
-            cell.textLabel?.text = "Location"
+            cell.textLabel?.text = NSLocalizedString("Location", comment: "location")
             cell.detailTextLabel?.text = restaurant.location
         case 1:
-            cell.textLabel?.text = "Category"
+            cell.textLabel?.text = NSLocalizedString("Category", comment: "category")
             cell.detailTextLabel?.text = restaurant.type
         case 2:
-            cell.textLabel?.text = "Phone"
+            cell.textLabel?.text = NSLocalizedString("Phone", comment: "phonenumber")
             if !restaurant.phoneNumber.isEmpty{
                 cell.detailTextLabel?.text = restaurant.phoneNumber
             } else {
-                cell.detailTextLabel?.text = "No telphone"
+                cell.detailTextLabel?.text = NSLocalizedString("No phone", comment: "nophone")
             }
         case 3:
             let count = Int(restaurant.userRate.intValue)
             cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
-            cell.textLabel?.text = "Review"
+            cell.textLabel?.text = NSLocalizedString("Review", comment: "review")
             if count == 0 {
                 cell.detailTextLabel?.text = String(count: 5, repeatedValue: Character("★"))
                 cell.detailTextLabel?.textColor = UIColor.lightGrayColor()

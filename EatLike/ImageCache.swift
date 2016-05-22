@@ -34,7 +34,7 @@ struct ImageCache {
         let imageURL = imageURLForKey(key)
         guard let imageForDisk = UIImage(contentsOfFile: imageURL.path!) else { return nil }
         print("I find the image in \(imageURL.path!)")
-        let imageData = UIImageJPEGRepresentation(imageForDisk, 0.6)
+        let imageData = UIImageJPEGRepresentation(imageForDisk, 0.8)
         caches.setObject(imageData!, forKey: key)
         return imageForDisk
     }

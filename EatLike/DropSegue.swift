@@ -54,7 +54,7 @@ class DropPresentAnimator:NSObject, UIViewControllerAnimatedTransitioning {
     let duration = transitionDuration(transitionContext)
     
     UIView.animateWithDuration(duration, delay: 0.0,
-      usingSpringWithDamping: 0.5, initialSpringVelocity: 2,
+      usingSpringWithDamping: 0.7, initialSpringVelocity: 4,
       options: [], animations: {
       if let toView = toView {
         toView.frame = finalFrame

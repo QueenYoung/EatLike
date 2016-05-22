@@ -13,7 +13,6 @@ class RestaurantTableViewCell: UITableViewCell {
     @IBOutlet weak var LocationLabel: UILabel!
     @IBOutlet weak var TypeLabel: UILabel!
     @IBOutlet weak var thumbnailImageView: UIImageView!
-    @IBOutlet weak var stackView: UIStackView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +27,10 @@ class RestaurantTableViewCell: UITableViewCell {
     func updateLabelPerferredFont() {
         let headFont = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         let captionFont = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)
-        let subFont = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
+        let footNote = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
 
         nameLabel.font = headFont
-        LocationLabel.font = subFont
+        LocationLabel.font = footNote
         TypeLabel.font = captionFont
     }
 
@@ -52,7 +51,7 @@ class RestaurantTableViewCell: UITableViewCell {
 
     }
 
-    func addNoteView(noteview: UIView) {
+    /* func addNoteView(noteview: UIView) {
         noteview.heightAnchor.constraintEqualToConstant(80).active = true
         stackView.addArrangedSubview(noteview)
     }
@@ -60,6 +59,6 @@ class RestaurantTableViewCell: UITableViewCell {
     func removeNoteView(noteView: UIView) {
         stackView.removeArrangedSubview(noteView)
         noteView.removeFromSuperview()
-    }
+    } */
     
 }

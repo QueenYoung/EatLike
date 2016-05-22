@@ -1,0 +1,54 @@
+/* Class = "UILabel"; text = "Coffee"; ObjectID = "99j-0p-iq4"; */
+"99j-0p-iq4.text" = "☕️ 咖啡";
+
+/* Class = "UILabel"; text = "Fast Food"; ObjectID = "BhR-ox-Oty"; */
+"BhR-ox-Oty.text" = "🍲 快餐";
+
+/* Class = "UITextField"; placeholder = "Keep my food in your mind (Optional)"; ObjectID = "Ceo-uh-cnY"; */
+"Ceo-uh-cnY.placeholder" = "将这份食物记载在你的心中(可选)";
+
+/* Class = "UILabel"; text = "Western"; ObjectID = "Ggk-5m-l1j"; */
+"Ggk-5m-l1j.text" = "🍽 西餐";
+
+/* Class = "UILabel"; text = "Chinese"; ObjectID = "OZL-Xb-eVp"; */
+"OZL-Xb-eVp.text" = "🍚 中餐";
+
+/* Class = "UINavigationItem"; title = "Categary"; ObjectID = "Q2B-Wd-8ZH"; */
+"Q2B-Wd-8ZH.title" = "分类";
+
+/* Class = "UILabel"; text = "Cold Drinks"; ObjectID = "Q3w-ps-KKf"; */
+"Q3w-ps-KKf.text" = "🍦 冷饮";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "Wch-Q7-OOi"; */
+"Wch-Q7-OOi.placeholder" = "餐厅";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "cgz-d5-4LJ"; */
+"cgz-d5-4LJ.normalTitle" = "取消";
+
+/* Class = "UILabel"; text = "Hot Pot"; ObjectID = "cn5-ck-1Ca"; */
+"cn5-ck-1Ca.text" = "🍲 火锅";
+
+/* Class = "UILabel"; text = "Desserts"; ObjectID = "e7U-cI-DBm"; */
+"e7U-cI-DBm.text" = "🍩 甜点";
+
+/* Class = "UITextField"; placeholder = "Contact Number (Optional)"; ObjectID = "eCX-uE-KdP"; */
+"eCX-uE-KdP.placeholder" = "联系号码(可选)";
+
+/* Class = "UITextField"; placeholder = "Location"; ObjectID = "h6M-I8-MRg"; */
+"h6M-I8-MRg.placeholder" = "地理位置";
+
+/* Class = "UITableViewSection"; headerTitle = "Food"; ObjectID = "lVD-I6-mj8"; */
+"lVD-I6-mj8.headerTitle" = "食物";
+
+/* Class = "UITableViewSection"; headerTitle = "Drinks"; ObjectID = "rt4-Lh-7DJ"; */
+"rt4-Lh-7DJ.headerTitle" = "饮品";
+
+/* Class = "UILabel"; text = "Restaurant Categary"; ObjectID = "sx0-AZ-aeg"; */
+"sx0-AZ-aeg.text" = "餐厅分类";
+
+/* Class = "UILabel"; text = "Bars"; ObjectID = "wTV-5r-g1f"; */
+"wTV-5r-g1f.text" = "🍺 酒吧";
+
+/* Class = "UIBarButtonItem"; title = "Again"; ObjectID = "zmz-rc-U93"; */
+"zmz-rc-U93.title" = "重试";
+

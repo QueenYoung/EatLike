@@ -1,0 +1,81 @@
+/* Class = "UILabel"; text = "Category"; ObjectID = "0N0-iw-DKk"; */
+"0N0-iw-DKk.text" = "分类";
+
+/* Class = "UITabBarItem"; title = "Favorite"; ObjectID = "0TA-Ou-Koj"; */
+"0TA-Ou-Koj.title" = "Favorite";
+
+/* Class = "UINavigationItem"; title = "Remind"; ObjectID = "6d1-uc-vQT"; */
+"6d1-uc-vQT.title" = "通知";
+
+/* Class = "UILabel"; text = "Due Date"; ObjectID = "9MK-57-XiC"; */
+"9MK-57-XiC.text" = "到期时间";
+
+/* Class = "UIButton"; normalTitle = "It's OK"; ObjectID = "44Y-uh-gYI"; */
+"44Y-uh-gYI.normalTitle" = "还不错";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "807-7S-h5K"; */
+"807-7S-h5K.text" = "标题";
+
+/* Class = "UINavigationItem"; title = "Rate"; ObjectID = "FkK-OO-Y4a"; */
+"FkK-OO-Y4a.title" = "评价";
+
+/* Class = "UILabel"; text = "How would you think of"; ObjectID = "H4E-32-Y5E"; */
+"H4E-32-Y5E.text" = "你觉得下面这道菜这样";
+
+/* Class = "UILabel"; text = "捕捉每一个瞬间"; ObjectID = "He0-aE-DLz"; */
+"He0-aE-DLz.text" = "捕捉每一个瞬间";
+
+/* Class = "UIButton"; normalTitle = "Meh"; ObjectID = "JTL-Qu-C2E"; */
+"JTL-Qu-C2E.normalTitle" = "一般般";
+
+/* Class = "UILabel"; text = "Reminded"; ObjectID = "L79-QJ-t9A"; */
+"L79-QJ-t9A.text" = "提醒";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Lan-Ym-nHI"; */
+"Lan-Ym-nHI.text" = "详细";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "M6A-na-7S7"; */
+"M6A-na-7S7.text" = "地址";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "OEm-FQ-jGx"; */
+"OEm-FQ-jGx.text" = "名字";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "WWR-Md-aiw"; */
+"WWR-Md-aiw.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Boring"; ObjectID = "YHS-Wf-Qs4"; */
+"YHS-Wf-Qs4.normalTitle" = "无聊";
+
+/* Class = "UIButton"; normalTitle = "Fantastical"; ObjectID = "aUB-bA-Cot"; */
+"aUB-bA-Cot.normalTitle" = "棒极了";
+
+/* Class = "UIButton"; normalTitle = "Like It"; ObjectID = "d4e-my-WaH"; */
+"d4e-my-WaH.normalTitle" = "喜欢";
+
+/* Class = "UITableViewSection"; headerTitle = "Choose date to notifite"; ObjectID = "gAu-Hk-g2j"; */
+"gAu-Hk-g2j.headerTitle" = "选择通知的时间";
+
+/* Class = "UITextField"; placeholder = "Type the message"; ObjectID = "izT-3a-LTf"; */
+"izT-3a-LTf.placeholder" = "填入通知内容";
+
+/* Class = "UILabel"; text = "Remained"; ObjectID = "kEu-Fo-Lhg"; */
+"kEu-Fo-Lhg.text" = "Remained";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "mgF-2X-1Z0"; */
+"mgF-2X-1Z0.text" = "Detail";
+
+/* Class = "UINavigationItem"; title = "NImabi"; ObjectID = "nHm-wj-Pt5"; */
+"nHm-wj-Pt5.title" = "NImabi";
+
+/* Class = "UILabel"; text = "Note:"; ObjectID = "tEe-jV-9yk"; */
+"tEe-jV-9yk.text" = "备注:";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "wTH-ip-HMW"; */
+"wTH-ip-HMW.text" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "xHw-rj-Lp1"; */
+"xHw-rj-Lp1.text" = "Title";
+
+/* Class = "UILabel"; text = "wocao"; ObjectID = "xqp-uI-9o3"; */
+"xqp-uI-9o3.text" = "wocao";
+

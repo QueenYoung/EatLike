@@ -1,0 +1,30 @@
+/* Class = "UINavigationItem"; title = "Feedback"; ObjectID = "GSN-Jf-Zyg"; */
+"GSN-Jf-Zyg.title" = "反馈";
+
+/* Class = "UITableViewSection"; headerTitle = "Leave Feedback"; ObjectID = "H9a-CC-NdX"; */
+"H9a-CC-NdX.headerTitle" = "留下建议";
+
+/* Class = "UITableViewSection"; headerTitle = "Follow Us"; ObjectID = "I2f-eZ-5mD"; */
+"I2f-eZ-5mD.headerTitle" = "Follow Us";
+
+/* Class = "UILabel"; text = "QZone"; ObjectID = "Lk0-yJ-xB0"; */
+"Lk0-yJ-xB0.text" = "QQ 空间";
+
+/* Class = "UINavigationItem"; title = "More"; ObjectID = "Pge-oR-kes"; */
+"Pge-oR-kes.title" = "More";
+
+/* Class = "UITabBarItem"; title = "About"; ObjectID = "RUa-Rv-NQe"; */
+"RUa-Rv-NQe.title" = "About";
+
+/* Class = "UILabel"; text = "Email"; ObjectID = "aUT-Ne-s6C"; */
+"aUT-Ne-s6C.text" = "Email";
+
+/* Class = "UILabel"; text = "Rate us on App Store"; ObjectID = "nW8-YZ-3oB"; */
+"nW8-YZ-3oB.text" = "通过 App Store 评论我们";
+
+/* Class = "UILabel"; text = "GitHub"; ObjectID = "skV-BT-DNG"; */
+"skV-BT-DNG.text" = "GitHub";
+
+/* Class = "UILabel"; text = "Tell us your feedback"; ObjectID = "xol-s5-efN"; */
+"xol-s5-efN.text" = "告诉我们你的反馈";
+

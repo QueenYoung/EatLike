@@ -31,7 +31,7 @@ class WalkthroughContentViewController: UIViewController {
 
         if (index == 2) {
             NSTimer.scheduledTimerWithTimeInterval(
-                2,
+                3,
                 target: self,
                 selector: #selector(doneButtonTapped),
                 userInfo: nil,

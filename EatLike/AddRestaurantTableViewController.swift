@@ -40,7 +40,7 @@ class AddRestaurantTableViewController: UITableViewController {
             configeRestaurantInformation()
         } else {
             nameTextField.becomeFirstResponder()
-            title = "New Restaurant"
+            title = NSLocalizedString("New Restaurant", comment: "newrestaurant")
         }
     }
 
@@ -115,30 +115,34 @@ class AddRestaurantTableViewController: UITableViewController {
                     "Restaurant",
                     inManagedObjectContext: managedObjectContext) as? Restaurant
         }
+        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        dispatch_async(queue) { [unowned self] in
+            self.updateRestaurantInformation()
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+                return
+            }
 
-        updateRestaurantInformation()
-
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print(error)
-            return
-        }
-
-        dismissViewControllerAnimated(true, completion: nil)
-        if isUpdate {
-            performSegueWithIdentifier("unwindToDetailView", sender: self)
-        } else {
-            performSegueWithIdentifier("unwindToHomeView", sender: self)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                if self.isUpdate {
+                    self.performSegueWithIdentifier("unwindToDetailView", sender: self)
+                } else {
+                    self.performSegueWithIdentifier("unwindToHomeView", sender: self)
+                }
+            }
         }
     }
-
+    
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
-
-
-
+    
+    
+    
     private func configeRestaurantInformation() {
         imageView.image        = cache.imageForKey(newRestaurant.keyString)
         nameTextField.text     = newRestaurant.name
@@ -147,32 +151,32 @@ class AddRestaurantTableViewController: UITableViewController {
         phoneTextField.text    = newRestaurant.phoneNumber
         noteTextField.text     = newRestaurant.note
         isUpdate               = true
-
+        
         imageView.contentMode = .ScaleAspectFill
         categaryLabel.textColor = .blackColor()
     }
-
-
+    
+    
     private func updateRestaurantInformation() {
-
+        
         let name     = nameTextField.text!
         let location = locationTextField.text!
         let type     = categaryLabel.text!
         // 返回的是 NSData 类型, 刚好可以初始化
-        let image    = imageView.image.flatMap { UIImageJPEGRepresentation($0, 0.6) }
+        let image    = imageView.image.flatMap { UIImageJPEGRepresentation($0, 0.8) }
         let phone    = phoneTextField.text!
         let note     = noteTextField.text!
-
+        
         print(newRestaurant.keyString)
-
+        
         // 把 keyString 的默认值设为了 none. 说明这个一个新的数据.
         if newRestaurant.keyString == "none" {
             newRestaurant.keyString = NSUUID().UUIDString
         }
-
+        
         // TODO: 找到一个方法, 不用每次都加缓存.
         cache.setImage(image!, key: newRestaurant.keyString)
-
+        
         newRestaurant.name        = name
         newRestaurant.location    = location
         newRestaurant.type        = type
@@ -187,7 +191,7 @@ class AddRestaurantTableViewController: UITableViewController {
 // MARK: - ImagePicker Delegate Methods
 extension AddRestaurantTableViewController:
 UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     private func showImagePicker() {
         let canMakePicture = UIImagePickerController.isCameraDeviceAvailable(.Rear)
         let imagePicker = UIImagePickerController()
@@ -196,7 +200,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         imagePicker.allowsEditing = true
         operationForRealDevices(imagePicker, isRealDevice: canMakePicture)
     }
-
+    
     private func operationForRealDevices(imagePicker: UIImagePickerController, isRealDevice: Bool) {
         // 如果可以后置照相机的话, 再询问使用哪一种
         let actionSheet = UIAlertController(title: "\n\n\n\n",
@@ -208,40 +212,42 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             // imagePicker.allowsEditing = true
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
-
-        delay(0.0) {
+        let queue = dispatch_queue_create("org.queen.jaxu", DISPATCH_QUEUE_CONCURRENT)
+        dispatch_async(queue) {
             let previewController = PreviewCollectionViewController(collectionViewLayout: self.collectionLayout)
             previewController.delegate = self
-            let width = self.view.frame.width
-            let view = UIView(frame: CGRect(x: 4, y: 4, width: width - 30, height: 96))
             self.previews.append(previewController)
-            view.addSubview(previewController.view)
-            actionSheet.view.addSubview(view)
+            dispatch_async(dispatch_get_main_queue()) {
+                let width = self.view.frame.width
+                let view = UIView(frame: CGRect(x: 4, y: 4, width: width - 30, height: 96))
+                view.addSubview(previewController.view)
+                actionSheet.view.addSubview(view)
+            }
         }
-
+        
         if isRealDevice {
             let cameraAction = UIAlertAction(title: "From Camera", style: .Default) {
                 [unowned self] _ in
                 imagePicker.sourceType = .Camera
                 self.presentViewController(imagePicker, animated: true, completion: nil)
-//                self.performSegueWithIdentifier("ShowCamera", sender: self)
+                //                self.performSegueWithIdentifier("ShowCamera", sender: self)
             }
             actionSheet.addAction(cameraAction)
         }
-
+        
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         actionSheet.addAction(pictureAction)
         presentViewController(actionSheet, animated: true, completion: nil)
     }
-
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
-
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -251,7 +257,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 extension AddRestaurantTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         navigationItem.rightBarButtonItem?.enabled = true
-
+        
         if nameTextField.isFirstResponder() {
             locationTextField.becomeFirstResponder()
         } else if locationTextField.isFirstResponder() {
@@ -261,23 +267,23 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
         }
         return true
     }
-
+    
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         guard textField === phoneTextField else { return true }
         // 过滤那些不是数字的所有输入, 即使是粘贴也不行.
         let decimalSet = NSMutableCharacterSet.decimalDigitCharacterSet()
         let typeSet = NSCharacterSet(charactersInString: string)
         decimalSet.addCharactersInString("-")
-
+        
         let count = phoneTextField.text?.characters.filter { $0 != "-" }.count
         var phone = phoneTextField.text!
-
+        
         guard decimalSet.isSupersetOfSet(typeSet) else { return false }
-
+        
         if count == 4 && phone[3] != "-" {
             phone.insert("-", atIndex: phone.startIndex.advancedBy(3, limit: phone.endIndex))
         }
-
+        
         if count == 7 && phone[7] != "-" {
             phone.insert("-", atIndex: phone.startIndex.advancedBy(8, limit: phone.endIndex))
             // 因为会清楚 - 的原因, 所以在重新生成 - 的时候, 同时生成第三位的
@@ -285,7 +291,7 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
                 phone.insert("-", atIndex: phone.startIndex.advancedBy(3, limit: phone.endIndex))
             }
         }
-
+        
         // 如果电话号码已经11位, 并且输入的是数字的话, 则返回 false
         // 因为非数字已经被排序, 现在能输入的之后 删除键. 通过 Int(stirng) 来判断输入的是数字还是删除
         if count >= 11 && Int(string) != nil {
@@ -295,11 +301,11 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
             } else {
                 return false
             }
-        // 在电话号码小于 10 位的时候, 清除 -
+            // 在电话号码小于 10 位的时候, 清除 -
         } else if count <= 10 && Int(string) == nil {
             phone = phone.characters.split("-").map(String.init).joinWithSeparator("")
         }
-
+        
         phoneTextField.text = phone
         return true
     }
@@ -310,11 +316,11 @@ extension AddRestaurantTableViewController: PreviewSelectable {
         imageView.image = image
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
-
+        
         if !nameTextField.text!.isEmpty {
             view.endEditing(true)
         }
-
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
