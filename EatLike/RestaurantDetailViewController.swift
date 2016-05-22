@@ -8,7 +8,8 @@
 
 import UIKit
 
-class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
+class RestaurantDetailViewController: UIViewController,
+                                      UITableViewDataSource,
                                       UITableViewDelegate {
 
     @IBOutlet weak var restaurantImageView: UIImageView!
@@ -24,8 +25,6 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
         restaurantImageView.image = cache.imageForKey(restaurant.keyString)
-//        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -76,6 +75,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
                 .managedObjectContext else { return }
 
         try! managedObjectContext.save()
+        restaurant.updateSpotlightIndex()
     }
 
 
@@ -164,10 +164,11 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
             cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
             cell.textLabel?.text = NSLocalizedString("Review", comment: "review")
             if count == 0 {
-                cell.detailTextLabel?.text = String(count: 5, repeatedValue: Character("★"))
+                cell.detailTextLabel?.text = String(
+                    count: 5, repeatedValue: Character("🌚"))
                 cell.detailTextLabel?.textColor = UIColor.lightGrayColor()
             } else {
-                cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("★"))
+                cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("⭐️"))
             }
         case 4:
             cell = tableView.dequeueReusableCellWithIdentifier("RemainedCell")!
@@ -180,8 +181,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDataSource,
     private func configureStarColor(count: Int) {
         let indexpath = NSIndexPath(forRow: 3, inSection: 0)
         let cell = tableView.cellForRowAtIndexPath(indexpath)
-        cell?.detailTextLabel!.text = String(count: count, repeatedValue: Character("★"))
-        cell?.detailTextLabel?.textColor = UIColor(red: 1, green: 180/255.0, blue: 0, alpha: 1.0)
+        cell?.detailTextLabel!.text = String(count: count, repeatedValue: Character("⭐️"))
     }
 
     @IBAction func cancel(sender: UIBarButtonItem) {

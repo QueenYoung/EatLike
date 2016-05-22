@@ -8,11 +8,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MapPinView" customModule="EatLike" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="240" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Fqt-Ow-mUJ">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="150"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Qft-Or-mPk" userLabel="Description Stack View">
                             <rect key="frame" x="0.0" y="0.0" width="90" height="17"/>
@@ -40,19 +40,19 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oIF-go-j4r">
-                            <rect key="frame" x="0.0" y="27" width="240" height="123"/>
+                            <rect key="frame" x="0.0" y="27" width="600" height="573"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这个小鬼很懒, 什么都没说" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aI-EI-Q0N">
-                                    <rect key="frame" x="51" y="0.0" width="139" height="15"/>
+                                    <rect key="frame" x="231" y="0.0" width="139" height="15"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="xEM-NZ-hM0" userLabel="Buttons Stack View">
-                                    <rect key="frame" x="23" y="25" width="195" height="56"/>
+                                    <rect key="frame" x="203" y="25" width="195" height="506"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HsD-yr-90x">
-                                            <rect key="frame" x="0.0" y="0.0" width="30" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="30" height="506"/>
                                             <state key="normal" image="cafetransit_icon_call_on"/>
                                             <state key="disabled" image="cafetransit_icon_call_off"/>
                                             <connections>
@@ -60,7 +60,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDj-ol-d8L">
-                                            <rect key="frame" x="55" y="0.0" width="30" height="56"/>
+                                            <rect key="frame" x="55" y="0.0" width="30" height="506"/>
                                             <state key="normal" image="cafetransit_icon_train_off"/>
                                             <state key="highlighted" image="cafetransit_icon_train_on"/>
                                             <connections>
@@ -68,14 +68,14 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEw-f9-wR1">
-                                            <rect key="frame" x="110" y="0.0" width="30" height="56"/>
+                                            <rect key="frame" x="110" y="0.0" width="30" height="506"/>
                                             <state key="normal" image="cafetransit_icon_yelp_off"/>
                                             <connections>
                                                 <action selector="navigationButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="q6S-An-2hG"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdY-kh-Lyv">
-                                            <rect key="frame" x="165" y="0.0" width="30" height="56"/>
+                                            <rect key="frame" x="165" y="0.0" width="30" height="506"/>
                                             <state key="normal" image="cafetransit_icon_time_off"/>
                                             <connections>
                                                 <action selector="timeTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="zWx-j9-bUz"/>
@@ -84,7 +84,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="20f-1c-Kvw" userLabel="Time Stack View">
-                                    <rect key="frame" x="82" y="91" width="76" height="32"/>
+                                    <rect key="frame" x="262" y="541" width="76" height="32"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Zm6-1Z-Wii">
                                             <rect key="frame" x="0.0" y="0.0" width="28" height="32"/>
@@ -139,7 +139,6 @@
                 <constraint firstItem="Fqt-Ow-mUJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jGq-Mq-WZF"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="arrivalLabel" destination="fHK-49-tfk" id="5qz-OU-NGi"/>
                 <outlet property="callButton" destination="HsD-yr-90x" id="WPt-4C-0bO"/>

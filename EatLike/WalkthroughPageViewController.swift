@@ -47,6 +47,7 @@ class WalkthroughPageViewController: UIPageViewController,
             return nil
         }
 
+
         guard let pageController = storyboard?
             .instantiateViewControllerWithIdentifier ("WalkthroughContentViewController")
             as? WalkthroughContentViewController else { return nil }
@@ -65,11 +66,17 @@ class WalkthroughPageViewController: UIPageViewController,
         var index = (viewController as! WalkthroughContentViewController).index
         index += 1
 
-        return viewControllerAtIndex(index)
-    }
+        // 如果当前是最后一个引导图, 加 1 后就是 3
+        if index == 3 {
+            NSTimer.scheduledTimerWithTimeInterval(
+                2,
+                target: self,
+                selector: #selector(doneButtonTapped),
+                userInfo: nil,
+                repeats: false)
+        }
 
-    @objc func turnToMain() {
-        dismissViewControllerAnimated(true, completion: nil)
+        return viewControllerAtIndex(index)
     }
 
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -82,5 +89,11 @@ class WalkthroughPageViewController: UIPageViewController,
     // MARK: - Delegate Methods
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
         return pageHeadings.count
+    }
+
+    func doneButtonTapped() {
+        let save = NSUserDefaults.standardUserDefaults()
+        save.setBool(true, forKey: "hasViewedWalkthrough")
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

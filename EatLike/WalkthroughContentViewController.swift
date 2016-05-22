@@ -29,25 +29,12 @@ class WalkthroughContentViewController: UIViewController {
         pageControl.currentPage = index
         // Do any additional setup after loading the view.
 
-        if (index == 2) {
-            NSTimer.scheduledTimerWithTimeInterval(
-                3,
-                target: self,
-                selector: #selector(doneButtonTapped),
-                userInfo: nil,
-                repeats: false)
-        }
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    func doneButtonTapped() {
-        let save = NSUserDefaults.standardUserDefaults()
-        save.setBool(true, forKey: "hasViewedWalkthrough")
-        dismissViewControllerAnimated(true, completion: nil)
     }
    
 }

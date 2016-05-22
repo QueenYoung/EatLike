@@ -52,7 +52,7 @@ class RestaurantTableViewController: UITableViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         // 临时代码
-        // NSUserDefaults.standardUserDefaults().setBool(false, forKey: "hasViewedWalkthrough")
+         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "hasViewedWalkthrough")
 
         // fetch data
         let fetchRequest = NSFetchRequest(entityName: "Restaurant")
@@ -138,7 +138,8 @@ class RestaurantTableViewController: UITableViewController,
         
         let cell = tableView.dequeueReusableCellWithIdentifier(
             "Cell", forIndexPath: indexPath) as! RestaurantTableViewCell
-        
+
+        configureCell(cell, indexPath: indexPath)
         return cell
     }
     
@@ -156,7 +157,6 @@ class RestaurantTableViewController: UITableViewController,
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        configureCell(cell as! RestaurantTableViewCell, indexPath: indexPath)
         // inital
         cell.alpha = 0.0
         let rotationTransform = CGAffineTransformMakeTranslation(-300, 0)
@@ -195,6 +195,7 @@ class RestaurantTableViewController: UITableViewController,
             let restaurantToDelete =
                 self.fetchResultController.objectAtIndexPath(indexPath) as! Restaurant
             cache.removeImage(restaurant.keyString)
+            restaurantToDelete.deleteSpotlightIndex()
             managedObjectContext.deleteObject(restaurantToDelete)
             guard let _ = try? managedObjectContext.save() else { return }
         }

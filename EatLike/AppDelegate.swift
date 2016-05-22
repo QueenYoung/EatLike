@@ -8,12 +8,11 @@
 
 import UIKit
 import CoreData
-import MessageUI
+import CoreSpotlight
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var mailCompose: MFMailComposeViewController!
     var imageCache = ImageCache()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
@@ -24,31 +23,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                  NSFontAttributeName: barFont]
         }
 
-        mailCompose = nil
-        mailCompose = MFMailComposeViewController()
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        let objectId: String
+        if userActivity.activityType == Restaurant.domainIdentifier,
+            let activityObjectId = userActivity.userInfo?["id"] as? String {
+            // Handle result from NSUserActivity indexing
+            objectId = activityObjectId
+        } else if userActivity.activityType == CSSearchableItemActionType,
+            let activityObjectId = userActivity
+                .userInfo?[CSSearchableItemActivityIdentifier] as? String  {
+            // Handle result from CoreSpotlight indexing
+            objectId = activityObjectId
+        } else {
+            return false
+        }
 
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
+        print(window!.rootViewController)
+        print((window!.rootViewController as! UITabBarController).viewControllers!)
+        if let tabv = window!.rootViewController as? UITabBarController,
+            nav = tabv.viewControllers!.first as? UINavigationController,
+            homeVC = nav.viewControllers.first as? RestaurantTableViewController,
+            restaurant = homeVC.restaurants.filter({$0.keyString == objectId}).first {
 
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
+            nav.popToRootViewControllerAnimated(false)
+            let restaurantDetailVC = (
+                homeVC.storyboard!
+                .instantiateViewControllerWithIdentifier(
+                    "restaurantDetailNavigationController")
+                    as! UINavigationController
+                ).topViewController
+                as! RestaurantDetailViewController
 
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+            restaurantDetailVC.restaurant = restaurant
+            nav.pushViewController(restaurantDetailVC, animated: true)
+            return true
+        }
+        return false
     }
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {

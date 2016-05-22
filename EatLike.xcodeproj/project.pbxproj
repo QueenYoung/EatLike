@@ -35,6 +35,7 @@
 		96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */; };
 		96B8A05D1CF17AAE00019BEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96B8A05F1CF17AAE00019BEC /* Localizable.strings */; };
 		96B8A0621CF17AAF00019BEC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96B8A0641CF17AAF00019BEC /* InfoPlist.strings */; };
+		96B8A0681CF1B56C00019BEC /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B8A0671CF1B56C00019BEC /* CoreSpotlight.framework */; };
 		96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */; };
 		96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801001CB283F9003BC85E /* DiscoverViewController.swift */; };
 		96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */; };
@@ -91,6 +92,7 @@
 		96B8A05A1CF15E3200019BEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/about.strings"; sourceTree = "<group>"; };
 		96B8A05E1CF17AAE00019BEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		96B8A0631CF17AAF00019BEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		96B8A0671CF1B56C00019BEC /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 		96C801001CB283F9003BC85E /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverRestaurants.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96B8A0681CF1B56C00019BEC /* CoreSpotlight.framework in Frameworks */,
 				969641E21C992ED3006B6A09 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +139,7 @@
 		96275E4E1C92E5EF00E90E2E = {
 			isa = PBXGroup;
 			children = (
+				96B8A0671CF1B56C00019BEC /* CoreSpotlight.framework */,
 				969641E11C992ED3006B6A09 /* MapKit.framework */,
 				96275E581C92E5EF00E90E2E /* Products */,
 				96B564461CC1D0A6008638BD /* Support Files */,

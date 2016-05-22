@@ -109,11 +109,13 @@ class AddRestaurantTableViewController: UITableViewController {
             else { return }
 
         // 如果是添加新的数据, 则插入一个新的数据实例.
+        // 并且设置一个 UUID, 插入 Spotlight index
         if !isUpdate {
             newRestaurant = NSEntityDescription
                 .insertNewObjectForEntityForName(
                     "Restaurant",
-                    inManagedObjectContext: managedObjectContext) as? Restaurant
+                    inManagedObjectContext: managedObjectContext) as! Restaurant
+            newRestaurant.keyString = NSUUID().UUIDString
         }
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -121,6 +123,7 @@ class AddRestaurantTableViewController: UITableViewController {
             self.updateRestaurantInformation()
             do {
                 try managedObjectContext.save()
+                self.newRestaurant.updateSpotlightIndex()
             } catch {
                 print(error)
                 return
@@ -168,11 +171,6 @@ class AddRestaurantTableViewController: UITableViewController {
         let note     = noteTextField.text!
         
         print(newRestaurant.keyString)
-        
-        // 把 keyString 的默认值设为了 none. 说明这个一个新的数据.
-        if newRestaurant.keyString == "none" {
-            newRestaurant.keyString = NSUUID().UUIDString
-        }
         
         // TODO: 找到一个方法, 不用每次都加缓存.
         cache.setImage(image!, key: newRestaurant.keyString)

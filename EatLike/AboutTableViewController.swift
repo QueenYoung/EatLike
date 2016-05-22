@@ -14,13 +14,12 @@ class AboutTableViewController: UITableViewController,
     let links = ["http://user.qzone.qq.com/593969406/main/",
                  "https://github.com/QueenYoung/EatLike/"]
 
-    var mailCompose: MFMailComposeViewController!
+    var mailCompose = MFMailComposeViewController()
     override func viewDidLoad() {
 	    super.viewDidLoad()
 	    tableView.estimatedRowHeight = 64
         tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        mailCompose = (UIApplication.sharedApplication().delegate as? AppDelegate)?.mailCompose
     }
 
 
@@ -58,7 +57,6 @@ class AboutTableViewController: UITableViewController,
             let alert = UIAlertController(title: "Can't do this", message: "You hadn't set the mail account", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             presentViewController(alert, animated: true, completion: nil)
-            mailCompose = nil
         }
 
 
@@ -67,9 +65,6 @@ class AboutTableViewController: UITableViewController,
     // 发送完邮件需要做的事情. 我们就是简单的 dismiss 就可以咯.
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
 
-        dismissViewControllerAnimated(true) {
-            self.mailCompose = nil
-            self.mailCompose = MFMailComposeViewController()
-        }
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

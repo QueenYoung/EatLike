@@ -243,7 +243,7 @@ extension MapViewController {
 
         alertView.addAction(UIAlertAction(title: "Replace It", style: .Default) {
             _ in
-                self.resultSearchController.active = true
+                self.resultSearchController.becomeFirstResponder()
             })
 
         alertView.addAction(UIAlertAction(title: "Go Back", style: .Cancel, handler: {
@@ -257,6 +257,17 @@ extension MapViewController {
      用来创建一个 **Annotation**, 在刚进入视图或者更新了地理位置后调用
      */
     private func createAnnotation() {
+
+        func addAnnotation(location: CLLocation) {
+            let annotation = MKPointAnnotation()
+            annotation.title = self.restaurant.name
+            annotation.subtitle = self.restaurant.type
+            annotation.coordinate = location.coordinate
+
+            self.mapView.showAnnotations([annotation], animated: true)
+            self.mapView.selectAnnotation(annotation, animated: true)
+        }
+
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(restaurant.location) {
             [unowned self] placemarks, error in
@@ -270,15 +281,9 @@ extension MapViewController {
             guard let location = placemarks?.first?.location else {
                 return
             }
+            self.currentRestaurantPlacemark = placemarks!.first!
 
-            self.currentRestaurantPlacemark = placemarks!.first! as CLPlacemark
-            let annotation = MKPointAnnotation()
-            annotation.title = self.restaurant.name
-            annotation.subtitle = self.restaurant.type
-            annotation.coordinate = location.coordinate
-
-            self.mapView.showAnnotations([annotation], animated: true)
-            self.mapView.selectAnnotation(annotation, animated: true)
+            addAnnotation(location)
         }
     }
 }
