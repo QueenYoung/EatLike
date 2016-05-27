@@ -30,13 +30,13 @@ class AboutTableViewController: UITableViewController,
                 let safari = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
                 presentViewController(safari, animated: true, completion: nil)
             }
-        case 1 where indexPath.row != 2:
+        case 0 where indexPath.row == 2:
+            sendEmail()
+        case 1:
             if let url = NSURL(string: links[indexPath.row]) {
                 let safariViewController = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
                 presentViewController(safariViewController, animated: true, completion: nil)
             }
-        case 1:
-            sendEmail()
         default:
             break
         }

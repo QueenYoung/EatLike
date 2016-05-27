@@ -76,7 +76,8 @@ class MapViewController: UIViewController {
 
     @IBAction func showNearby(sender: UIBarButtonItem) {
         let searchRequest = MKLocalSearchRequest()
-        searchRequest.naturalLanguageQuery = restaurant.type
+        // 去除 emoji 的影响
+        searchRequest.naturalLanguageQuery = String(restaurant.type.characters.split(" ")[1])
         // 获得当前地图中心, 方圆 2 公里的区域
         let region = MKCoordinateRegionMakeWithDistance(mapView.centerCoordinate, 2000, 2000)
         searchRequest.region = region
@@ -196,6 +197,13 @@ extension MapViewController {
             routeResponse, routeError in
             if routeError != nil {
                 print("Error: \(routeError!.localizedFailureReason), \(routeError?.localizedDescription)")
+                let alert = UIAlertController(
+                    title: routeError!.localizedFailureReason!,
+                    message: routeError!.localizedDescription,
+                    preferredStyle: .Alert)
+
+                alert.addAction(UIAlertAction(title: "I got it!", style: .Cancel, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             } else {
                 // 获得 Apple 服务器发来的路线数据.一般情况下只会发送一个
                 // 但是在 requestsAlternateRoutes 设置为 true 的情况下, 就会返回多个.
@@ -370,6 +378,7 @@ extension MapViewController: HandleMapSearchDelegate {
     func replaceLocationFor(place: String) {
         restaurant.location = place
         mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
         createAnnotation()
 
         resultSearchController?.searchBar.text = ""

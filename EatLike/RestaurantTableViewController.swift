@@ -29,15 +29,12 @@ class RestaurantTableViewController: UITableViewController,
         return searchController
     }()
 
-    @IBOutlet weak var noteTextView: UITextView!
-    @IBOutlet weak var noteView: UIView!
-    var restaurants:[Restaurant] = []
+    var restaurants: [Restaurant] = []
     var searchedRestaurants = [Restaurant]()
     // MARK: - View Controller Methods
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.hidesBarsOnSwipe = true
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
         // 实现用户引导界面
         let isViewed = NSUserDefaults
             .standardUserDefaults().boolForKey("hasViewedWalkthrough")
@@ -52,7 +49,7 @@ class RestaurantTableViewController: UITableViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         // 临时代码
-         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "hasViewedWalkthrough")
+//         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "hasViewedWalkthrough")
 
         // fetch data
         let fetchRequest = NSFetchRequest(entityName: "Restaurant")

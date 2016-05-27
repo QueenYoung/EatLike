@@ -18,7 +18,7 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
         UIImage(named: "royaloak"),
         UIImage(named: "teakha"),
         UIImage(named: "traif"),
-        UIImage(named: "teakha"),
+        UIImage(named: "cafelore"),
         UIImage(named: "confessional")
     ]
 
@@ -29,7 +29,7 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
 
         // Do any additional setup after loading the view.
         self.collectionView?.backgroundColor = UIColor.clearColor()
-        self.view.frame.size = CGSize(width: 290, height: 98)
+        self.view.frame.size = CGSize(width: delegate!.pictureWidth, height: 98)
         collectionView?.delegate = self
     }
 
@@ -88,6 +88,7 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
 
 protocol PreviewSelectable: class {
     func imageBeSelected(selectedImage image: UIImage)
+    var pictureWidth: CGFloat { get }
 }
 
 final class previewCollectionCell: UICollectionViewCell {

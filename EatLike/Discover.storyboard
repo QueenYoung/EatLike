@@ -412,7 +412,7 @@
                                                     </mask>
                                                 </variation>
                                                 <connections>
-                                                    <segue destination="eJ1-6N-Mix" kind="presentation" identifier="modalFriend" customClass="FadeSegue" customModule="EatLike" customModuleProvider="target" modalTransitionStyle="partialCurl" id="QSy-oI-78k"/>
+                                                    <segue destination="eJ1-6N-Mix" kind="presentation" identifier="modalFriend" modalTransitionStyle="crossDissolve" id="QSy-oI-78k"/>
                                                 </connections>
                                             </button>
                                             <stackView contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="guL-mY-3hi" userLabel="Button Stack View">

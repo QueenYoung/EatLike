@@ -170,8 +170,6 @@ class AddRestaurantTableViewController: UITableViewController {
         let phone    = phoneTextField.text!
         let note     = noteTextField.text!
         
-        print(newRestaurant.keyString)
-        
         // TODO: 找到一个方法, 不用每次都加缓存.
         cache.setImage(image!, key: newRestaurant.keyString)
         
@@ -210,8 +208,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             // imagePicker.allowsEditing = true
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
-        let queue = dispatch_queue_create("org.queen.jaxu", DISPATCH_QUEUE_CONCURRENT)
-        dispatch_async(queue) {
+        let queue = dispatch_queue_create("com.queen.jxau.eatlike", nil)
+        dispatch_async(queue) { [unowned self] in
             let previewController = PreviewCollectionViewController(collectionViewLayout: self.collectionLayout)
             previewController.delegate = self
             self.previews.append(previewController)
@@ -320,5 +318,9 @@ extension AddRestaurantTableViewController: PreviewSelectable {
         }
         
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    var pictureWidth: CGFloat {
+        return self.view.frame.width - 30
     }
 }

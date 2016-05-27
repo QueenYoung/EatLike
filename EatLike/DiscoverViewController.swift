@@ -26,7 +26,7 @@ class DiscoverViewController: UIViewController {
     var snapBehavior : UISnapBehavior!
     var isAnimated = false
 
-    private var discovers = getData()
+    private lazy var discovers = getData()
 
     var index = 0
 
@@ -81,9 +81,12 @@ class DiscoverViewController: UIViewController {
         if segue.identifier == "modalFriend" {
             let nav = segue.destinationViewController as! UINavigationController
             let friendVC = nav.topViewController as! FriendRestaurantViewController
-            friendVC.startTime = NSDate()
-            friendVC.friendData = discovers
-            friendVC.index = index
+            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+            dispatch_async(queue) {
+                friendVC.startTime = NSDate()
+                friendVC.friendData = self.discovers
+                friendVC.index = self.index
+            }
         }
     }
 
@@ -95,7 +98,7 @@ class DiscoverViewController: UIViewController {
         let location = sender.locationInView(view)
         let boxLocation = sender.locationInView(dialogView)
 
-        if sender.state == UIGestureRecognizerState.Began {
+        if sender.state == .Began {
             if snapBehavior != nil {
                 animator.removeBehavior(snapBehavior)
             }
@@ -107,10 +110,10 @@ class DiscoverViewController: UIViewController {
 
             animator.addBehavior(attachmentBehavior)
         }
-        else if sender.state == UIGestureRecognizerState.Changed {
+        else if sender.state == .Changed {
             attachmentBehavior.anchorPoint = location
         }
-        else if sender.state == UIGestureRecognizerState.Ended {
+        else if sender.state == .Ended {
             animator.removeBehavior(attachmentBehavior)
 
             let translation = sender.translationInView(view)
@@ -125,7 +128,7 @@ class DiscoverViewController: UIViewController {
                 animator.addBehavior(gravity)
 
                 // 使用线程刷新
-                delay(0.3) {
+                delay(0.2) {
                     self.refreshView()
                 }
             } else {

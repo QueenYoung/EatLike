@@ -31,13 +31,9 @@ class RestaurantDetailViewController: UIViewController,
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        // 进入 detail 视图的时候,关闭 hide on swipe 功能.
         navigationController?.hidesBarsOnSwipe = false
-//        let size = CGSize(width: 1, height: 1)
-//        navigationController?.navigationBar
-//            .setBackgroundImage(.withColor(.clearColor(), size: size), forBarMetrics: .Default)
-//        navigationController?.navigationBar.shadowImage = UIImage.init()
     }
+
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
@@ -219,12 +215,12 @@ extension RestaurantDetailViewController: SegueType {
 }
 
 extension RestaurantDetailViewController {
-    @IBAction func tapGestureImageForDetail(sender: UITapGestureRecognizer) {
+    /* @IBAction func tapGestureImageForDetail(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             performSegueWithIdentifier(.ScaleImage, sender: nil)
             print(#function)
         }
-    }
+    } */
 
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if touches.count == 1 {
@@ -241,6 +237,7 @@ class DetailImageController: UIViewController {
         super.viewDidLoad()
         imageView.image = image
     }
+
 
     @IBAction func tapGestureToReturn(sender: UITapGestureRecognizer) {
 //        dismissViewControllerAnimated(true, completion: nil)

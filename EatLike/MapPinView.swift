@@ -27,6 +27,7 @@ class MapPinView: UIView {
     }()
 
     var currentRestaurantPlacemark: CLPlacemark?
+    var response: MKETAResponse?
     var restaurant: Restaurant! {
         didSet {
             restaurantNote.preferredMaxLayoutWidth = 160.0
@@ -54,8 +55,15 @@ class MapPinView: UIView {
 
     private func udpateEstimatedTimeLabels(response: MKETAResponse?) {
         if let response = response {
-            self.departureLabel.text = dateFormatter.stringFromDate(response.expectedDepartureDate)
-            self.arrivalLabel.text = dateFormatter.stringFromDate(response.expectedArrivalDate)
+            let departure = dateFormatter.stringFromDate(response.expectedDepartureDate)
+            let arrival = dateFormatter.stringFromDate(response.expectedArrivalDate)
+            if departure == response {
+                self.departureLabel.text = "😭"
+                self.arrivalLabel.text = "😭"
+            } else {
+                self.departureLabel.text = departure
+                self.arrivalLabel.text = arrival
+            }
         }
     }
 }
@@ -65,13 +73,13 @@ extension MapPinView {
     @IBAction func phoneTapped(sender: UIButton) {
         call(restaurant.phoneNumber, isAlert: false)
     }
-
+    
     @IBAction func transitTapped(sender: UIButton) {
         if let location = currentRestaurantPlacemark?.location?.coordinate {
             openTransitDirectionForCoodrinates(location)
         }
     }
-
+    
     @IBAction func timeTapped(sender: UIButton) {
         if timeStackView.hidden {
             animatedView(timeStackView, hidden: false)
@@ -84,11 +92,11 @@ extension MapPinView {
             timeButton.setImage(UIImage(named: "cafetransit_icon_time_off"), forState: .Normal)
         }
     }
-
+    
     @IBAction func navigationButtonTapped(sender: UIButton) {
         delegate?.getNavigationRoute()
     }
-
+    
     // MARK: - Helper Methods
     private func animatedView(view: UIView..., hidden: Bool) {
         UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: [], animations: {
@@ -96,16 +104,16 @@ extension MapPinView {
             view.forEach({$0.hidden = hidden})
             }, completion: nil)
     }
-
+    
     private func requestTransitTimes() {
         let request = MKDirectionsRequest()
         request.source = MKMapItem.mapItemForCurrentLocation()
         guard let currentRestaurantPlacemark = currentRestaurantPlacemark else { return }
         let destinationPlacemark = MKPlacemark(placemark: currentRestaurantPlacemark)
         request.destination = MKMapItem(placemark: destinationPlacemark)
-
+        
         request.transportType = .Transit
-
+        
         let directions = MKDirections(request: request)
         directions.calculateETAWithCompletionHandler {
             response, error in
@@ -116,7 +124,7 @@ extension MapPinView {
             }
         }
     }
-
+    
     private func openTransitDirectionForCoodrinates(coor: CLLocationCoordinate2D) {
         let placemark = MKPlacemark(coordinate: coor, addressDictionary: [CNPostalAddressStreetKey: restaurant.location])
         let mapItem = MKMapItem(placemark: placemark)

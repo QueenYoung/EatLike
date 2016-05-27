@@ -69,7 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 接下来只需要定义一个有意思的就可以.
         let alert = UIAlertController(title: "吃饭时间到了!", message: "不愿走路的话, 就叫外卖吧", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        ((window!.rootViewController! as! UITabBarController)
+            .viewControllers![0] as! UINavigationController)
+            .topViewController?.presentViewController(alert, animated: true, completion: nil)
     }
 
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {

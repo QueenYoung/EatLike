@@ -9,17 +9,17 @@
 import UIKit
 
 class FriendRestaurantViewController: UIViewController {
-
+    
     @IBOutlet var detailImageView: UIImageView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var dackButton: UIButton!
-
+    
     var startTime: NSDate!
     var friendData: [DiscoverRestaurants] = []
     var index: Int!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,33 +27,28 @@ class FriendRestaurantViewController: UIViewController {
         detailImageView.image = friendData[index].detailImage
         userImageView.image = friendData[index].authorImage
         authorLabel.text = friendData[index].userName
-        authorLabel.text?.appendContentsOf(" 🌚🌝 \(friendData[index].foodName)")
-
+        authorLabel.text?.appendContentsOf(" 👉 \(friendData[index].foodName)")
+        
         self.dackButton.alpha = 0.0
         self.descriptionTextView.alpha = 0.0
-
+        
         print(NSDate().timeIntervalSinceDate(startTime))
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(true)
-
-    }
-
+    
+    
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        delay(0.2) {
-            self.dackButton.alpha = 1.0
-            self.springScaleFrom(self.dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
-            spring(0.5) {
-                self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
-                self.descriptionTextView.alpha = 1.0
-            }
+        dackButton.alpha = 1.0
+        springScaleFrom(self.dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
+        spring(0.5) {
+            self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
+            self.descriptionTextView.alpha = 1.0
         }
     }
     
@@ -62,18 +57,22 @@ class FriendRestaurantViewController: UIViewController {
     }
     
     private func textViewWithFont(textView: UITextView, fontName: String, fontSize: CGFloat, lineSpacing: CGFloat) {
+        let queue = dispatch_queue_create("com.queen.jaxu.eatlike", DISPATCH_QUEUE_CONCURRENT)
         let font = UIFont(name: fontName, size: fontSize)
-        textView.text = friendData[index].note
-        let text = textView.text
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = lineSpacing
-        
-        let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, attributedString.length))
-        
-        textView.attributedText = attributedString
+        dispatch_async(queue) {
+            let text = self.friendData[self.index].note
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = lineSpacing
+            
+            let attributedString = NSMutableAttributedString(string: text)
+            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, attributedString.length))
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                textView.attributedText = attributedString
+            }
+        }
     }
     
     private func springScaleFrom (view: UIView, x: CGFloat, y: CGFloat, scaleX: CGFloat, scaleY: CGFloat) {
@@ -94,12 +93,7 @@ class FriendRestaurantViewController: UIViewController {
         }
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
-    
-    override func childViewControllerForStatusBarStyle() -> UIViewController? {
-        return navigationController?.topViewController
-    }
-    
 }
