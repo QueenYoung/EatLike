@@ -15,7 +15,6 @@
 		96275E6D1C92E96100E90E2E /* RestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */; };
 		96275E6F1C93099F00E90E2E /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */; };
 		96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96275E701C93CE9100E90E2E /* Restaurant.swift */; };
-		9636EFF21CEDE75100EC589D /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9636EFF11CEDE75100EC589D /* NoteViewController.swift */; };
 		963BC9351CD8E891002702A7 /* ChooseCategaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963BC9341CD8E891002702A7 /* ChooseCategaryTableViewController.swift */; };
 		963BC9381CD8F27E002702A7 /* UpdateRestaurant.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 963BC9361CD8F27E002702A7 /* UpdateRestaurant.storyboard */; };
 		9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9645B5931C9D0FAD00C94E35 /* EatLike.xcdatamodeld */; };
@@ -51,6 +50,7 @@
 		96E6E90B1CA192A600D33EB9 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E6E90A1CA192A600D33EB9 /* WalkthroughPageViewController.swift */; };
 		96E6E90F1CA278A900D33EB9 /* about.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96E6E90D1CA278A900D33EB9 /* about.storyboard */; };
 		96E6E9141CA2792500D33EB9 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96E6E9121CA2792500D33EB9 /* Favorites.storyboard */; };
+		96F6DE5B1CFEA4A600A8C36C /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F6DE5A1CFEA4A600A8C36C /* HudView.swift */; };
 		96F7DD181CABA1D60042707E /* AboutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F7DD171CABA1D60042707E /* AboutTableViewController.swift */; };
 		96F7DD1A1CABA7900042707E /* FeedbackWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F7DD191CABA7900042707E /* FeedbackWebViewController.swift */; };
 /* End PBXBuildFile section */
@@ -66,7 +66,6 @@
 		96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewController.swift; sourceTree = "<group>"; };
 		96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		96275E701C93CE9100E90E2E /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
-		9636EFF11CEDE75100EC589D /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		963BC9341CD8E891002702A7 /* ChooseCategaryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCategaryTableViewController.swift; sourceTree = "<group>"; };
 		963BC9371CD8F27E002702A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UpdateRestaurant.storyboard; sourceTree = "<group>"; };
 		9645B5941C9D0FAD00C94E35 /* EatLike.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EatLike.xcdatamodel; sourceTree = "<group>"; };
@@ -108,6 +107,7 @@
 		96E6E90A1CA192A600D33EB9 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		96E6E90E1CA278A900D33EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/about.storyboard; sourceTree = "<group>"; };
 		96E6E9131CA2792500D33EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Favorites.storyboard; sourceTree = "<group>"; };
+		96F6DE5A1CFEA4A600A8C36C /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		96F7DD171CABA1D60042707E /* AboutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
 		96F7DD191CABA7900042707E /* FeedbackWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackWebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,6 +173,7 @@
 			children = (
 				968F2E9B1CD5BF280067D0C4 /* RemindTableViewController.swift */,
 				963BC9341CD8E891002702A7 /* ChooseCategaryTableViewController.swift */,
+				96F6DE5A1CFEA4A600A8C36C /* HudView.swift */,
 				969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */,
 				964B360F1CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift */,
 			);
@@ -182,7 +183,6 @@
 		964B360E1CE6DCDE001A8CB2 /* Core Pattern */ = {
 			isa = PBXGroup;
 			children = (
-				9636EFF11CEDE75100EC589D /* NoteViewController.swift */,
 				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
 				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
 				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
@@ -374,6 +374,7 @@
 				964B36101CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift in Sources */,
 				96275E6D1C92E96100E90E2E /* RestaurantTableViewController.swift in Sources */,
 				9645B5951C9D0FAD00C94E35 /* EatLike.xcdatamodeld in Sources */,
+				96F6DE5B1CFEA4A600A8C36C /* HudView.swift in Sources */,
 				96E6E9091CA1912F00D33EB9 /* WalkthroughContentViewController.swift in Sources */,
 				9692D2811CB8B765006D5CEF /* ExtensionFile.swift in Sources */,
 				969641E01C984832006B6A09 /* AddRestaurantTableViewController.swift in Sources */,
@@ -394,7 +395,6 @@
 				964B360D1CE4AB18001A8CB2 /* MapPinView.swift in Sources */,
 				968F2E9C1CD5BF280067D0C4 /* RemindTableViewController.swift in Sources */,
 				96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */,
-				9636EFF21CEDE75100EC589D /* NoteViewController.swift in Sources */,
 				96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */,
 				96F7DD181CABA1D60042707E /* AboutTableViewController.swift in Sources */,
 				96E3CE6E1CEAD9B10008822D /* DropSegue.swift in Sources */,

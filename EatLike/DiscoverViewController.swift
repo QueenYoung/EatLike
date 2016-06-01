@@ -128,9 +128,7 @@ class DiscoverViewController: UIViewController {
                 animator.addBehavior(gravity)
 
                 // 使用线程刷新
-                delay(0.2) {
-                    self.refreshView()
-                }
+                delay(0.2) { self.refreshView() }
             } else {
                 // otherwise 添加晃动动作
                 snapBehavior = UISnapBehavior(item: myView, snapToPoint: view.center)

@@ -16,9 +16,9 @@ class AddRestaurantTableViewController: UITableViewController {
     @IBOutlet weak var categaryLabel: UILabel!
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var noteTextField: UITextField!
-
+    
     var isUpdate = false
-
+    
     lazy var collectionLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .Horizontal
@@ -26,11 +26,11 @@ class AddRestaurantTableViewController: UITableViewController {
         layout.itemSize = CGSize(width: 100, height: 92)
         return layout
     }()
-
+    
     var previews = [PreviewCollectionViewController]()
-
+    
     let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
-
+    
     var newRestaurant: Restaurant!
     // MARK: - View Controller
     override func viewDidLoad() {
@@ -42,29 +42,32 @@ class AddRestaurantTableViewController: UITableViewController {
             nameTextField.becomeFirstResponder()
             title = NSLocalizedString("New Restaurant", comment: "newrestaurant")
         }
+        
+        tableView.estimatedRowHeight = 56
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
-
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         view.endEditing(true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
     // MARK: - Table View Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             showImagePicker()
         }
-
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-
-
+    
+    
     // MARK: - IBAction
     @IBAction func unwindFromCamera(sender: UIStoryboardSegue) {
         if let capturePhoto = sender.sourceViewController as? CapturePhotoViewController {
@@ -75,7 +78,7 @@ class AddRestaurantTableViewController: UITableViewController {
             }
         }
     }
-
+    
     // unwind 回来并更新 category
     @IBAction func updateCategary(sender: UIStoryboardSegue) {
         let categaryTVC = sender.sourceViewController as! ChooseCategaryTableViewController
@@ -85,12 +88,13 @@ class AddRestaurantTableViewController: UITableViewController {
             phoneTextField.becomeFirstResponder()
         }
     }
-
+    
     @IBAction func saveNewRestaurant(sender: UIButton) {
         let name = nameTextField.text!
         let type = categaryLabel.text!
         let location = locationTextField.text!
-
+        let hudText: String
+        
         // 如果 name type 或者 location 有一个没有填, 则提示用户
         if name.isEmpty || type.isEmpty || location.isEmpty {
             navigationItem.rightBarButtonItem?.enabled = false
@@ -98,16 +102,16 @@ class AddRestaurantTableViewController: UITableViewController {
                 title: "Wrong!",
                 message: "Can't proceed because one of fields is blank.",
                 preferredStyle: .Alert)
-
+            
             alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
             presentViewController(alert, animated: true, completion: nil)
             return
         }
-
+        
         guard let managedObjectContext =
             (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
             else { return }
-
+        
         // 如果是添加新的数据, 则插入一个新的数据实例.
         // 并且设置一个 UUID, 插入 Spotlight index
         if !isUpdate {
@@ -116,10 +120,13 @@ class AddRestaurantTableViewController: UITableViewController {
                     "Restaurant",
                     inManagedObjectContext: managedObjectContext) as! Restaurant
             newRestaurant.keyString = NSUUID().UUIDString
+            hudText = "Done"
+        } else {
+            hudText = "Updated"
         }
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        dispatch_async(queue) { [unowned self] in
+        dispatch_async(queue) {
             self.updateRestaurantInformation()
             do {
                 try managedObjectContext.save()
@@ -128,13 +135,17 @@ class AddRestaurantTableViewController: UITableViewController {
                 print(error)
                 return
             }
-
+            
             dispatch_async(dispatch_get_main_queue()) {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                if self.isUpdate {
-                    self.performSegueWithIdentifier("unwindToDetailView", sender: self)
-                } else {
-                    self.performSegueWithIdentifier("unwindToHomeView", sender: self)
+                let hud = HudView.hudInView(self.navigationController!.view, animated: true)
+                hud.text = hudText
+                delay(0.6) {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    if self.isUpdate {
+                        self.performSegueWithIdentifier("unwindToDetailView", sender: self)
+                    } else {
+                        self.performSegueWithIdentifier("unwindToHomeView", sender: self)
+                    }
                 }
             }
         }
