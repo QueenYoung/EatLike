@@ -25,7 +25,8 @@ class RestaurantDetailViewController: UIViewController,
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
         restaurantImageView.image = cache.imageForKey(restaurant.keyString)
-        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.estimatedRowHeight = 64
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
@@ -136,28 +137,32 @@ class RestaurantDetailViewController: UIViewController,
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let row = indexPath.row
+        var cell: UITableViewCell!
+        if case 0...2 = row {
+            cell = tableView.dequeueReusableCellWithIdentifier("NormalCell")
+                as! DetailTableViewCell
+        } else if row == 3 {
+            cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
+        } else if row == 4 {
+            cell = tableView.dequeueReusableCellWithIdentifier("RemainedCell")
+        }
 
-        var cell = tableView.dequeueReusableCellWithIdentifier("NormalCell")!
-        cell.textLabel?.textColor = .blueColor()
-        cell.textLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-        cell.detailTextLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         switch row {
         case 0:
-            cell.textLabel?.text = NSLocalizedString("Location", comment: "location")
-            cell.detailTextLabel?.text = restaurant.location
+            (cell as! DetailTableViewCell).titleLabel.text = NSLocalizedString("Location", comment: "location")
+            (cell as! DetailTableViewCell).subtitleLabel.text = restaurant.location
         case 1:
-            cell.textLabel?.text = NSLocalizedString("Category", comment: "category")
-            cell.detailTextLabel?.text = restaurant.type
+            (cell as! DetailTableViewCell).titleLabel.text = NSLocalizedString("Category", comment: "category")
+            (cell as! DetailTableViewCell).subtitleLabel.text = restaurant.type
         case 2:
-            cell.textLabel?.text = NSLocalizedString("Phone", comment: "phonenumber")
+            (cell as! DetailTableViewCell).titleLabel.text = NSLocalizedString("Phone", comment: "phonenumber")
             if !restaurant.phoneNumber.isEmpty{
-                cell.detailTextLabel?.text = restaurant.phoneNumber
+                (cell as! DetailTableViewCell).subtitleLabel.text = restaurant.phoneNumber
             } else {
-                cell.detailTextLabel?.text = NSLocalizedString("No phone", comment: "nophone")
+                (cell as! DetailTableViewCell).subtitleLabel.text = NSLocalizedString("No phone", comment: "nophone")
             }
         case 3:
             let count = Int(restaurant.userRate.intValue)
-            cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
             cell.textLabel?.text = NSLocalizedString("Review", comment: "review")
             if count == 0 {
                 cell.detailTextLabel?.text = String(
@@ -166,8 +171,6 @@ class RestaurantDetailViewController: UIViewController,
             } else {
                 cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("⭐️"))
             }
-        case 4:
-            cell = tableView.dequeueReusableCellWithIdentifier("RemainedCell")!
         default:
             break
         }

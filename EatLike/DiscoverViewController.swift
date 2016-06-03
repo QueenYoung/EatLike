@@ -81,33 +81,31 @@ class DiscoverViewController: UIViewController {
         if segue.identifier == "modalFriend" {
             let nav = segue.destinationViewController as! UINavigationController
             let friendVC = nav.topViewController as! FriendRestaurantViewController
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            dispatch_async(queue) {
-                friendVC.startTime = NSDate()
-                friendVC.friendData = self.discovers
-                friendVC.index = self.index
-            }
+
+            friendVC.startTime = NSDate()
+            friendVC.friendData = self.discovers
+            friendVC.index = self.index
         }
     }
-
-
+    
+    
     // MARK: Action
-
+    
     @IBAction func handlerPanGesture(sender: UIPanGestureRecognizer) {
         let myView = dialogView
         let location = sender.locationInView(view)
         let boxLocation = sender.locationInView(dialogView)
-
+        
         if sender.state == .Began {
             if snapBehavior != nil {
                 animator.removeBehavior(snapBehavior)
             }
-
+            
             // 添加钟摆效果并且计算偏移量, 摆动终点就是手指停留的位置
             let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(myView.bounds), boxLocation.y - CGRectGetMidY(myView.bounds));
             attachmentBehavior = UIAttachmentBehavior(item: myView, offsetFromCenter: centerOffset, attachedToAnchor: location)
             attachmentBehavior.frequency = 0.0
-
+            
             animator.addBehavior(attachmentBehavior)
         }
         else if sender.state == .Changed {
@@ -115,18 +113,18 @@ class DiscoverViewController: UIViewController {
         }
         else if sender.state == .Ended {
             animator.removeBehavior(attachmentBehavior)
-
+            
             let translation = sender.translationInView(view)
             // 如果是向下移动超过了 100 点, 就移除所有之前的行为, 附加重力效果
             // 并且开始刷新界面
             if translation.y > 100 {
                 animator.removeAllBehaviors()
-
+                
                 // 添加重力效果
                 let gravity = UIGravityBehavior(items: [dialogView])
                 gravity.gravityDirection = CGVectorMake(0, 10)
                 animator.addBehavior(gravity)
-
+                
                 // 使用线程刷新
                 delay(0.2) { self.refreshView() }
             } else {
@@ -136,7 +134,7 @@ class DiscoverViewController: UIViewController {
             }
         }
     }
-
+    
     @IBAction func likeButtonDidPressed(sender: UIButton) {
         let currentRestaurant = discovers[index]
         let isLiked = currentRestaurant.isLike
@@ -154,25 +152,25 @@ class DiscoverViewController: UIViewController {
         // 但是我发现使用 class 的话加载更快.
         discovers[index] = currentRestaurant
     }
-
-// MARK: - Helper Function
-
+    
+    // MARK: - Helper Function
+    
     private func refreshView() {
         index += 1
         if index == discovers.count {
             index = 0
         }
-
+        
         animator.removeAllBehaviors()
         snapBehavior = UISnapBehavior(item: dialogView, snapToPoint: view.center)
         attachmentBehavior.anchorPoint = view.center
-
+        
         dialogView.center = view.center
         isAnimated = true
         configureView()
         viewDidAppear(true)
     }
-
+    
     private func animatedView() {
         let scale = CGAffineTransformMakeScale(0.5, 0.5)
         let translate = CGAffineTransformMakeTranslation(0, -200)
@@ -181,7 +179,7 @@ class DiscoverViewController: UIViewController {
             self.dialogView.transform = CGAffineTransformIdentity
         }
     }
-
+    
     private func configureView() {
         let restaurant = discovers[index]
         backgroundBlurImage.image = restaurant.detailImage
@@ -195,7 +193,7 @@ class DiscoverViewController: UIViewController {
         updateLikeButtonColor()
         dialogView.alpha = 1
     }
-
+    
     private func updateLikeButtonColor() {
         if discovers[index].isLike {
             likesButton.tintColor = .redColor()
@@ -203,6 +201,6 @@ class DiscoverViewController: UIViewController {
             likesButton.tintColor = .blueColor()
         }
     }
-
+    
 }
 

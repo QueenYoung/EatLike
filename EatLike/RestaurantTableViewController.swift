@@ -21,6 +21,7 @@ class RestaurantTableViewController: UITableViewController,
         //	搜索的时候，背景不会模糊。如果使用的不是另一个独立的视图，需要赋值为 false， 否则无法点击搜索的值
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
+        searchController.searchResultsUpdater = self
         let bar = searchController.searchBar
         bar.placeholder = NSLocalizedString("Search Restaurants", comment: "place")
         bar.sizeToFit()
@@ -44,7 +45,6 @@ class RestaurantTableViewController: UITableViewController,
 
         presentViewController(pageViewController, animated: true, completion: nil)
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +76,7 @@ class RestaurantTableViewController: UITableViewController,
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.title = "Restaurants"
         // 让 tableView 获得可以动态的定义高度.
-        tableView.estimatedRowHeight = 80
+        tableView.estimatedRowHeight = 88
         // 这个属性对于那些系统提供的 Cell 来说是默认属性, 但是对于自定义的类型, 默认值是
         // IB 上的 RowHeight. 需要主动设置
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -94,7 +94,6 @@ class RestaurantTableViewController: UITableViewController,
     }
     
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -151,6 +150,9 @@ class RestaurantTableViewController: UITableViewController,
         detailRestaurantVC.restaurant = restaurants[indexPath.row]
         showViewController(detailRestaurantVC, sender: self)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if searchController.active {
+            searchController.active = false
+        }
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -179,22 +181,36 @@ class RestaurantTableViewController: UITableViewController,
             [unowned self] (action, indexPath) in
             if let image = restaurant.image {
                 let defaultText = "Just check in \(restaurant.name)"
-                let activity = UIActivityViewController(activityItems: [image, defaultText], applicationActivities: nil)
+                let activity = UIActivityViewController(
+                    activityItems: [image, defaultText],
+                    applicationActivities: nil)
                 self.presentViewController(activity, animated: true, completion: nil)
             }
         }
         
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "Delete") {
             [unowned self] (action, indexPath) in
-            guard let managedObjectContext =
-                (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext else { return }
-            let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
-            let restaurantToDelete =
-                self.fetchResultController.objectAtIndexPath(indexPath) as! Restaurant
-            cache.removeImage(restaurant.keyString)
-            restaurantToDelete.deleteSpotlightIndex()
-            managedObjectContext.deleteObject(restaurantToDelete)
-            guard let _ = try? managedObjectContext.save() else { return }
+            let alert = UIAlertController(title: "你确定要删除吗?", message: nil, preferredStyle: .Alert)
+
+            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) {
+                _ in
+                guard let managedObjectContext =
+                    (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext else { return }
+                let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
+                let restaurantToDelete =
+                    self.fetchResultController.objectAtIndexPath(indexPath) as! Restaurant
+                cache.removeImage(restaurant.keyString)
+                restaurantToDelete.deleteSpotlightIndex()
+                managedObjectContext.deleteObject(restaurantToDelete)
+                guard let _ = try? managedObjectContext.save() else { return }
+            }
+            alert.addAction(deleteAction)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+                self.tableView.setEditing(false, animated: true)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+            let cell = tableView.cellForRowAtIndexPath(indexPath)!
+            cell.shake()
         }
         
         let callAction = UITableViewRowAction(style: .Normal, title: "Call") {
@@ -330,3 +346,21 @@ private extension Selector {
     static let TextSizeChange = #selector(
         RestaurantTableViewController.onTextSizeChange(_:))
 }
+
+protocol Shakeable {
+    func shake()
+}
+
+extension Shakeable where Self: UIView {
+    func shake() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.05
+        animation.repeatCount = 10
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(self.center.x - 4.0, self.center.y))
+        animation.toValue = NSValue(CGPoint: CGPointMake(self.center.x + 4.0, self.center.y))
+        layer.addAnimation(animation, forKey: "position")
+    }
+}
+
+extension UITableViewCell: Shakeable {}
