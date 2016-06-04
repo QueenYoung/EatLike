@@ -174,6 +174,7 @@
 				968F2E9B1CD5BF280067D0C4 /* RemindTableViewController.swift */,
 				963BC9341CD8E891002702A7 /* ChooseCategaryTableViewController.swift */,
 				96F6DE5A1CFEA4A600A8C36C /* HudView.swift */,
+				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
 				969641DF1C984832006B6A09 /* AddRestaurantTableViewController.swift */,
 				964B360F1CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift */,
 			);
@@ -184,7 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				96275E6C1C92E96100E90E2E /* RestaurantTableViewController.swift */,
-				96B488A91C941FDE00A6B008 /* RestaurantDetailViewController.swift */,
 				96275E6E1C93099F00E90E2E /* RestaurantTableViewCell.swift */,
 				96C99E751C95A6D80007849E /* ReviewViewController.swift */,
 				96275E701C93CE9100E90E2E /* Restaurant.swift */,
