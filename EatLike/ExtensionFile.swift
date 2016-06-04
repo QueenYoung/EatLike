@@ -81,12 +81,19 @@ public func configureAppearance() {
     navBarAppearance.shadowImage = .withColor(.clearColor(), size: imageSize)
 }
 
+func async<T>(closure: Void -> T) -> T? {
+    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+    dispatch_async(queue) {
+        return closure()
+    }
+    return nil
+}
+
 func getData() -> [DiscoverRestaurants] {
-let a = NSArray(contentsOfURL:
+    let a = NSArray(contentsOfURL:
         NSBundle.mainBundle().URLForResource(
             "Preview", withExtension: "plist")!)!
         as! [[String: AnyObject]]
-
     return a.map {
         DiscoverRestaurants(name: $0["name"] as! String,
             userName: $0["userName"] as! String,

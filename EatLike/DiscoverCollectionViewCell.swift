@@ -28,16 +28,7 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
         userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
         // 加上圆角效果 and Blur
         getBlurView(headView, style: .Dark)
-        layer.cornerRadius = 6.0
+        layer.cornerRadius = 10.0
     }
 
-    func changeLikeTotal(add: Bool) {
-        if add {
-            let total = Int(likesTotal.text!)! + 1
-            likesTotal.text = "\(total)"
-        } else {
-            let total = Int(likesTotal.text!)! - 1
-            likesTotal.text = "\(total)"
-        }
-    }
 }

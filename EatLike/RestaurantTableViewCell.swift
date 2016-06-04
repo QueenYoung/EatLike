@@ -42,23 +42,6 @@ class RestaurantTableViewCell: UITableViewCell {
         thumbnailImageView.image = cache.imageForKey(data.keyString)
         updateLabelPerferredFont()
 
-        /* 给 缩略图添加圆角效果
-         但是可以使用 IB 来完成这个任务。
-         通过添加 Runtime Attribute 设置半径（为图片框架的长度的一半，半径）
-         再设置 imageView 的 Attribute 的  Clip Subviews */
-        // cell.thumbnailImageView.layer.cornerRadius = 30.0
-        // cell.thumbnailImageView.clipsToBounds = true
-
     }
 
-    /* func addNoteView(noteview: UIView) {
-        noteview.heightAnchor.constraintEqualToConstant(80).active = true
-        stackView.addArrangedSubview(noteview)
-    }
-
-    func removeNoteView(noteView: UIView) {
-        stackView.removeArrangedSubview(noteView)
-        noteView.removeFromSuperview()
-    } */
-    
 }
