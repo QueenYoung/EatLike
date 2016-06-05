@@ -14,8 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var imageCache = ImageCache()
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        UIApplication.shared().statusBarStyle = .lightContent
         configureAppearance()
         if let barFont = UIFont(name: "Avenir-Light", size: 24) {
             UINavigationBar.appearance().titleTextAttributes =
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         let objectId: String
         if userActivity.activityType == Restaurant.domainIdentifier,
             let activityObjectId = userActivity.userInfo?["id"] as? String {
@@ -48,11 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             homeVC = nav.viewControllers.first as? RestaurantTableViewController,
             restaurant = homeVC.restaurants.filter({$0.keyString == objectId}).first {
 
-            nav.popToRootViewControllerAnimated(false)
+            nav.popToRootViewController(animated: false)
             let restaurantDetailVC = (
                 homeVC.storyboard!
-                .instantiateViewControllerWithIdentifier(
-                    "restaurantDetailNavigationController")
+                    .instantiateViewController(
+                        withIdentifier: "restaurantDetailNavigationController")
                     as! UINavigationController
                 ).topViewController
                 as! RestaurantDetailViewController
@@ -64,19 +64,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         // TODO: 通过这个方法可以在软件运行的时候, 显示 alert.
         // 接下来只需要定义一个有意思的就可以.
-        let alert = UIAlertController(title: "吃饭时间到了!", message: "不愿走路的话, 就叫外卖吧", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        let alert = UIAlertController(title: "吃饭时间到了!", message: "不愿走路的话, 就叫外卖吧", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         ((window!.rootViewController! as! UITabBarController)
             .viewControllers![0] as! UINavigationController)
-            .topViewController?.presentViewController(alert, animated: true, completion: nil)
+            .topViewController?.present(alert, animated: true, completion: nil)
     }
 
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: () -> Void) {
         if identifier == "Justsavaworld" {
-            NSNotificationCenter.defaultCenter().postNotificationName("SaveWorld", object: nil)
+            NSNotificationCenter.default().post(name: "SaveWorld", object: nil)
         }
 
         completionHandler()
@@ -86,24 +86,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.appcoda.CoreDataDemo" in the application's documents Application Support directory.
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let urls = NSFileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("EatLike", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
+        let modelURL = NSBundle.main().urlForResource("EatLike", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("EatLike.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("EatLike.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            try coordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: url,
+                options: nil
+            )
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -124,7 +129,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(
+            concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()

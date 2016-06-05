@@ -19,15 +19,15 @@ class RestaurantTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
 
     func updateLabelPerferredFont() {
-        let headFont = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-        let captionFont = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)
-        let footNote = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+        let headFont = UIFont.preferredFont(forTextStyle: UIFontTextStyleHeadline)
+        let captionFont = UIFont.preferredFont(forTextStyle: UIFontTextStyleCaption1)
+        let footNote = UIFont.preferredFont(forTextStyle: UIFontTextStyleFootnote)
 
         nameLabel.font = headFont
         LocationLabel.font = footNote
@@ -35,11 +35,11 @@ class RestaurantTableViewCell: UITableViewCell {
     }
 
     func configure(data: Restaurant) {
-        let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
+        let cache = (UIApplication.shared().delegate as! AppDelegate).imageCache
         nameLabel.text = data.name
         LocationLabel.text = data.location
         TypeLabel.text = data.type
-        thumbnailImageView.image = cache.imageForKey(data.keyString)
+        thumbnailImageView.image = cache.image(for: data.keyString)
         updateLabelPerferredFont()
 
     }

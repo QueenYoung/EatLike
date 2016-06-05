@@ -10,16 +10,16 @@ class ScaleSegue: UIStoryboardSegue {
 }
 
 extension ScaleSegue: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(
-        presented: UIViewController,
-        presentingController presenting: UIViewController,
+    func animationController(
+        forPresentedController presented: UIViewController,
+        presenting: UIViewController,
         sourceController source: UIViewController)
         -> UIViewControllerAnimatedTransitioning? {
 
         return ScalePresentAnimator()
     }
 
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissedController dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return ScaleDismissAnimator()
     }
 }
@@ -29,22 +29,24 @@ protocol ViewScaleable {
 }
 
 class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
     }
 
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        var fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+    func animateTransition(_ transitionContext: UIViewControllerContextTransitioning) {
+        var fromViewController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey)!
         if let fromNC = fromViewController as? UINavigationController {
             if let controller = fromNC.topViewController {
                 fromViewController = controller
             }
         }
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
+        let fromView = transitionContext.view(
+            forKey: UITransitionContextFromViewKey)
 
         // 1. Get the transition context to- controller and view
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+        let toViewController = transitionContext.viewController(
+            forKey: UITransitionContextToViewControllerKey)!
+        let toView = transitionContext.view(forKey: UITransitionContextToViewKey)
 
         // 2. Add the to-view to the transition context
         if let toView = toView {
@@ -63,9 +65,10 @@ class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         // 4. Perform the animation
         let duration = transitionDuration(transitionContext)
-        let finalFrame = transitionContext.finalFrameForViewController(toViewController)
+        let finalFrame = transitionContext.finalFrame(for: toViewController)
 
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(
+            withDuration: duration, animations: {
             toView?.frame = finalFrame
             toView?.layoutIfNeeded()
             fromView?.alpha = 0.0
@@ -79,15 +82,16 @@ class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 }
 
 class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
     }
 
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
+    func animateTransition(_ transitionContext: UIViewControllerContextTransitioning) {
+        let fromView = transitionContext.view(forKey: UITransitionContextFromViewKey)
 
         // Get the transition context to- controller and view
-        var toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        var toViewController = transitionContext
+            .viewController(forKey: UITransitionContextToViewControllerKey)!
 
         if let toNC = toViewController as? UINavigationController {
             if let controller = toNC.topViewController {
@@ -95,7 +99,7 @@ class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             }
         }
 
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+        let toView = transitionContext.view(forKey: UITransitionContextToViewKey)
 
         // Add the to- view to the transition context
         if let fromView = fromView,
@@ -117,7 +121,8 @@ class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // Perform the animation
         let duration = transitionDuration(transitionContext)
 
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(
+            withDuration: duration, animations: {
             fromView?.frame = finalFrame
             fromView?.layoutIfNeeded()
             toView?.alpha = 1.0

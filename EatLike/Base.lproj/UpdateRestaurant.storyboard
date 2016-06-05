@@ -26,6 +26,7 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoalbum" translatesAutoresizingMaskIntoConstraints="NO" id="E1L-ep-puK">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="179"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -47,13 +48,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="n8E-8v-EdX">
                                                     <rect key="frame" x="13" y="11" width="579" height="33"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_restaurant_name_icon" translatesAutoresizingMaskIntoConstraints="NO" id="MVQ-ch-dSg">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homename" translatesAutoresizingMaskIntoConstraints="NO" id="MVQ-ch-dSg">
                                                             <rect key="frame" x="0.0" y="0.0" width="28" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="28" id="dmS-QA-SJx"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wch-Q7-OOi">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wch-Q7-OOi">
                                                             <rect key="frame" x="38" y="0.0" width="541" height="33"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -82,7 +83,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JAc-f7-0C6">
                                                     <rect key="frame" x="13" y="10" width="579" height="35"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Y1T-f0-jHd">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="compass" translatesAutoresizingMaskIntoConstraints="NO" id="Y1T-f0-jHd">
                                                             <rect key="frame" x="0.0" y="0.0" width="28" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="28" id="5f6-YL-mbm"/>
@@ -117,7 +118,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rql-Vf-xPW">
                                                     <rect key="frame" x="13" y="10" width="579" height="35"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurant_category_icon" translatesAutoresizingMaskIntoConstraints="NO" id="xMf-WH-THT">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flag" translatesAutoresizingMaskIntoConstraints="NO" id="xMf-WH-THT">
                                                             <rect key="frame" x="0.0" y="0.0" width="28" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="28" id="rsd-nU-UGm"/>
@@ -153,7 +154,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="f65-K5-8bb">
                                                     <rect key="frame" x="13" y="10" width="579" height="35"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contact_number" translatesAutoresizingMaskIntoConstraints="NO" id="ANe-Zz-AWX">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smartphone-8" translatesAutoresizingMaskIntoConstraints="NO" id="ANe-Zz-AWX">
                                                             <rect key="frame" x="0.0" y="0.0" width="28" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="28" id="91o-f2-ooN"/>
@@ -188,7 +189,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eOJ-3i-0dc">
                                                     <rect key="frame" x="13" y="10" width="579" height="35"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notes_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Ueo-VT-le6">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notepad-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ueo-VT-le6">
                                                             <rect key="frame" x="0.0" y="0.0" width="28" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="28" id="xrd-qE-uqT"/>
@@ -224,12 +225,12 @@
                     <navigationItem key="navigationItem" id="9Uy-PW-IvX">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lfZ-Nu-7Ry">
                             <connections>
-                                <action selector="cancel" destination="RYy-rE-Sx6" id="ZNO-s9-RNn"/>
+                                <action selector="cancel" destination="RYy-rE-Sx6" id="f6q-hf-feg"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="u5A-27-a1l">
                             <connections>
-                                <action selector="saveNewRestaurant:" destination="RYy-rE-Sx6" id="xGG-1i-3e3"/>
+                                <action selector="saveNewRestaurantWithSender:" destination="RYy-rE-Sx6" id="1Gi-MS-5Eu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -241,82 +242,14 @@
                         <outlet property="nameTextField" destination="Wch-Q7-OOi" id="bEH-FD-pdh"/>
                         <outlet property="noteTextField" destination="Ceo-uh-cnY" id="AN2-kH-z5R"/>
                         <outlet property="phoneTextField" destination="eCX-uE-KdP" id="8Ne-sX-ekd"/>
-                        <segue destination="25c-uv-4uP" kind="unwind" identifier="unwindToDetailView" unwindAction="unwindToDetail:" id="cPn-h3-MKn"/>
-                        <segue destination="25c-uv-4uP" kind="unwind" identifier="unwindToHomeView" unwindAction="unwindToHome:" id="TQP-rR-paZ"/>
-                        <segue destination="Gvq-Wq-ixl" kind="presentation" identifier="ShowCamera" id="N0M-4F-TlN"/>
+                        <segue destination="25c-uv-4uP" kind="unwind" identifier="unwindToDetailView" unwindAction="unwindToDetailWithSegue:" id="cPn-h3-MKn"/>
+                        <segue destination="25c-uv-4uP" kind="unwind" identifier="unwindToHomeView" unwindAction="unwindToHomeWithSegue:" id="TQP-rR-paZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAd-CX-PNe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="25c-uv-4uP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4367" y="-136"/>
-        </scene>
-        <!--Camera View Controller-->
-        <scene sceneID="Vuh-hu-SJd">
-            <objects>
-                <viewController id="Gvq-Wq-ixl" customClass="CameraViewController" customModule="EatLike" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yQS-g6-UfN"/>
-                        <viewControllerLayoutGuide type="bottom" id="Jt4-3I-gUu"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="qSz-J6-zkL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgz-d5-4LJ">
-                                <rect key="frame" x="532" y="535" width="48" height="30"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="dismiss:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="ybG-wE-4f7"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2F-cs-MQo">
-                                <rect key="frame" x="270" y="520" width="60" height="60"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="4Oq-jL-Ho8"/>
-                                    <constraint firstAttribute="width" constant="60" id="AQf-Y5-keR"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="30"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="capture:" destination="Gvq-Wq-ixl" eventType="touchUpInside" id="CML-A1-h8g"/>
-                                    <segue destination="v7p-hh-ayC" kind="unwind" unwindAction="unwindFromCamera:" id="V8g-yy-CFH"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="i2F-cs-MQo" firstAttribute="centerX" secondItem="qSz-J6-zkL" secondAttribute="centerX" id="ab3-sR-OoL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cgz-d5-4LJ" secondAttribute="trailing" id="dme-EB-hdn"/>
-                            <constraint firstItem="Jt4-3I-gUu" firstAttribute="top" secondItem="i2F-cs-MQo" secondAttribute="bottom" constant="20" id="jlV-nl-9N3"/>
-                            <constraint firstItem="cgz-d5-4LJ" firstAttribute="centerY" secondItem="i2F-cs-MQo" secondAttribute="centerY" id="sWb-Zc-CSd"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="6UX-TZ-jV2" appends="YES" id="sG9-cA-WOb"/>
-                        </connections>
-                    </view>
-                    <connections>
-                        <outlet property="cameraButton" destination="i2F-cs-MQo" id="gIV-33-7Km"/>
-                        <outlet property="cancelButton" destination="cgz-d5-4LJ" id="od5-Nt-zZM"/>
-                        <segue destination="zzw-rE-fon" kind="presentation" identifier="ShowCaptureImage" id="ctW-7a-ac4"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cau-jO-kT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="v7p-hh-ayC" userLabel="Exit" sceneMemberID="exit"/>
-                <swipeGestureRecognizer direction="down" id="6UX-TZ-jV2">
-                    <connections>
-                        <action selector="swipeSwitchCameraGesture:" destination="Gvq-Wq-ixl" id="Fgy-AE-t7v"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="5107" y="-393"/>
         </scene>
         <!--Categary-->
         <scene sceneID="Tc9-to-ueb">
@@ -488,87 +421,18 @@
                     <navigationItem key="navigationItem" title="Categary" id="Q2B-Wd-8ZH">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="2YG-Ck-vU1">
                             <connections>
-                                <action selector="done:" destination="3Sx-E0-yux" id="bGH-Nd-noI"/>
+                                <action selector="doneWithSender:" destination="3Sx-E0-yux" id="gWJ-8B-mMw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="SxS-rr-8HA" kind="unwind" identifier="UnwindCategary" unwindAction="updateCategary:" id="oeQ-Qf-s9X"/>
+                        <segue destination="SxS-rr-8HA" kind="unwind" identifier="UnwindCategary" unwindAction="updateCategaryWithSender:" id="oeQ-Qf-s9X"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ON6-do-KXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="SxS-rr-8HA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5975" y="310"/>
-        </scene>
-        <!--Capture Photo View Controller-->
-        <scene sceneID="QeK-Bp-eKY">
-            <objects>
-                <viewController id="6WJ-rG-oJe" customClass="CapturePhotoViewController" customModule="EatLike" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Cv2-Cb-s4p"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZEf-Mq-cWN"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pCU-6d-mIJ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ss0-Gf-Oth">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="ss0-Gf-Oth" secondAttribute="trailing" id="5qz-7v-Bdq"/>
-                            <constraint firstItem="ss0-Gf-Oth" firstAttribute="leading" secondItem="pCU-6d-mIJ" secondAttribute="leading" id="7wu-XR-zx2"/>
-                            <constraint firstItem="ss0-Gf-Oth" firstAttribute="bottom" secondItem="ZEf-Mq-cWN" secondAttribute="top" id="Dqr-iT-6yT"/>
-                            <constraint firstItem="ss0-Gf-Oth" firstAttribute="top" secondItem="Cv2-Cb-s4p" secondAttribute="bottom" id="gdj-jo-MPq"/>
-                            <constraint firstItem="ss0-Gf-Oth" firstAttribute="top" secondItem="pCU-6d-mIJ" secondAttribute="top" constant="44" id="mDA-kt-tfH"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="mDA-kt-tfH"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <navigationItem key="navigationItem" id="ZMB-71-dl7">
-                        <barButtonItem key="leftBarButtonItem" title="Again" id="zmz-rc-U93">
-                            <connections>
-                                <action selector="recapture:" destination="6WJ-rG-oJe" id="I03-qC-uzT"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="JX1-KL-J7a">
-                            <connections>
-                                <segue destination="XiC-ub-LIX" kind="unwind" unwindAction="unwindSavaCapture:" id="6mr-zM-fBh"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="imageView" destination="ss0-Gf-Oth" id="bYT-T7-hMV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qq7-6J-iZF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="XiC-ub-LIX" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="6861" y="-303"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="2cf-KS-SPi">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zzw-rE-fon" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GVl-76-DDF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="6WJ-rG-oJe" kind="relationship" relationship="rootViewController" id="akk-eI-OrV"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6zq-ki-GZV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5859" y="-393"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9GS-pl-cnY">
@@ -590,12 +454,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add_restaurant_name_icon" width="27" height="28"/>
-        <image name="contact_number" width="25" height="23"/>
-        <image name="location_icon" width="25" height="25"/>
-        <image name="notes_icon" width="23" height="23"/>
+        <image name="compass" width="256" height="256"/>
+        <image name="flag" width="256" height="256"/>
+        <image name="homename" width="256" height="256"/>
+        <image name="notepad-1" width="256" height="256"/>
         <image name="photoalbum" width="84" height="84"/>
-        <image name="restaurant_category_icon" width="24" height="28"/>
+        <image name="smartphone-8" width="256" height="256"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

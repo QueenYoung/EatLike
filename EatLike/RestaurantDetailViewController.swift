@@ -16,7 +16,7 @@ class RestaurantDetailViewController: UIViewController,
     @IBOutlet var tableView: UITableView!
 
     var restaurant: Restaurant!
-    let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
+    let cache = (UIApplication.shared().delegate as! AppDelegate).imageCache
 
     // MARK: - View Controller
     override func viewDidLoad() {
@@ -24,19 +24,19 @@ class RestaurantDetailViewController: UIViewController,
 
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
-        restaurantImageView.image = cache.imageForKey(restaurant.keyString)
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        restaurantImageView.image = cache.image(for: restaurant.keyString)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.estimatedRowHeight = 64
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.hidesBarsOnSwipe = false
     }
 
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         configureAppearance()
     }
@@ -55,7 +55,7 @@ class RestaurantDetailViewController: UIViewController,
             let count = Int(restaurant.userRate.intValue)
             configureStarColor(count)
         } else if sourceViewController is AddRestaurantTableViewController {
-            restaurantImageView.image = cache.imageForKey(restaurant.keyString)
+            restaurantImageView.image = cache.image(for: restaurant.keyString)
             tableView.reloadData()
             if navigationItem.title != restaurant.name {
                 navigationItem.title = restaurant.name
@@ -64,11 +64,11 @@ class RestaurantDetailViewController: UIViewController,
         } else if sourceViewController is RemindTableViewController {
             restaurant.scheduleNotification()
         } else if  sourceViewController is MapViewController {
-            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+            tableView.reloadRows(at: [NSIndexPath(forRow: 0, inSection: 0)], with: .automatic)
         }
 
         guard let managedObjectContext =
-            (UIApplication.sharedApplication().delegate as? AppDelegate)?
+            (UIApplication.shared().delegate as? AppDelegate)?
                 .managedObjectContext else { return }
 
         try! managedObjectContext.save()
@@ -76,8 +76,8 @@ class RestaurantDetailViewController: UIViewController,
     }
 
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segueIdentifierForSegue(segue) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segueIdentifier(for: segue) {
         case .EditRestaurant:
             let editNV = segue.destinationViewController as! UINavigationController
             let editVc = editNV.topViewController as! AddRestaurantTableViewController
@@ -100,51 +100,51 @@ class RestaurantDetailViewController: UIViewController,
 
     // MARK: - Table View Data Source
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
         let row = indexPath.row
 
         switch row {
         case 0:
-                performSegueWithIdentifier(.ModalMapView, sender: self)
+            performSegue(with: .ModalMapView, sender: self)
         case 2:
             // will modal a alert view
-            if let alert = call(restaurant.phoneNumber) {
-                presentViewController(alert, animated: true, completion: nil)
+            if let alert = call(telphone: restaurant.phoneNumber) {
+                present(alert, animated: true, completion: nil)
             }
         case 3:
             let reviewNC = storyboard!
-                .instantiateViewControllerWithIdentifier("ReviewNavigationController")
+                .instantiateViewController(withIdentifier: "ReviewNavigationController")
                 as! UINavigationController
 
             let reviewVC = reviewNC.topViewController as! ReviewViewController
             reviewVC.restaurant = restaurant
-            showViewController(reviewVC, sender: self)
+            show(reviewVC, sender: self)
         case 4:
-            performSegueWithIdentifier(.ShowReminded, sender: self)
+            performSegue(with: .ShowReminded, sender: self)
         default:
             break
         }
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 
 
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
 
         let row = indexPath.row
         var cell: UITableViewCell!
         if case 0...2 = row {
-            cell = tableView.dequeueReusableCellWithIdentifier("NormalCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "NormalCell")
                 as! DetailTableViewCell
         } else if row == 3 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "ReviewCell")!
         } else if row == 4 {
-            cell = tableView.dequeueReusableCellWithIdentifier("RemainedCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "RemainedCell")
         }
 
         switch row {
@@ -165,11 +165,10 @@ class RestaurantDetailViewController: UIViewController,
             let count = Int(restaurant.userRate.intValue)
             cell.textLabel?.text = NSLocalizedString("Review", comment: "review")
             if count == 0 {
-                cell.detailTextLabel?.text = String(
-                    count: 5, repeatedValue: Character("🌚"))
-                cell.detailTextLabel?.textColor = UIColor.lightGrayColor()
+                cell.detailTextLabel?.text = String(repeating:  Character("🌕"), count: count)
+                cell.detailTextLabel?.textColor = UIColor.lightGray()
             } else {
-                cell.detailTextLabel?.text = String(count: count, repeatedValue: Character("⭐️"))
+                cell.detailTextLabel?.text = String(repeating:  Character("⭐️"), count: count)
             }
         default:
             break
@@ -177,14 +176,14 @@ class RestaurantDetailViewController: UIViewController,
         return cell
     }
 
-    private func configureStarColor(count: Int) {
+    private func configureStarColor(_ count: Int) {
         let indexpath = NSIndexPath(forRow: 3, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(indexpath)
-        cell?.detailTextLabel!.text = String(count: count, repeatedValue: Character("⭐️"))
+        let cell = tableView.cellForRow(at: indexpath)
+        cell?.detailTextLabel?.text = String(repeating:  Character("⭐️"), count: count)
     }
 
     @IBAction func cancel(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -194,11 +193,11 @@ protocol SegueType {
 }
 
 extension SegueType where Self: UIViewController, CustomSegueIdentifier.RawValue == String {
-    func performSegueWithIdentifier(identifier: CustomSegueIdentifier, sender: AnyObject?) {
-        performSegueWithIdentifier(identifier.rawValue, sender: self)
+    func performSegue(with identifier: CustomSegueIdentifier, sender: AnyObject?) {
+        performSegue(withIdentifier: identifier.rawValue, sender: self)
     }
 
-    func segueIdentifierForSegue(segue: UIStoryboardSegue) -> CustomSegueIdentifier {
+    func segueIdentifier(for segue: UIStoryboardSegue) -> CustomSegueIdentifier {
         guard let identifier = segue.identifier,
             segueIdentifier = CustomSegueIdentifier(rawValue: identifier) else {
                 fatalError("Invalid segue identifier \(segue.identifier)")
@@ -225,9 +224,9 @@ extension RestaurantDetailViewController {
         }
     } */
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.count == 1 {
-            performSegueWithIdentifier(.ScaleImage, sender: nil)
+            performSegue(with: .ScaleImage, sender: nil)
         }
     }
 
@@ -246,9 +245,9 @@ class DetailImageController: UIViewController {
 //        dismissViewControllerAnimated(true, completion: nil)
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.count == 1 {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
 }

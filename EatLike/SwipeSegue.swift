@@ -10,9 +10,9 @@ class SwipeSegue: UIStoryboardSegue {
 }
 
 extension SwipeSegue: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(
-        presented: UIViewController,
-        presentingController presenting: UIViewController,
+    func animationController(
+        forPresentedController presented: UIViewController,
+        presenting: UIViewController,
                              sourceController source: UIViewController)
         -> UIViewControllerAnimatedTransitioning? {
 
@@ -20,7 +20,7 @@ extension SwipeSegue: UIViewControllerTransitioningDelegate {
         return ScalePresentAnimator()
     }
 
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissedController dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SwipeDismissAnimator()
     }
 }
@@ -31,19 +31,20 @@ protocol ViewSwipeable {
 
 class SwipeDismissAnimator:NSObject, UIViewControllerAnimatedTransitioning {
 
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(
+        _ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
 
     }
 
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(_ transitionContext: UIViewControllerContextTransitioning) {
 
         // Get the views from the transition context
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey)!
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey)!
 
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+        let fromView = transitionContext.view(forKey: UITransitionContextFromViewKey)
+        let toView = transitionContext.view(forKey: UITransitionContextToViewKey)
 
 
         // Add the to- view to the transition context
@@ -54,27 +55,27 @@ class SwipeDismissAnimator:NSObject, UIViewControllerAnimatedTransitioning {
         }
 
         // Work out the final frame for the animation
-        var finalFrame = transitionContext.initialFrameForViewController(fromViewController)
+        var finalFrame = transitionContext.initialFrame(for: fromViewController)
         // Center final frame so it slides  vertically
-        let toFinalFrame = transitionContext.finalFrameForViewController(toViewController)
+        let toFinalFrame = transitionContext.finalFrame(for: toViewController)
         finalFrame.origin.x = toFinalFrame.width/2 - finalFrame.width/2
 
         if let fromViewController = fromViewController as? ViewSwipeable {
             let direction = fromViewController.swipeDirection
             switch direction {
-            case UISwipeGestureRecognizerDirection.Up:
+            case UISwipeGestureRecognizerDirection.up:
                 finalFrame.origin.y = -finalFrame.height
-            case UISwipeGestureRecognizerDirection.Down:
+            case UISwipeGestureRecognizerDirection.down:
                 finalFrame.origin.y = UIWindow().bounds.height
             default:()
             }
-        }else {
+        } else {
             // Not Swipeable
             print("Warning: Controller \(fromViewController) does not conform to ViewSwipeable")
         }
         // Perform the animation
         let duration = transitionDuration(transitionContext)
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             fromView?.frame = finalFrame
             }, completion: {
                 finished in

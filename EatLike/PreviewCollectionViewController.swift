@@ -25,10 +25,10 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         // Register cell classes
-        self.collectionView!.registerClass(previewCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(previewCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
-        self.collectionView?.backgroundColor = UIColor.clearColor()
+        self.collectionView?.backgroundColor = UIColor.clear()
         self.view.frame.size = CGSize(width: delegate!.pictureWidth, height: 98)
         collectionView?.delegate = self
     }
@@ -40,18 +40,17 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return pictures.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! previewCollectionCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! previewCollectionCell
     
         // Configure the cell
         cell.photoImageView.image = pictures[indexPath.row]
@@ -61,9 +60,12 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
     // MARK: UICollectionViewDelegate
 
     // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        shouldHighlightItemAt indexPath: NSIndexPath) -> Bool {
         return true
     }
+
 
     // 总是会出问题, 不知道为什么.
     /* func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -79,8 +81,8 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
         return CGSize(width: cellWidth, height: cellHeight)
     } */
 
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! previewCollectionCell
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! previewCollectionCell
         let image = cell.photoImageView.image!
         delegate?.imageBeSelected(selectedImage: image)
     }
@@ -93,24 +95,28 @@ protocol PreviewSelectable: class {
 
 final class previewCollectionCell: UICollectionViewCell {
     let photoImageView = UIImageView()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        photoImageView.contentMode = .ScaleAspectFill
+        
+        photoImageView.contentMode = .scaleAspectFill
         photoImageView.clipsToBounds = true
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(photoImageView)
-
-        photoImageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        photoImageView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        photoImageView.leftAnchor.constraintEqualToAnchor(contentView.leftAnchor).active = true
-        photoImageView.rightAnchor.constraintEqualToAnchor(contentView.rightAnchor).active = true
+        
+        photoImageView.topAnchor.constraintEqual(
+            to: contentView.topAnchor).isActive = true
+        photoImageView.bottomAnchor.constraintEqual(
+            to: contentView.bottomAnchor).isActive = true
+        photoImageView.leftAnchor.constraintEqual(
+            to: contentView.leftAnchor).isActive = true
+        photoImageView.rightAnchor.constraintEqual(
+            to: contentView.rightAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-
+    
+    
 }

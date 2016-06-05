@@ -21,13 +21,14 @@ class ChooseCategaryTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+    override func tableView(
+        _ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)!
         choosedCategary = cell.textLabel?.text
-        performSegueWithIdentifier("UnwindCategary", sender: self)
+        performSegue(withIdentifier: "UnwindCategary", sender: self)
     }
 
     @IBAction func done(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
   }

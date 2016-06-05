@@ -22,7 +22,7 @@ class MapPinView: UIView {
 
     lazy var dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.timeStyle = .ShortStyle
+        formatter.timeStyle = .shortStyle
         return formatter
     }()
 
@@ -36,27 +36,27 @@ class MapPinView: UIView {
             }
             updateRating()
             if restaurant.phoneNumber.isEmpty {
-                callButton.enabled = false
+                callButton.isEnabled = false
             }
         }
     }
 
     override func awakeFromNib() {
-        timeStackView.hidden = true
+        timeStackView.isHidden = true
     }
 
     private func updateRating() {
-        let count = restaurant.userRate.integerValue
+        let count = restaurant.userRate.intValue
         for i in reaingStackView.arrangedSubviews[count..<5] {
             let star = i as! UIImageView
             star.image = UIImage(named: "cafetransit_icon_star_off")
         }
     }
 
-    private func udpateEstimatedTimeLabels(response: MKETAResponse?) {
+    private func udpateEstimatedTimeLabels(for response: MKETAResponse?) {
         if let response = response {
-            let departure = dateFormatter.stringFromDate(response.expectedDepartureDate)
-            let arrival = dateFormatter.stringFromDate(response.expectedArrivalDate)
+            let departure = dateFormatter.string(from: response.expectedDepartureDate)
+            let arrival = dateFormatter.string(from: response.expectedArrivalDate)
             if departure == response {
                 self.departureLabel.text = "😭"
                 self.arrivalLabel.text = "😭"
@@ -71,25 +71,25 @@ class MapPinView: UIView {
 extension MapPinView {
     // MARK: - IBActions
     @IBAction func phoneTapped(sender: UIButton) {
-        call(restaurant.phoneNumber, isAlert: false)
+        _ = call(telphone: restaurant.phoneNumber, isAlert: false)
     }
     
     @IBAction func transitTapped(sender: UIButton) {
         if let location = currentRestaurantPlacemark?.location?.coordinate {
-            openTransitDirectionForCoodrinates(location)
+            openTransitDirection(for: location)
         }
     }
     
     @IBAction func timeTapped(sender: UIButton) {
-        if timeStackView.hidden {
-            animatedView(timeStackView, hidden: false)
-            animatedView(restaurantNote, hidden: true)
-            timeButton.setImage(UIImage(named: "cafetransit_icon_time_on"), forState: .Normal)
+        if timeStackView.isHidden {
+            animated(view: timeStackView, hidden: false)
+            animated(view: restaurantNote, hidden: true)
+            timeButton.setImage(UIImage(named: "cafetransit_icon_time_on"), for: [])
             requestTransitTimes()
         } else {
-            animatedView(timeStackView, restaurantNote, hidden: true)
-            animatedView(restaurantNote, hidden: false)
-            timeButton.setImage(UIImage(named: "cafetransit_icon_time_off"), forState: .Normal)
+            animated(view: timeStackView, restaurantNote, hidden: true)
+            animated(view: restaurantNote, hidden: false)
+            timeButton.setImage(UIImage(named: "cafetransit_icon_time_off"), for: [])
         }
     }
     
@@ -98,38 +98,45 @@ extension MapPinView {
     }
     
     // MARK: - Helper Methods
-    private func animatedView(view: UIView..., hidden: Bool) {
-        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: [], animations: {
-            _ in
-            view.forEach({$0.hidden = hidden})
+    private func animated(view: UIView..., hidden: Bool) {
+        UIView.animate(
+            withDuration: 0.8,
+            delay: 0.0,
+            usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 5.0,
+            options: [], animations: { _ in
+            view.forEach({$0.isHidden = hidden})
             }, completion: nil)
     }
     
     private func requestTransitTimes() {
         let request = MKDirectionsRequest()
-        request.source = MKMapItem.mapItemForCurrentLocation()
+        request.source = MKMapItem.forCurrentLocation()
         guard let currentRestaurantPlacemark = currentRestaurantPlacemark else { return }
         let destinationPlacemark = MKPlacemark(placemark: currentRestaurantPlacemark)
         request.destination = MKMapItem(placemark: destinationPlacemark)
         
-        request.transportType = .Transit
+        request.transportType = .transit
         
         let directions = MKDirections(request: request)
-        directions.calculateETAWithCompletionHandler {
+        directions.calculateETA {
             response, error in
             if let error = error {
                 print(error.localizedFailureReason)
             } else {
-                self.udpateEstimatedTimeLabels(response)
+                self.udpateEstimatedTimeLabels(for: response)
             }
         }
     }
     
-    private func openTransitDirectionForCoodrinates(coor: CLLocationCoordinate2D) {
-        let placemark = MKPlacemark(coordinate: coor, addressDictionary: [CNPostalAddressStreetKey: restaurant.location])
+    private func openTransitDirection(for coodrinates: CLLocationCoordinate2D) {
+        let placemark = MKPlacemark(
+            coordinate: coodrinates,
+            addressDictionary: [CNPostalAddressStreetKey: restaurant.location]
+        )
         let mapItem = MKMapItem(placemark: placemark)
         let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
-        mapItem.openInMapsWithLaunchOptions(launchOptions)
+        mapItem.openInMaps(launchOptions: launchOptions)
     }
 }
 

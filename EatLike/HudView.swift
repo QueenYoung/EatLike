@@ -12,12 +12,12 @@ class HudView: UIView {
 
     var text = ""
 
-    class func hudInView(view: UIView, animated: Bool) -> HudView {
+    class func hud(in view: UIView, animated: Bool) -> HudView {
         let hudview = HudView(frame: view.bounds)
-        hudview.opaque = false
+        hudview.isOpaque = false
 
         view.addSubview(hudview)
-        view.userInteractionEnabled = false
+        view.isUserInteractionEnabled = false
 
         view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
         if animated {
@@ -26,9 +26,9 @@ class HudView: UIView {
         return hudview
     }
 
-    override func drawRect(rect: CGRect) {
-        let boxWidth: CGFloat = 96.0
-        let boxHeight: CGFloat = 96.0
+    override func draw(_ rect: CGRect) {
+        let boxWidth: CGFloat = 128.0
+        let boxHeight: CGFloat = 128.0
 
         let boxRect = CGRect(
             x: round((bounds.size.width - boxWidth) / 2),
@@ -38,7 +38,7 @@ class HudView: UIView {
         )
 
         let roundRect = UIBezierPath(roundedRect: boxRect, cornerRadius: 10)
-        UIColor(white: 0.3, alpha: 0.8).setFill()
+        UIColor(white: 0.3, alpha: 0.6).setFill()
         roundRect.fill()
 
         // add image
@@ -48,30 +48,36 @@ class HudView: UIView {
                 y: center.y - round(image.size.height / 2) - boxHeight / 8
             )
 
-            image.drawAtPoint(imagePoint)
+            image.draw(at: imagePoint)
         }
 
         // add text
-        let attribs = [NSFontAttributeName: UIFont.systemFontOfSize(16),
-                       NSForegroundColorAttributeName: UIColor.whiteColor()]
-        let textSize = text.sizeWithAttributes(attribs)
+        let attribs = [NSFontAttributeName: UIFont.systemFont(ofSize: 16),
+                       NSForegroundColorAttributeName: UIColor.white()]
+        let textSize = text.size(attributes: attribs)
 
         let textPoint = CGPoint(
             x: center.x - round(textSize.width / 2),
             y: center.y - round(textSize.height / 2) + boxHeight / 4
         )
 
-        (text as NSString).drawAtPoint(textPoint, withAttributes: attribs)
+        (text as NSString).draw(at: textPoint, withAttributes: attribs)
     }
 
     func showAnimated() {
         alpha = 0.0
-        transform = CGAffineTransformMakeScale(1.5, 1.5)
+        transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
 
-        UIView.animateWithDuration(0.4, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5.0, options: [], animations: {
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0.0,
+            usingSpringWithDamping: 0.6,
+            initialSpringVelocity: 5.0,
+            options: [],
+            animations: {
             self.alpha = 1.0
-            self.transform = CGAffineTransformIdentity
-            }, completion: nil)
+            self.transform = CGAffineTransform.identity
+            }, completion: nil
+        )
     }
-    
 }

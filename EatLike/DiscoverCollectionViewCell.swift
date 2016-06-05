@@ -19,15 +19,15 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var buttonStackView: UIStackView!
 
     func configure(restaurant: DiscoverRestaurants) {
-//        let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
+//        let cache = (UIApplication.shared().delegate as! AppDelegate).imageCache
         likesTotal.text = String(restaurant.likesTotal)
         nameLabel.text  = restaurant.name
         userNameLabel.text = restaurant.userName
 //        userThumbImage.image = cache.imageForKey(restaurant.authorImageKey)
 //        restaurantImage.image = cache.imageForKey(restaurant.detailImageKey)
-        userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
+        userNameLabel.text?.append(" | \(restaurant.foodName)")
         // 加上圆角效果 and Blur
-        getBlurView(headView, style: .Dark)
+        getBlur(in: headView, style: .dark)
         layer.cornerRadius = 10.0
     }
 

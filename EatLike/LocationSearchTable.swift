@@ -24,24 +24,24 @@ class LocationSearchTable: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(
+        _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return matchingItems.count
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView
-            .dequeueReusableCellWithIdentifier(
-                "searchCell", forIndexPath: indexPath)
+            .dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
 
         // Configure the cell...
         let selectedItem = matchingItems[indexPath.row].placemark
         cell.textLabel?.text = selectedItem.name
-        cell.detailTextLabel?.text = parseAddress(selectedItem)
+        cell.detailTextLabel?.text = parseAddress(for: selectedItem)
         return cell
     }
 
-    private func parseAddress(selectedItem:MKPlacemark) -> String {
+    private func parseAddress(for selectedItem: MKPlacemark) -> String {
         // put a space between "4" and "Melrose Place"
         let firstSpace = (selectedItem.subThoroughfare != nil &&
             selectedItem.thoroughfare != nil) ? " " : ""
@@ -69,30 +69,30 @@ class LocationSearchTable: UITableViewController {
         return addressLine
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
         let selectedItem = matchingItems[indexPath.row].placemark
-        delegate?.dropPinZoomIn(selectedItem)
-        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.dropPinZoomIn(placemark: selectedItem)
+        dismiss(animated: true, completion: nil)
     }
 
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let setLocationAction = UITableViewRowAction(
-            style: .Destructive, title: "Replace") {
+            style: .destructive, title: "Replace") {
                 _ in
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath)!
+                let cell = self.tableView.cellForRow(at: indexPath)!
                 print(cell.textLabel!.text!)
                 self.delegate?.replaceLocationFor(
-                    cell.detailTextLabel!.text! +  cell.textLabel!.text!)
-                self.dismissViewControllerAnimated(true, completion: nil)
+                    place: cell.detailTextLabel!.text! +  cell.textLabel!.text!)
+                self.dismiss(animated: true, completion: nil)
         }
 
-        setLocationAction.backgroundColor = .blueColor()
+        setLocationAction.backgroundColor = .blue()
         return [setLocationAction]
     }
 }
 
 extension LocationSearchTable: UISearchResultsUpdating {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         guard let mapView = mapView,
               let searchBarText = searchController.searchBar.text else { return }
         let request = MKLocalSearchRequest()
@@ -100,7 +100,7 @@ extension LocationSearchTable: UISearchResultsUpdating {
         request.region = mapView.region
 
         let search = MKLocalSearch(request: request)
-        search.startWithCompletionHandler {
+        search.start {
             response, _ in
             guard let response = response else { return }
             self.matchingItems = response.mapItems
