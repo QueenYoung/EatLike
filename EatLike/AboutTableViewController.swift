@@ -19,28 +19,30 @@ class AboutTableViewController: UITableViewController,
 	    super.viewDidLoad()
 	    tableView.estimatedRowHeight = 64
         tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
 
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
         switch indexPath.section {
         case 0 where indexPath.row == 0:
             if let url = NSURL(string: "http://www.apple.com/itunes/charts/paid-apps/") {
-                let safari = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-                presentViewController(safari, animated: true, completion: nil)
+                let safari = SFSafariViewController(
+                    url: url, entersReaderIfAvailable: false)
+                present(safari, animated: true, completion: nil)
             }
         case 0 where indexPath.row == 2:
             sendEmail()
         case 1:
             if let url = NSURL(string: links[indexPath.row]) {
-                let safariViewController = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
-                presentViewController(safariViewController, animated: true, completion: nil)
+                let safariViewController = SFSafariViewController(
+                    url: url, entersReaderIfAvailable: true)
+                present(safariViewController, animated: true, completion: nil)
             }
         default:
             break
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 
     // 似乎因为 Apple 的问题, 使用模拟器发送邮件就会异常.
@@ -51,20 +53,23 @@ class AboutTableViewController: UITableViewController,
             mailCompose.setToRecipients(["c6swift@gmail.com"])
             let mailContent = "I am the user of your App"
             mailCompose.setMessageBody(mailContent, isHTML: false)
-            presentViewController(mailCompose, animated: true, completion: nil)
+            present(mailCompose, animated: true, completion: nil)
         } else {
             // 否则出现一个警告框.
-            let alert = UIAlertController(title: "Can't do this", message: "You hadn't set the mail account", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-            presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Can't do this", message: "You hadn't set the mail account", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
         }
 
 
     }
 
     // 发送完邮件需要做的事情. 我们就是简单的 dismiss 就可以咯.
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+    func mailComposeController(_
+        controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: NSError?) {
 
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

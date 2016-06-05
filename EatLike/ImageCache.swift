@@ -9,55 +9,54 @@
 import UIKit
 
 struct ImageCache {
-    let caches = NSCache()
+    let caches = NSCache<AnyObject, NSData>()
 
-    func setImage(imagedata: NSData, key: String) {
+    func set(imagedata: NSData, key: String) {
         // 先把需要缓存的对象, 写入缓存区
         caches.setObject(imagedata, forKey: key)
         // 同时将对象写入 App 的 Document 中
-        let imageURL = imageURLForKey(key)
+        let imageurl = imageURL(for: key)
 
-        imagedata.writeToURL(imageURL, atomically: true)
-        print("image is write to \(imageURL.path!)")
+        imagedata.write(to: imageurl, atomically: true)
+        print("image is write to \(imageurl.path!)")
     }
 
-    func imageForKey(key: String) -> UIImage? {
+    func image(for key: String) -> UIImage? {
         // 如果能直接从缓存中找到图片, 就将它转码并且返回
-        if let existingData = caches.objectForKey(key) as? NSData,
+        if let existingData = caches.object(forKey: key),
            let existingImage = UIImage(data: existingData) {
             print("I find the image")
             return existingImage
         }
-
+        
         // 否则去 Document 中查找 并再一次将它存入缓存中.
         // 重新启动 App 的时候就会出现没找到的情况. 因为 Cache 对象被释放咯.
-        let imageURL = imageURLForKey(key)
-        guard let imageForDisk = UIImage(contentsOfFile: imageURL.path!) else { return nil }
-        print("I find the image in \(imageURL.path!)")
+        let imageurl = imageURL(for: key)
+        guard let imageForDisk = UIImage(contentsOfFile: imageurl.path!) else { return nil }
+        print("I find the image in \(imageurl.path!)")
         let imageData = UIImageJPEGRepresentation(imageForDisk, 0.8)
         caches.setObject(imageData!, forKey: key)
         return imageForDisk
     }
-
-    func removeImage(key: String) {
+    
+    func remove(for key: String) {
         // 清纯缓存的同时, 清楚 document 中的数据.
-        caches.removeObjectForKey(key)
-        let imageURL = imageURLForKey(key)
-
+        caches.removeObject(forKey: key)
+        let imageurl = imageURL(for: key)
         do {
-            try NSFileManager.defaultManager().removeItemAtURL(imageURL)
+            try NSFileManager.default().removeItem(at: imageurl)
         } catch {
             print(error)
             print("Something was not surive")
         }
-        print("Remove the cache from \(imageURL.path!)")
+        print("Remove the cache from \(imageurl.path!)")
     }
-
-    private func imageURLForKey(key: String) -> NSURL {
-        let documentDirectory = NSFileManager.defaultManager()
-            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+    
+    private func imageURL(`for` key: String) -> NSURL {
+        let documentDirectory = NSFileManager.default()
+            .urlsForDirectory(.cachesDirectory, inDomains: .userDomainMask)
         let document = documentDirectory.first!
 
-        return document.URLByAppendingPathComponent(key)
+        return document.appendingPathComponent(key)
     }
 }

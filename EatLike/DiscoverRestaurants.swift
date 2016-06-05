@@ -39,7 +39,7 @@ class DiscoverRestaurants {
         // 如果是第一次使用的话, 就设置一些属性并且将 UUID存储, 并设置缓存
         // 否则直接从 standUserDefault 中获取
 
-        /* let cache = (UIApplication.sharedApplication().delegate as! AppDelegate).imageCache
+        /* let cache = (UIApplication.shared().delegate as! AppDelegate).imageCache
         let stand = NSUserDefaults.standardUserDefaults()
         if stand.integerForKey("OneTimes") == 0 {
             detailImageKey = NSUUID().UUIDString

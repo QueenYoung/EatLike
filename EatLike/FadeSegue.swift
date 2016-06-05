@@ -11,15 +11,17 @@ class FadeSegue: UIStoryboardSegue {
 }
 
 extension FadeSegue: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(presented: UIViewController,
-                                                   presentingController presenting: UIViewController,
-                                                                        sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(
+        forPresentedController presented: UIViewController,
+        presenting: UIViewController,
+        sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let fade = FadeAnimator()
         fade.isPresenting = true
         return fade
     }
 
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(
+        forDismissedController: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let fade = FadeAnimator()
         fade.isPresenting = false
         return fade
@@ -32,15 +34,15 @@ class FadeAnimator:NSObject, UIViewControllerAnimatedTransitioning {
 
     var isPresenting = false
 
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
     }
 
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(_ transitionContext: UIViewControllerContextTransitioning) {
 
         // 1. Get the transition context to- view
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+        let fromView = transitionContext.view(forKey: UITransitionContextFromViewKey)
+        let toView = transitionContext.view(forKey: UITransitionContextToViewKey)
 
         // 2. Add the to-view to the transition context
         // 3. Set up the initial state for the animation
@@ -62,7 +64,7 @@ class FadeAnimator:NSObject, UIViewControllerAnimatedTransitioning {
         // 4. Perform the animation
         let duration = transitionDuration(transitionContext)
 
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             if self.isPresenting {
                 if let toView = toView {
                     toView.alpha = 1.0

@@ -27,12 +27,12 @@ class FriendRestaurantViewController: UIViewController {
         detailImageView.image = friendData[index].detailImage
         userImageView.image = friendData[index].authorImage
         authorLabel.text = friendData[index].userName
-        authorLabel.text?.appendContentsOf(" 👉 \(friendData[index].foodName)")
+        authorLabel.text?.append(" 👉 \(friendData[index].foodName)")
         
         self.dackButton.alpha = 0.0
         self.descriptionTextView.alpha = 0.0
         
-        print(NSDate().timeIntervalSinceDate(startTime))
+        print(NSDate().timeIntervalSince(startTime))
     }
     
     override func didReceiveMemoryWarning() {
@@ -42,24 +42,24 @@ class FriendRestaurantViewController: UIViewController {
     
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         dackButton.alpha = 1.0
-        springScaleFrom(self.dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
-        spring(0.5) {
-            self.textViewWithFont(self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
+        springScaleFrom(view: self.dackButton, x: -100, y: 0, scaleX: 0.5, scaleY: 0.5)
+        spring(duration: 0.5) {
+            self.textViewWithFont(textView: self.descriptionTextView, fontName: "Georgia", fontSize: 16, lineSpacing: 6.0)
             self.descriptionTextView.alpha = 1.0
         }
     }
     
     @IBAction func cancel(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     private func textViewWithFont(textView: UITextView, fontName: String, fontSize: CGFloat, lineSpacing: CGFloat) {
         let queue = dispatch_queue_create("com.queen.jaxu.eatlike", DISPATCH_QUEUE_CONCURRENT)
         let font = UIFont(name: fontName, size: fontSize)
-        dispatch_async(queue) {
+        dispatch_async(queue!) {
             let text = self.friendData[self.index].note
             
             let paragraphStyle = NSMutableParagraphStyle()
@@ -76,20 +76,26 @@ class FriendRestaurantViewController: UIViewController {
     }
     
     private func springScaleFrom (view: UIView, x: CGFloat, y: CGFloat, scaleX: CGFloat, scaleY: CGFloat) {
-        let translation = CGAffineTransformMakeTranslation(x, y)
-        let scale = CGAffineTransformMakeScale(scaleX, scaleY)
-        view.transform = CGAffineTransformConcat(translation, scale)
+        let translation = CGAffineTransform(translationX: x, y: y)
+        let scale = CGAffineTransform(scaleX: scaleX, y: scaleY)
+        view.transform = translation.concat(scale)
         
-        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: {
-            view.transform = CGAffineTransformIdentity
+        UIView.animate(
+            withDuration: 0.7,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.7,
+            options: [],
+            animations: {
+            view.transform = CGAffineTransform.identity
             }, completion: nil)
     }
     
     
     // fixme: 
     @IBAction func swipeDownToDismissView(sender: UISwipeGestureRecognizer) {
-        UIView.animateWithDuration(0.2) {
-            self.dismissViewControllerAnimated(true, completion: nil)
+        UIView.animate(withDuration: 0.2) {
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

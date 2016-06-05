@@ -39,9 +39,9 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
 
     lazy var dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.timeZone = NSTimeZone.defaultTimeZone()
-        formatter.timeStyle = .ShortStyle
-        formatter.dateStyle = .ShortStyle
+        formatter.timeZone = NSTimeZone.default()
+        formatter.timeStyle = .shortStyle
+        formatter.dateStyle = .shortStyle
         return formatter
     }()
 
@@ -53,16 +53,16 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         let notificationAction = UIMutableUserNotificationAction()
         notificationAction.identifier = "Justsaveworld"
         notificationAction.title = "Save World"
-        notificationAction.activationMode = .Background
-        notificationAction.authenticationRequired = false
-        notificationAction.destructive = true
+        notificationAction.activationMode = .background
+        notificationAction.isAuthenticationRequired = false
+        notificationAction.isDestructive = true
 
-        category.setActions([notificationAction], forContext: .Default)
-        category.setActions([notificationAction], forContext: .Minimal)
+        category.setActions([notificationAction], for: .default)
+        category.setActions([notificationAction], for: .minimal)
 
         var ns = Set<UIMutableUserNotificationCategory>(arrayLiteral: category)
 
-        let notificationSettings = UIUserNotificationSettings   (forTypes: [.Alert, .Sound, .Badge], categories: ns)
+        let notificationSettings = UIUserNotificationSettings   (forTypes: [.alert, .sound, .badge], categories: ns)
 
         return notificationSettings
     }()
@@ -70,19 +70,19 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBAction func dateValueChanged(sender: UIDatePicker) {
         dueDate = sender.date
-        dateLabel.text = dateFormatter.stringFromDate(dueDate)
+        dateLabel.text = dateFormatter.string(from: dueDate)
     }
 
     // 在将开关关闭的时候, 单元格的背景色发生变化
     // 给用户提供更强列的提示
-    private func turnCellStatus(cell: UITableViewCell, enable: Bool) {
+    private func turnCellStatus(_ cell: UITableViewCell, enable: Bool) {
         if enable {
-            cell.backgroundColor = .whiteColor()
-            cell.textLabel?.textColor = .blackColor()
-            cell.userInteractionEnabled = true
+            cell.backgroundColor = .white()
+            cell.textLabel?.textColor = .black()
+            cell.isUserInteractionEnabled = true
         } else {
-            cell.userInteractionEnabled = false
-            cell.backgroundColor = .clearColor()
+            cell.isUserInteractionEnabled = false
+            cell.backgroundColor = .clear()
             cell.textLabel?.textColor = cell.detailTextLabel?.textColor
         }
     }
@@ -90,17 +90,17 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func remindToggled(sender: UISwitch) {
         messageField.resignFirstResponder()
         let indexPath = NSIndexPath(forRow: 1, inSection: 1)
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        if sender.on {
-            UIApplication.sharedApplication()
-                .registerUserNotificationSettings(notificationSettings)
+        let cell = tableView.cellForRow(at: indexPath)!
+        if sender.isOn {
+            UIApplication.shared()
+                .register(notificationSettings)
         } else {
             if isPickerVisual {
                 hideDatePicker()
             }
         }
-        self.turnCellStatus(cell, enable: sender.on)
-        needRemind = sender.on
+        self.turnCellStatus(cell, enable: sender.isOn)
+        needRemind = sender.isOn
     }
 
 
@@ -110,15 +110,15 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         // 让日期选取器的最小时间为当前时间, 不能往前调
         datePicker.minimumDate = NSDate()
         datePicker.date = dueDate
-        dateLabel.text = dateFormatter.stringFromDate(dueDate)
+        dateLabel.text = dateFormatter.string(from: dueDate)
         // 如果提醒信息不是空的, 就赋给 messageField
         if !restaurant.alertMessage.isEmpty {
             messageField.text = restaurant.alertMessage
         } else {
-            navigationItem.rightBarButtonItem?.enabled = false
+            navigationItem.rightBarButtonItem?.isEnabled = false
         }
 
-        needRemainedSwitch.on = restaurant.needRemind.boolValue
+        needRemainedSwitch.isOn = restaurant.needRemind.boolValue
     }
 
     override func didReceiveMemoryWarning() {
@@ -127,21 +127,21 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
     override func tableView(
-        tableView: UITableView, willDisplayCell
+        _ tableView: UITableView, willDisplay
         cell: UITableViewCell,
-        forRowAtIndexPath indexPath: NSIndexPath) {
+        forRowAt indexPath: NSIndexPath) {
 
         if indexPath.section == 1 && indexPath.row == 1 {
             turnCellStatus(cell, enable: needRemind)
         }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 && isPickerVisual {
             return 3
         } else {
@@ -150,17 +150,17 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 2 && indexPath.section == 1 {
             return datePickerCell
         } else {
-            return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }
     }
 
     // MARK: - Table Delegate
     // 只有点击了第一节第一行, 才会有选中动作
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: NSIndexPath) -> NSIndexPath? {
         if indexPath.section == 1 && indexPath.row == 1 {
             return indexPath
         } else {
@@ -168,8 +168,8 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         messageField.resignFirstResponder()
 
         if !isPickerVisual {
@@ -179,12 +179,12 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: NSIndexPath) -> CGFloat {
         // 之前没使用这一步的话
         if indexPath.section == 1 && indexPath.row == 2 {
             return 217.0
         } else {
-            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            return super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
 
@@ -192,39 +192,39 @@ class RemindTableViewController: UITableViewController, UITextFieldDelegate {
     private func showDatePicker() {
         isPickerVisual = true
         let indexPath = NSIndexPath(forRow: 2, inSection: 1)
-        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        tableView.insertRows(at: [indexPath], with: .automatic)
         datePicker.setDate(dueDate, animated: true)
     }
 
     private func hideDatePicker() {
         isPickerVisual = false
         let indexPath = NSIndexPath(forRow: 2, inSection: 1)
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
-    override func tableView(tableView: UITableView, indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: NSIndexPath) -> Int {
         var newIndexPath = indexPath
         if indexPath.section == 1 && indexPath.row == 2 {
             newIndexPath = NSIndexPath(forRow: 0, inSection: 1)
         }
 
-        return super.tableView(tableView, indentationLevelForRowAtIndexPath: newIndexPath)
+        return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
     }
 
     // MARK: - TextFiled Delegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
 
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if !textField.text!.isEmpty {
-            navigationItem.rightBarButtonItem?.enabled = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
         }
         restaurant.alertMessage = textField.text!
     }
 
-    func textFieldDidBeginEditing(textField: UITextField) {
-        navigationItem.rightBarButtonItem?.enabled = false
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        navigationItem.rightBarButtonItem?.isEnabled = false
         if isPickerVisual {
             hideDatePicker()
         }

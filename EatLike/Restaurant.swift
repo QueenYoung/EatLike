@@ -38,8 +38,10 @@ extension Restaurant {
 
 extension String {
 	subscript(index: Int) -> Character {
-		return self[self.startIndex.advancedBy(index, limit: self.endIndex.predecessor())]
+        guard let i = self.index(startIndex, offsetBy: index, limitedBy: self.index(before: endIndex)) else { fatalError("Index out") }
+        return self[i]
 	}
+
 }
 // MARK: - Local Notification
 extension Restaurant {
@@ -47,33 +49,33 @@ extension Restaurant {
 	    if !needRemind.boolValue {
 		    let existingNotification = scheduledNotifications()
 		    if let exist = existingNotification {
-			    UIApplication.sharedApplication().cancelLocalNotification(exist)
+			    UIApplication.shared().cancel(exist)
 			    return
 		    }
-	    } else if dueDate.compare(NSDate()) == .OrderedDescending {
+	    } else if dueDate.compare(NSDate()) == .orderedDescending {
 		    let notification = UILocalNotification()
             // fix some bug
             // 这个可选集合必须包括所有需要用到的时间 Unit, 否则默认都是0
-            let dateComponents = NSCalendar.currentCalendar().components(
-                [.Day, .Hour, .Minute, .Second, .Month, .Year], fromDate: dueDate)
+            let dateComponents = NSCalendar.current().components(
+                [.day, .hour, .minute, .second, .month, .year], from: dueDate)
             dateComponents.second = 0
-            let fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
+            let fixedDate = NSCalendar.current().date(from: dateComponents)!
             print(fixedDate)
 		    notification.fireDate = fixedDate
-		    notification.timeZone = .defaultTimeZone()
+		    notification.timeZone = .default()
 		    notification.alertBody = alertMessage
 		    notification.soundName = UILocalNotificationDefaultSoundName
             notification.alertAction = "Youqu"
             notification.alertTitle = "\(name)"
 		    let identifier = "\(name)\(type)\(phoneNumber)"
 		    notification.userInfo = ["itemID": identifier]
-		    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+		    UIApplication.shared().scheduleLocalNotification(notification)
 	    }
     }
 
     private func scheduledNotifications() -> UILocalNotification? {
         let identifier = "\(name)\(type)\(phoneNumber)"
-        let schedule = UIApplication.sharedApplication().scheduledLocalNotifications
+        let schedule = UIApplication.shared().scheduledLocalNotifications
         guard let all = schedule else { return nil }
         return all.filter { (($0.userInfo?["itemID"] as? String) ?? "") == identifier }.first
     }
@@ -99,9 +101,9 @@ extension Restaurant {
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeContact as String)
         attributeSet.title = name
         var rate = ""
-        if userRate.integerValue != 0 {
+        if userRate.intValue != 0 {
             rate = "\n"
-            rate.appendContentsOf(String(count: userRate.integerValue, repeatedValue: "⭐️"))
+            rate.append(String(repeating:  Character("⭐️"), count: userRate.intValue))
         }
 
 
@@ -127,7 +129,7 @@ extension Restaurant {
     }
 
     func updateSpotlightIndex() {
-        CSSearchableIndex.defaultSearchableIndex().indexSearchableItems([searchableItem]) {
+        CSSearchableIndex.default().indexSearchableItems([searchableItem]) {
             error in
             if error != nil {
                 print(error)
@@ -138,14 +140,14 @@ extension Restaurant {
     }
 
     func deleteSpotlightIndex() {
-        CSSearchableIndex.defaultSearchableIndex()
-            .deleteSearchableItemsWithIdentifiers([keyString]) {
-                error in
-                if error != nil {
-                    print(error)
-                } else {
-                    print("Delete the spotlight index")
-                }
+        CSSearchableIndex.default().deleteSearchableItems(
+            withIdentifiers: [keyString]) {
+            error in
+            if error != nil {
+                print(error)
+            } else {
+                print("Delete the spotlight index")
+            }
         }
     }
 }

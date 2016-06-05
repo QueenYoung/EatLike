@@ -17,7 +17,7 @@ class FeedbackWebViewController: UIViewController {
         // 需要前往 info 文件添加一个 App Transport Security 字典,
         // 并设置 Allow Arbitrary Loads to `YES`
         if let url = NSURL(string: "https://www.icloud.com/#mail/") {
-            let request = NSURLRequest(URL: url)
+            let request = NSURLRequest(url: url)
             webView.loadRequest(request)
         }
         // Do any additional setup after loading the view.
@@ -28,15 +28,4 @@ class FeedbackWebViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -28,8 +28,8 @@ class WalkthroughPageViewController: UIPageViewController,
         super.viewDidLoad()
 
         dataSource = self
-        if let startingViewController = viewControllerAtIndex(0) {
-            setViewControllers([startingViewController], direction: .Forward, animated: true, completion: nil)
+        if let startingViewController = getViewController(at: 0) {
+            setViewControllers([startingViewController], direction: .forward, animated: true, completion: nil)
         }
         // Do any additional setup after loading the view.
     }
@@ -42,14 +42,14 @@ class WalkthroughPageViewController: UIPageViewController,
 
 
     // MARK: - PageView Datasouce Methods
-    private func viewControllerAtIndex(index: Int) -> WalkthroughContentViewController? {
+    private func getViewController(at index: Int) -> WalkthroughContentViewController? {
         if index < 0 || index >= pageHeadings.count {
             return nil
         }
 
 
         guard let pageController = storyboard?
-            .instantiateViewControllerWithIdentifier ("WalkthroughContentViewController")
+            .instantiateViewController(withIdentifier: "WalkthroughContentViewController")
             as? WalkthroughContentViewController else { return nil }
 
         // 为相应视图控制器设置属性。
@@ -62,38 +62,35 @@ class WalkthroughPageViewController: UIPageViewController,
 
     }
 
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughContentViewController).index
         index += 1
 
         // 如果当前是最后一个引导图, 加 1 后就是 3
         if index == 3 {
-            NSTimer.scheduledTimerWithTimeInterval(
-                2,
-                target: self,
-                selector: #selector(doneButtonTapped),
-                userInfo: nil,
-                repeats: false)
+            delay(with: 2.0, closure: {
+                self.doneButtonTapped()
+            })
         }
 
-        return viewControllerAtIndex(index)
+        return getViewController(at: index)
     }
 
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughContentViewController).index
         index -= 1
 
-        return viewControllerAtIndex(index)
+        return getViewController(at: index)
     }
 
     // MARK: - Delegate Methods
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return pageHeadings.count
     }
 
     func doneButtonTapped() {
-        let save = NSUserDefaults.standardUserDefaults()
-        save.setBool(true, forKey: "hasViewedWalkthrough")
-        dismissViewControllerAnimated(true, completion: nil)
+        let save = NSUserDefaults.standard()
+        save.set(true, forKey: "hasViewedWalkthrough")
+        dismiss(animated: true, completion: nil)
     }
 }

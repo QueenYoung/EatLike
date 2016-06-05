@@ -37,29 +37,29 @@ class DiscoverViewController: UIViewController {
         }
 
         configureView()
-        getBlurView(backgroundBlurImage, style: .Dark)
-        getBlurView(headerView, style: .Dark)
+        getBlur(in: backgroundBlurImage, style: .dark)
+        getBlur(in: headerView, style: .dark)
         animator = UIDynamicAnimator(referenceView: view)
 
         let imageSize = CGSize(width: 1, height: 1)
         self.navigationController?.navigationBar
-            .setBackgroundImage(.withColor(.clearColor(), size: imageSize), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = .withColor(.clearColor(), size: imageSize)
+            .setBackgroundImage(.withColor(color: .clear(), size: imageSize), for: .default)
+        self.navigationController?.navigationBar.shadowImage = .withColor(color: .clear(), size: imageSize)
         
-        view.insertSubview(backgroundBlurImage, atIndex: 0)
+        view.insertSubview(backgroundBlurImage, at: 0)
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.shared().statusBarStyle = .lightContent
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        UIApplication.sharedApplication().statusBarStyle = .Default
+        UIApplication.shared().statusBarStyle = .default
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
 
         // 来控制是否需要额外的动画.
@@ -77,7 +77,7 @@ class DiscoverViewController: UIViewController {
 
     // MARK: - Navigation
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "modalFriend" {
             let nav = segue.destinationViewController as! UINavigationController
             let friendVC = nav.topViewController as! FriendRestaurantViewController
@@ -93,28 +93,31 @@ class DiscoverViewController: UIViewController {
     
     @IBAction func handlerPanGesture(sender: UIPanGestureRecognizer) {
         let myView = dialogView
-        let location = sender.locationInView(view)
-        let boxLocation = sender.locationInView(dialogView)
+        let location = sender.location(in: view)
+        let boxLocation = sender.location(in: dialogView)
         
-        if sender.state == .Began {
+        if sender.state == .began {
             if snapBehavior != nil {
                 animator.removeBehavior(snapBehavior)
             }
             
             // 添加钟摆效果并且计算偏移量, 摆动终点就是手指停留的位置
-            let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(myView.bounds), boxLocation.y - CGRectGetMidY(myView.bounds));
+            let centerOffset = UIOffsetMake(
+                boxLocation.x - myView.bounds.midX,
+                boxLocation.y - myView.bounds.midY
+            )
             attachmentBehavior = UIAttachmentBehavior(item: myView, offsetFromCenter: centerOffset, attachedToAnchor: location)
             attachmentBehavior.frequency = 0.0
             
             animator.addBehavior(attachmentBehavior)
         }
-        else if sender.state == .Changed {
+        else if sender.state == .changed {
             attachmentBehavior.anchorPoint = location
         }
-        else if sender.state == .Ended {
+        else if sender.state == .ended {
             animator.removeBehavior(attachmentBehavior)
             
-            let translation = sender.translationInView(view)
+            let translation = sender.translation(in: view)
             // 如果是向下移动超过了 100 点, 就移除所有之前的行为, 附加重力效果
             // 并且开始刷新界面
             if translation.y > 100 {
@@ -122,14 +125,14 @@ class DiscoverViewController: UIViewController {
                 
                 // 添加重力效果
                 let gravity = UIGravityBehavior(items: [dialogView])
-                gravity.gravityDirection = CGVectorMake(0, 10)
+                gravity.gravityDirection = CGVector(dx: 0, dy: 10)
                 animator.addBehavior(gravity)
                 
                 // 使用线程刷新
-                delay(0.2) { self.refreshView() }
+                delay(with: 0.2) { self.refreshView() }
             } else {
                 // otherwise 添加晃动动作
-                snapBehavior = UISnapBehavior(item: myView, snapToPoint: view.center)
+                snapBehavior = UISnapBehavior(item: myView, snapTo: view.center)
                 animator.addBehavior(snapBehavior)
             }
         }
@@ -141,11 +144,11 @@ class DiscoverViewController: UIViewController {
         if isLiked {
             currentRestaurant.isLike = false
             currentRestaurant.likesTotal -= 1
-            sender.tintColor = .blueColor()
+            sender.tintColor = .blue()
         } else {
             currentRestaurant.isLike = true
             currentRestaurant.likesTotal += 1
-            sender.tintColor = .redColor()
+            sender.tintColor = .red()
         }
         likesTotalLabel.text = "\(currentRestaurant.likesTotal)"
         // 如果换成结构体的话, 要记得保存会原来的结构, 毕竟是值类型
@@ -162,7 +165,7 @@ class DiscoverViewController: UIViewController {
         }
         
         animator.removeAllBehaviors()
-        snapBehavior = UISnapBehavior(item: dialogView, snapToPoint: view.center)
+        snapBehavior = UISnapBehavior(item: dialogView, snapTo: view.center)
         attachmentBehavior.anchorPoint = view.center
         
         dialogView.center = view.center
@@ -172,11 +175,11 @@ class DiscoverViewController: UIViewController {
     }
     
     private func animatedView() {
-        let scale = CGAffineTransformMakeScale(0.5, 0.5)
-        let translate = CGAffineTransformMakeTranslation(0, -200)
-        dialogView.transform = CGAffineTransformConcat(scale, translate)
-        spring(0.5, delay: 0.2) {
-            self.dialogView.transform = CGAffineTransformIdentity
+        let scale = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        let translate = CGAffineTransform(translationX: 0, y: -200)
+        dialogView.transform = scale.concat(translate)
+        spring(duration: 0.5, delay: 0.2) {
+            self.dialogView.transform = CGAffineTransform.identity
         }
     }
     
@@ -185,20 +188,20 @@ class DiscoverViewController: UIViewController {
         backgroundBlurImage.image = restaurant.detailImage
         userImageView.image = restaurant.authorImage
         restaurantImageButton.setImage(
-            restaurant.detailImage, forState: .Normal)
+            restaurant.detailImage, for: [])
         restaurantLabel.text = restaurant.name
         likesTotalLabel.text = "\(restaurant.likesTotal)"
         userNameLabel.text = restaurant.userName
-        userNameLabel.text?.appendContentsOf(" | \(restaurant.foodName)")
+        userNameLabel.text?.append(" | \(restaurant.foodName)")
         updateLikeButtonColor()
         dialogView.alpha = 1
     }
     
     private func updateLikeButtonColor() {
         if discovers[index].isLike {
-            likesButton.tintColor = .redColor()
+            likesButton.tintColor = .red()
         } else {
-            likesButton.tintColor = .blueColor()
+            likesButton.tintColor = .blue()
         }
     }
     
