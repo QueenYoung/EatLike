@@ -100,6 +100,10 @@ class MapViewController: UIViewController {
     }
 
 
+    @IBAction func select(sender: UIButton) {
+        mapView.selectAnnotation(restaurantAnnotation, animated: true)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showNavigationSteps" {
             let stepsTC = segue.destinationViewController as! StepsTableViewController
@@ -138,8 +142,7 @@ extension MapViewController: MKMapViewDelegate {
         detailView.currentRestaurantPlacemark = currentRestaurantPlacemark
         annotationView?.detailCalloutAccessoryView = detailView
         annotationView?.pinTintColor = MKPinAnnotationView.greenPinColor()
-        restaurantAnnotation = annotation
-        
+
         return annotationView
     }
 
@@ -252,7 +255,7 @@ extension MapViewController {
         
         alertView.addAction(UIAlertAction(title: "Replace It", style: .default) {
             _ in
-            self.resultSearchController.becomeFirstResponder()
+            self.resultSearchController.isActive = true
             })
         
         alertView.addAction(UIAlertAction(title: "Go Back", style: .cancel, handler: {
@@ -272,7 +275,8 @@ extension MapViewController {
             annotation.title = self.restaurant.name
             annotation.subtitle = self.restaurant.type
             annotation.coordinate = location.coordinate
-            
+            // 赋值过去
+            restaurantAnnotation = annotation
             self.mapView.showAnnotations([annotation], animated: true)
             self.mapView.selectAnnotation(annotation, animated: true)
         }
@@ -369,6 +373,7 @@ extension MapViewController: HandleMapSearchDelegate {
         
         // 把 restaurant 的 annotation 重新加入
         mapView.addAnnotations([restaurantAnnotation, annotation])
+        mapView.selectAnnotation(annotation, animated: true)
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegionMake(placemark.coordinate, span)
         mapView.setRegion(region, animated: true)

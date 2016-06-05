@@ -51,6 +51,8 @@ class MapPinView: UIView {
             let star = i as! UIImageView
             star.image = UIImage(named: "cafetransit_icon_star_off")
         }
+
+        callButton.addTarget(self, action: #selector(phoneTapped), for: .touchUpInside)
     }
 
     private func udpateEstimatedTimeLabels(for response: MKETAResponse?) {
@@ -70,17 +72,17 @@ class MapPinView: UIView {
 
 extension MapPinView {
     // MARK: - IBActions
-    @IBAction func phoneTapped(sender: UIButton) {
+    @IBAction func phoneTapped() {
         _ = call(telphone: restaurant.phoneNumber, isAlert: false)
     }
     
-    @IBAction func transitTapped(sender: UIButton) {
+    @IBAction func transitTapped() {
         if let location = currentRestaurantPlacemark?.location?.coordinate {
             openTransitDirection(for: location)
         }
     }
     
-    @IBAction func timeTapped(sender: UIButton) {
+    @IBAction func timeTapped() {
         if timeStackView.isHidden {
             animated(view: timeStackView, hidden: false)
             animated(view: restaurantNote, hidden: true)
@@ -93,7 +95,7 @@ extension MapPinView {
         }
     }
     
-    @IBAction func navigationButtonTapped(sender: UIButton) {
+     @IBAction func navigationButtonTapped() {
         delegate?.getNavigationRoute()
     }
     

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Location Search Table-->
@@ -47,7 +48,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ise-oi-2kH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2052" y="1602"/>
+            <point key="canvasLocation" x="1817" y="1451"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="YyG-Fq-jNh">
@@ -97,12 +98,25 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKX-bK-6Xe">
+                                <rect key="frame" x="558" y="72" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="22" id="10n-lG-ahm"/>
+                                    <constraint firstAttribute="height" constant="22" id="yCq-Ak-KEp"/>
+                                </constraints>
+                                <state key="normal" image="placeholder-3"/>
+                                <connections>
+                                    <action selector="selectWithSender:" destination="DXo-X0-eqf" eventType="touchUpInside" id="PnG-TG-Nr8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="trailing" secondItem="Y4z-4n-kvm" secondAttribute="trailingMargin" id="1Ts-2K-3mp"/>
                             <constraint firstItem="Que-cO-BxE" firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="3CI-Jg-w8C"/>
                             <constraint firstItem="8eL-zy-qjJ" firstAttribute="leading" secondItem="Y4z-4n-kvm" secondAttribute="leading" id="D5f-4G-P3i"/>
                             <constraint firstItem="o1z-aV-3UL" firstAttribute="top" secondItem="8eL-zy-qjJ" secondAttribute="bottom" id="DC1-6d-abU"/>
+                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="top" secondItem="EgP-SI-XCY" secondAttribute="bottom" constant="8" id="EAK-xj-7TO"/>
                             <constraint firstItem="Que-cO-BxE" firstAttribute="bottom" secondItem="o1z-aV-3UL" secondAttribute="top" id="KUd-ya-APn"/>
                             <constraint firstItem="8eL-zy-qjJ" firstAttribute="top" secondItem="EgP-SI-XCY" secondAttribute="bottom" id="ZeO-oZ-4yC"/>
                             <constraint firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="jHZ-TD-jzo"/>
@@ -189,5 +203,6 @@
         <image name="back_icon" width="13" height="24"/>
         <image name="navigation" width="24" height="24"/>
         <image name="pin-1" width="24" height="24"/>
+        <image name="placeholder-3" width="256" height="256"/>
     </resources>
 </document>

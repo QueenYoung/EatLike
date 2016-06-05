@@ -24,7 +24,7 @@ extension ScaleSegue: UIViewControllerTransitioningDelegate {
     }
 }
 
-protocol ViewScaleable {
+private protocol ViewScaleable {
     var scaleView:UIView { get }
 }
 
@@ -57,6 +57,7 @@ class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         var startFrame = CGRect.zero
         if let fromViewController = fromViewController as? ViewScaleable {
             startFrame = fromViewController.scaleView.frame
+            startFrame.origin.y = 40
         } else {
             print("Warning: Controller \(fromViewController) does not conform to ViewScaleable")
         }
@@ -114,6 +115,7 @@ class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         var finalFrame = CGRect.zero
         if let toViewController = toViewController as? ViewScaleable {
             finalFrame = toViewController.scaleView.frame
+            finalFrame.origin.y = 40
         } else {
             print("Warning: Controller \(toViewController) does not conform to ViewScaleable")
         }
@@ -137,6 +139,23 @@ class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 extension RestaurantDetailViewController: ViewScaleable {
     var scaleView: UIView {
         return restaurantImageView
+    }
+}
+
+extension UITabBarController: ViewScaleable {
+    var scaleView: UIView {
+        let nvc = self.viewControllers!.first as! UINavigationController
+        if let detailVC = nvc.topViewController as? RestaurantDetailViewController {
+            return detailVC.scaleView
+        } else {
+            print("erjkl")
+            return UIView(frame:
+                CGRect(x: self.view.frame.origin.x,
+                       y: self.view.frame.height / 4.0,
+                       width: self.view.frame.width,
+                       height: self.view.frame.height)
+            )
+        }
     }
 }
 

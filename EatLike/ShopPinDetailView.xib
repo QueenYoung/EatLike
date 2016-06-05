@@ -56,7 +56,7 @@
                                             <state key="normal" image="cafetransit_icon_call_on"/>
                                             <state key="disabled" image="cafetransit_icon_call_off"/>
                                             <connections>
-                                                <action selector="phoneTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="CAB-xx-hQa"/>
+                                                <action selector="phoneTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="sal-xv-vBw"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDj-ol-d8L">
@@ -64,21 +64,21 @@
                                             <state key="normal" image="cafetransit_icon_train_off"/>
                                             <state key="highlighted" image="cafetransit_icon_train_on"/>
                                             <connections>
-                                                <action selector="transitTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="A3M-4f-DPf"/>
+                                                <action selector="transitTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="Wh1-v5-tBc"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEw-f9-wR1">
                                             <rect key="frame" x="110" y="0.0" width="30" height="506"/>
                                             <state key="normal" image="cafetransit_icon_yelp_off"/>
                                             <connections>
-                                                <action selector="navigationButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="q6S-An-2hG"/>
+                                                <action selector="navigationButtonTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="meP-cQ-9hl"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdY-kh-Lyv">
                                             <rect key="frame" x="165" y="0.0" width="30" height="506"/>
                                             <state key="normal" image="cafetransit_icon_time_off"/>
                                             <connections>
-                                                <action selector="timeTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="zWx-j9-bUz"/>
+                                                <action selector="timeTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="kyi-4O-QDN"/>
                                             </connections>
                                         </button>
                                     </subviews>

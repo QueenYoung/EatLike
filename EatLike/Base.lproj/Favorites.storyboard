@@ -265,7 +265,7 @@
                         <segue destination="3Zn-8d-FuY" kind="show" identifier="ShowReminded" id="V1W-qJ-NZO"/>
                         <segue destination="0b3-fE-Rl7" kind="show" identifier="ReviewNavigationController" id="huP-R9-8bp"/>
                         <segue destination="8Aq-pb-6z5" kind="presentation" identifier="ModalMapView" id="5zx-KZ-BJQ"/>
-                        <segue destination="9Qm-xF-KZV" kind="presentation" identifier="ScaleImage" customClass="DropSegue" customModule="EatLike" customModuleProvider="target" id="fDd-fg-ove"/>
+                        <segue destination="tMB-4R-2im" kind="presentation" identifier="ScaleImage" customClass="ScaleSegue" customModule="EatLike" customModuleProvider="target" id="fDd-fg-ove"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1g2-8D-Eqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -734,6 +734,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="zie-RU-ZDI"/>
                     <connections>
                         <outlet property="imageView" destination="Gas-Cx-i8C" id="lRc-2H-c4D"/>
                     </connections>
@@ -745,7 +746,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4457" y="143"/>
+            <point key="canvasLocation" x="5269" y="143"/>
         </scene>
         <!--Walkthrough Content View Controller-->
         <scene sceneID="gvb-Sx-aez">
@@ -837,6 +838,25 @@
             </objects>
             <point key="canvasLocation" x="1544" y="763"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IKc-ux-gMe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tMB-4R-2im" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Khb-FU-scg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Qm-xF-KZV" kind="relationship" relationship="rootViewController" id="sKX-UT-hJS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sPK-OC-XUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4457" y="143"/>
+        </scene>
     </scenes>
     <resources>
         <image name="alarm-1" width="256" height="256"/>
@@ -848,6 +868,6 @@
         <image name="rating_star" width="48" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Y1n-UZ-KXO"/>
+        <segue reference="WaJ-NZ-VLW"/>
     </inferredMetricsTieBreakers>
 </document>

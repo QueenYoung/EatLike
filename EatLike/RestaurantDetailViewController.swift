@@ -91,7 +91,8 @@ class RestaurantDetailViewController: UIViewController,
             let mapView = mapViewNC.topViewController as! MapViewController
             mapView.restaurant = restaurant
         case .ScaleImage:
-            let scaleVC = segue.destinationViewController as! DetailImageController
+            let scaleVC = (segue.destinationViewController as! UINavigationController)
+                .topViewController as! DetailImageController
             scaleVC.image = restaurantImageView.image
         default:
             break
