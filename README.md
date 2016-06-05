@@ -18,7 +18,7 @@ A experimental item.
 的框架了. 
 很是期待这次 *WWDC* 给我带来惊喜.
 
-### Swift 3
+##### Swift 3
 当 `Swift 3` 第一个预览版发布的时候, 我就是试了一下, 可是说代码全部崩坏!!
 但是 `Xcode` **Bug** 又太多, 使用*Command + Optional + Control + F* 很容易崩溃,
 正则表达式写得又不漂亮, 所以一个个改起来真的好累.
