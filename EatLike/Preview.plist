@@ -8,7 +8,7 @@
 		<key>userName</key>
 		<string>neymarjr</string>
 		<key>foodName</key>
-		<string>hhhh</string>
+		<string>Good Pasta</string>
 		<key>category</key>
 		<string>Western</string>
 		<key>isLike</key>
@@ -36,7 +36,7 @@
 		<key>note</key>
 		<string>作为一个职业球员, 为了始终保持高水平的竞技状态, 我必须吃营养师给我配置的营养套餐.👍 当然味道很好, 但是天天吃的话总会腻, 好在这次来了农大, 尝了一次传说中的中国料理, 有种童年的感觉😍. 我感觉我还能再拿几次金球奖⚽️</string>
 		<key>likesTotal</key>
-		<integer>1000</integer>
+		<integer>789</integer>
 		<key>authorImage</key>
 		<string>leomessi</string>
 		<key>detailImage</key>
@@ -52,7 +52,7 @@
 		<key>category</key>
 		<string>Chinese Food</string>
 		<key>isLike</key>
-		<true/>
+		<false/>
 		<key>note</key>
 		<string>听说梅西吃了这个后, 敢说他能再拿金球奖, 我笑了😂😂. 我不过这次刚好来农大玩了一下,  正好去体会一下梅西所谓的美味😉.一句话, 带感( ^ O ^ )q !!!👏👏</string>
 		<key>likesTotal</key>
@@ -76,7 +76,7 @@
 		<key>note</key>
 		<string>I like Ice Cream🍨, I need it to stay the high status. Don&apos;t be worry about falt👊!! Just eat😏</string>
 		<key>likesTotal</key>
-		<integer>1000</integer>
+		<integer>233</integer>
 		<key>authorImage</key>
 		<string>luissuarez9</string>
 		<key>detailImage</key>

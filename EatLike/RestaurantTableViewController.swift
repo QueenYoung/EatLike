@@ -42,6 +42,7 @@ class RestaurantTableViewController: UITableViewController,
         if isViewed == true { return }
         let pageViewController = storyboard!.instantiateViewController(
             withIdentifier: "WalkthroughPageController") as! WalkthroughPageViewController
+        pageViewController.modalTransitionStyle = .partialCurl
 
         present(pageViewController, animated: true, completion: nil)
     }
@@ -49,7 +50,7 @@ class RestaurantTableViewController: UITableViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         // 临时代码
-//         NSUserDefaults.standard().set(false, forKey: "hasViewedWalkthrough")
+         NSUserDefaults.standard().set(false, forKey: "hasViewedWalkthrough")
 
         // fetch data
         let fetchRequest = NSFetchRequest(entityName: "Restaurant")

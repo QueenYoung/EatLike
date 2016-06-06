@@ -17,17 +17,16 @@ class FriendRestaurantViewController: UIViewController {
     @IBOutlet weak var dackButton: UIButton!
     
     var startTime: NSDate!
-    var friendData: [DiscoverRestaurants] = []
-    var index: Int!
+    var friendData: DiscoverRestaurants!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = friendData[index].name
-        detailImageView.image = friendData[index].detailImage
-        userImageView.image = friendData[index].authorImage
-        authorLabel.text = friendData[index].userName
-        authorLabel.text?.append(" 👉 \(friendData[index].foodName)")
+        title = friendData.name
+        detailImageView.image = friendData.detailImage
+        userImageView.image = friendData.authorImage
+        authorLabel.text = friendData.userName
+        authorLabel.text?.append(" 👉 \(friendData.foodName)")
         
         self.dackButton.alpha = 0.0
         self.descriptionTextView.alpha = 0.0
@@ -60,7 +59,7 @@ class FriendRestaurantViewController: UIViewController {
         let queue = dispatch_queue_create("com.queen.jaxu.eatlike", DISPATCH_QUEUE_CONCURRENT)
         let font = UIFont(name: fontName, size: fontSize)
         dispatch_async(queue!) {
-            let text = self.friendData[self.index].note
+            let text = self.friendData.note
             
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = lineSpacing

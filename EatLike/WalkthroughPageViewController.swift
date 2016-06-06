@@ -68,7 +68,7 @@ class WalkthroughPageViewController: UIPageViewController,
 
         // 如果当前是最后一个引导图, 加 1 后就是 3
         if index == 3 {
-            delay(with: 2.0, closure: {
+            delay(with: 1.5, closure: {
                 self.doneButtonTapped()
             })
         }

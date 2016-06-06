@@ -34,6 +34,12 @@
 		96B8A05D1CF17AAE00019BEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96B8A05F1CF17AAE00019BEC /* Localizable.strings */; };
 		96B8A0621CF17AAF00019BEC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96B8A0641CF17AAF00019BEC /* InfoPlist.strings */; };
 		96B8A0681CF1B56C00019BEC /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B8A0671CF1B56C00019BEC /* CoreSpotlight.framework */; };
+		96C6133A1D050BE4003B3534 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C613391D050BE4003B3534 /* LaunchViewController.swift */; };
+		96C613421D050C33003B3534 /* OvalLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C6133B1D050C33003B3534 /* OvalLayer.swift */; };
+		96C613431D050C33003B3534 /* TriangleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C6133C1D050C33003B3534 /* TriangleLayer.swift */; };
+		96C613441D050C33003B3534 /* RectangleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C6133D1D050C33003B3534 /* RectangleLayer.swift */; };
+		96C613451D050C33003B3534 /* ArcLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C6133E1D050C33003B3534 /* ArcLayer.swift */; };
+		96C613461D050C33003B3534 /* HolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C613401D050C33003B3534 /* HolderView.swift */; };
 		96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */; };
 		96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801001CB283F9003BC85E /* DiscoverViewController.swift */; };
 		96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */; };
@@ -90,6 +96,12 @@
 		96B8A05E1CF17AAE00019BEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		96B8A0631CF17AAF00019BEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		96B8A0671CF1B56C00019BEC /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		96C613391D050BE4003B3534 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		96C6133B1D050C33003B3534 /* OvalLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OvalLayer.swift; sourceTree = "<group>"; };
+		96C6133C1D050C33003B3534 /* TriangleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleLayer.swift; sourceTree = "<group>"; };
+		96C6133D1D050C33003B3534 /* RectangleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangleLayer.swift; sourceTree = "<group>"; };
+		96C6133E1D050C33003B3534 /* ArcLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcLayer.swift; sourceTree = "<group>"; };
+		96C613401D050C33003B3534 /* HolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HolderView.swift; sourceTree = "<group>"; };
 		96C800FE1CB281E6003BC85E /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 		96C801001CB283F9003BC85E /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverRestaurants.swift; sourceTree = "<group>"; };
@@ -140,6 +152,7 @@
 				96B8A0671CF1B56C00019BEC /* CoreSpotlight.framework */,
 				969641E11C992ED3006B6A09 /* MapKit.framework */,
 				96275E581C92E5EF00E90E2E /* Products */,
+				96C613411D050C33003B3534 /* Loader View */,
 				96B564461CC1D0A6008638BD /* Support Files */,
 				96B564421CC1D019008638BD /* Storyboards */,
 				96B564431CC1D041008638BD /* Eat Like */,
@@ -259,6 +272,7 @@
 				96B8A0641CF17AAF00019BEC /* InfoPlist.strings */,
 				96B8A05F1CF17AAE00019BEC /* Localizable.strings */,
 				96275E631C92E5EF00E90E2E /* LaunchScreen.storyboard */,
+				96C613391D050BE4003B3534 /* LaunchViewController.swift */,
 				96275E661C92E5EF00E90E2E /* Info.plist */,
 				96275E5A1C92E5EF00E90E2E /* AppDelegate.swift */,
 				96275E611C92E5EF00E90E2E /* Assets.xcassets */,
@@ -266,6 +280,27 @@
 			);
 			name = "Support Files";
 			path = EatLike;
+			sourceTree = "<group>";
+		};
+		96C6133F1D050C33003B3534 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				96C6133B1D050C33003B3534 /* OvalLayer.swift */,
+				96C6133C1D050C33003B3534 /* TriangleLayer.swift */,
+				96C6133D1D050C33003B3534 /* RectangleLayer.swift */,
+				96C6133E1D050C33003B3534 /* ArcLayer.swift */,
+			);
+			name = Layers;
+			sourceTree = "<group>";
+		};
+		96C613411D050C33003B3534 /* Loader View */ = {
+			isa = PBXGroup;
+			children = (
+				96C6133F1D050C33003B3534 /* Layers */,
+				96C613401D050C33003B3534 /* HolderView.swift */,
+			);
+			name = "Loader View";
+			path = "../../Downloads/SBLoader - Starter/SBLoader";
 			sourceTree = "<group>";
 		};
 		96E6E90C1CA192B400D33EB9 /* Walkthrough */ = {
@@ -359,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C613451D050C33003B3534 /* ArcLayer.swift in Sources */,
 				96E3CE721CEADA810008822D /* FadeSegue.swift in Sources */,
 				964B36101CE6DDFF001A8CB2 /* PreviewCollectionViewController.swift in Sources */,
 				96275E6D1C92E96100E90E2E /* RestaurantTableViewController.swift in Sources */,
@@ -370,10 +406,12 @@
 				96275E6F1C93099F00E90E2E /* RestaurantTableViewCell.swift in Sources */,
 				967430C51CCE66D100D206C9 /* StepsTableViewController.swift in Sources */,
 				96C801011CB283F9003BC85E /* DiscoverViewController.swift in Sources */,
+				96C613461D050C33003B3534 /* HolderView.swift in Sources */,
 				96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */,
 				960B214E1CEB3348001BEB51 /* LocationSearchTable.swift in Sources */,
 				96E22EE41CDA240C00781CD0 /* ImageCache.swift in Sources */,
 				963BC9351CD8E891002702A7 /* ChooseCategaryTableViewController.swift in Sources */,
+				96C6133A1D050BE4003B3534 /* LaunchViewController.swift in Sources */,
 				96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */,
 				96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */,
 				96E3CE701CEAD9B90008822D /* SwipeSegue.swift in Sources */,
@@ -381,6 +419,8 @@
 				96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */,
 				96E6E90B1CA192A600D33EB9 /* WalkthroughPageViewController.swift in Sources */,
 				964B360D1CE4AB18001A8CB2 /* MapPinView.swift in Sources */,
+				96C613441D050C33003B3534 /* RectangleLayer.swift in Sources */,
+				96C613421D050C33003B3534 /* OvalLayer.swift in Sources */,
 				968F2E9C1CD5BF280067D0C4 /* RemindTableViewController.swift in Sources */,
 				96C800FF1CB281E6003BC85E /* DiscoverCollectionViewCell.swift in Sources */,
 				96275E711C93CE9100E90E2E /* Restaurant.swift in Sources */,
@@ -390,6 +430,7 @@
 				96275E5B1C92E5EF00E90E2E /* AppDelegate.swift in Sources */,
 				96A87F601C983667006BAA9C /* MapViewController.swift in Sources */,
 				96AA1F521D046BFF0085FC48 /* DetailTableViewCell.swift in Sources */,
+				96C613431D050C33003B3534 /* TriangleLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

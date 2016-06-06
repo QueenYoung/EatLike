@@ -83,8 +83,7 @@ class DiscoverViewController: UIViewController {
             let friendVC = nav.topViewController as! FriendRestaurantViewController
 
             friendVC.startTime = NSDate()
-            friendVC.friendData = self.discovers
-            friendVC.index = self.index
+            friendVC.friendData = self.discovers[index]
         }
     }
     
