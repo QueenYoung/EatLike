@@ -30,9 +30,9 @@ class LocationSearchTable: UITableViewController {
     }
 
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView
-            .dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
+            .dequeueReusableCell(withIdentifier: "searchCell", for: indexPath as IndexPath)
 
         // Configure the cell...
         let selectedItem = matchingItems[indexPath.row].placemark
@@ -69,17 +69,17 @@ class LocationSearchTable: UITableViewController {
         return addressLine
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = matchingItems[indexPath.row].placemark
         delegate?.dropPinZoomIn(placemark: selectedItem)
         dismiss(animated: true, completion: nil)
     }
 
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let setLocationAction = UITableViewRowAction(
             style: .destructive, title: "Replace") {
                 _ in
-                let cell = self.tableView.cellForRow(at: indexPath)!
+                let cell = self.tableView.cellForRow(at: indexPath as IndexPath)!
                 print(cell.textLabel!.text!)
                 self.delegate?.replaceLocationFor(
                     place: cell.detailTextLabel!.text! +  cell.textLabel!.text!)

@@ -99,10 +99,10 @@
                                 </items>
                             </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKX-bK-6Xe">
-                                <rect key="frame" x="558" y="72" width="22" height="22"/>
+                                <rect key="frame" x="548" y="131" width="32" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="22" id="10n-lG-ahm"/>
-                                    <constraint firstAttribute="height" constant="22" id="yCq-Ak-KEp"/>
+                                    <constraint firstAttribute="width" constant="32" id="8b5-wT-PbG"/>
+                                    <constraint firstAttribute="height" constant="32" id="Wy4-9N-oWJ"/>
                                 </constraints>
                                 <state key="normal" image="placeholder-3"/>
                                 <connections>
@@ -112,21 +112,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="trailing" secondItem="Y4z-4n-kvm" secondAttribute="trailingMargin" id="1Ts-2K-3mp"/>
                             <constraint firstItem="Que-cO-BxE" firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="3CI-Jg-w8C"/>
+                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="top" secondItem="EgP-SI-XCY" secondAttribute="bottom" constant="81" id="8ws-Nr-c3w"/>
                             <constraint firstItem="8eL-zy-qjJ" firstAttribute="leading" secondItem="Y4z-4n-kvm" secondAttribute="leading" id="D5f-4G-P3i"/>
                             <constraint firstItem="o1z-aV-3UL" firstAttribute="top" secondItem="8eL-zy-qjJ" secondAttribute="bottom" id="DC1-6d-abU"/>
-                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="top" secondItem="EgP-SI-XCY" secondAttribute="bottom" constant="8" id="EAK-xj-7TO"/>
                             <constraint firstItem="Que-cO-BxE" firstAttribute="bottom" secondItem="o1z-aV-3UL" secondAttribute="top" id="KUd-ya-APn"/>
                             <constraint firstItem="8eL-zy-qjJ" firstAttribute="top" secondItem="EgP-SI-XCY" secondAttribute="bottom" id="ZeO-oZ-4yC"/>
                             <constraint firstAttribute="trailing" secondItem="8eL-zy-qjJ" secondAttribute="trailing" id="jHZ-TD-jzo"/>
+                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="leading" secondItem="Y4z-4n-kvm" secondAttribute="leadingMargin" id="l3c-ml-ski"/>
+                            <constraint firstItem="ZKX-bK-6Xe" firstAttribute="leading" secondItem="8eL-zy-qjJ" secondAttribute="trailing" constant="-52" id="mRe-18-xpz"/>
                             <constraint firstItem="Que-cO-BxE" firstAttribute="leading" secondItem="8eL-zy-qjJ" secondAttribute="leading" id="pbM-Le-g9h"/>
+                            <constraint firstItem="8eL-zy-qjJ" firstAttribute="top" secondItem="ZKX-bK-6Xe" secondAttribute="bottom" constant="-99" id="rww-6j-guT"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="8ws-Nr-c3w"/>
+                                <exclude reference="l3c-ml-ski"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="aKT-ui-dxk">
                         <barButtonItem key="leftBarButtonItem" image="back_icon" id="vyK-6e-HOZ">
                             <connections>
-                                <segue destination="rH4-xE-bAd" kind="unwind" unwindAction="unwindToDetailWithSegue:" id="3sx-2b-6NH"/>
+                                <segue destination="rH4-xE-bAd" kind="unwind" identifier="unwindToDetail" unwindAction="unwindToDetailWithSegue:" id="3sx-2b-6NH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

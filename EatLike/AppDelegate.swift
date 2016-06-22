@@ -76,23 +76,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: () -> Void) {
         if identifier == "Justsavaworld" {
-            NSNotificationCenter.default().post(name: "SaveWorld", object: nil)
+            NotificationCenter.default().post(name: "SaveWorld" as NSNotification.Name, object: nil)
         }
 
         completionHandler()
     }
 
-    // MARK: - Core Data stack/**/
+	func applicationWillTerminate(_ application: UIApplication) {
+		self.saveContext()
+	}
 
-    lazy var applicationDocumentsDirectory: NSURL = {
+
+
+	// MARK: - Core Data Saving support
+
+
+	func saveContext () {
+		if managedObjectContext.hasChanges {
+			do {
+				try managedObjectContext.save()
+			} catch {
+				// Replace this implementation with code to handle the error appropriately.
+				// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+				let nserror = error as NSError
+				NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+				abort()
+			}
+		}	}
+
+
+	// MARK: - Core Data stack
+    lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.appcoda.CoreDataDemo" in the application's documents Application Support directory.
-        let urls = NSFileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.main().urlForResource("EatLike", withExtension: "momd")!
+        let modelURL = Bundle.main().urlForResource("EatLike", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
@@ -100,7 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("EatLike.sqlite")
+        let url = try! self.applicationDocumentsDirectory.appendingPathComponent("EatLike.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStore(
@@ -135,22 +157,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return managedObjectContext
     }()
 
-    // MARK: - Core Data Saving support
-
-    func saveContext() {
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-                abort()
-            }
-        }
-    }
-    
 }
 
 

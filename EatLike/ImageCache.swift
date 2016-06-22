@@ -9,22 +9,25 @@
 import UIKit
 
 struct ImageCache {
-    let caches = NSCache<AnyObject, NSData>()
+    let caches = Cache<AnyObject, NSData>()
 
-    func set(imagedata: NSData, key: String) {
+    func set(imagedata: Data, key: String) {
         // 先把需要缓存的对象, 写入缓存区
         caches.setObject(imagedata, forKey: key)
         // 同时将对象写入 App 的 Document 中
         let imageurl = imageURL(for: key)
-
-        imagedata.write(to: imageurl, atomically: true)
+		do {
+			try imagedata.write(to: imageurl, options: .atomicWrite)
+		} catch {
+			print(error)
+		}
         print("image is write to \(imageurl.path!)")
     }
 
     func image(for key: String) -> UIImage? {
         // 如果能直接从缓存中找到图片, 就将它转码并且返回
         if let existingData = caches.object(forKey: key),
-           let existingImage = UIImage(data: existingData) {
+           let existingImage = UIImage(data: existingData as Data) {
             print("I find the image")
             return existingImage
         }
@@ -44,7 +47,7 @@ struct ImageCache {
         caches.removeObject(forKey: key)
         let imageurl = imageURL(for: key)
         do {
-            try NSFileManager.default().removeItem(at: imageurl)
+            try FileManager.default().removeItem(at: imageurl as URL)
         } catch {
             print(error)
             print("Something was not surive")
@@ -52,11 +55,15 @@ struct ImageCache {
         print("Remove the cache from \(imageurl.path!)")
     }
     
-    private func imageURL(`for` key: String) -> NSURL {
-        let documentDirectory = NSFileManager.default()
+    private func imageURL(`for` key: String) -> URL {
+        let documentDirectory = FileManager.default()
             .urlsForDirectory(.cachesDirectory, inDomains: .userDomainMask)
         let document = documentDirectory.first!
+		do {
+			return try document.appendingPathComponent(key)
+		} catch {
+			fatalError("Appending path component eror")
+		}
 
-        return document.appendingPathComponent(key)
     }
 }

@@ -32,7 +32,7 @@ protocol ViewSwipeable {
 class SwipeDismissAnimator:NSObject, UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(
-        _ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        _ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
 
     }
@@ -50,7 +50,7 @@ class SwipeDismissAnimator:NSObject, UIViewControllerAnimatedTransitioning {
         // Add the to- view to the transition context
         if let fromView = fromView {
             if let toView = toView {
-                transitionContext.containerView()?.insertSubview(toView, belowSubview: fromView)
+                transitionContext.containerView().insertSubview(toView, belowSubview: fromView)
             }
         }
 

@@ -89,7 +89,7 @@ class WalkthroughPageViewController: UIPageViewController,
     }
 
     func doneButtonTapped() {
-        let save = NSUserDefaults.standard()
+        let save = UserDefaults.standard()
         save.set(true, forKey: "hasViewedWalkthrough")
         dismiss(animated: true, completion: nil)
     }

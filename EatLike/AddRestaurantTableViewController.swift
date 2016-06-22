@@ -60,13 +60,13 @@ class AddRestaurantTableViewController: UITableViewController {
     
     // MARK: - Table View Delegate
     override func tableView(
-        _ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
+        _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
             showImagePicker()
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
     
     
@@ -116,8 +116,8 @@ class AddRestaurantTableViewController: UITableViewController {
             hudText = "Updated"
         }
         
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        dispatch_async(queue!) {
+        let queue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosDefault)
+        queue.async() {
             self.updateRestaurantInformation()
             do {
                 try managedObjectContext.save()
@@ -126,8 +126,9 @@ class AddRestaurantTableViewController: UITableViewController {
                 print(error)
                 return
             }
-            
-            dispatch_async(dispatch_get_main_queue()) {
+
+
+            DispatchQueue.main.async() {
                 let hud = HudView.hud(
                     in: self.navigationController!.view, animated: true)
                 hud.text = hudText
@@ -209,14 +210,19 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             // imagePicker.allowsEditing = true
             self.present(imagePicker, animated: true, completion: nil)
         }
-        let queue = dispatch_queue_create(
-            "com.queen.jxau.eatlike", DISPATCH_QUEUE_CONCURRENT)
-        
-        dispatch_async(queue!) { [unowned self] in
-            let previewController = PreviewCollectionViewController(collectionViewLayout: self.collectionLayout)
+
+
+		let queue = DispatchQueue(
+			label: "com.queen.jxau.eatlike",
+			attributes: .concurrent,
+			target: nil)
+
+        queue.async { [unowned self] in
+            let previewController = PreviewCollectionViewController(
+				collectionViewLayout: self.collectionLayout)
             previewController.delegate = self
             self.previews.append(previewController)
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let width = self.view.frame.width
                 let view = UIView(frame: CGRect(x: 4, y: 4, width: width - 30, height: 96))
                 view.addSubview(previewController.view)
@@ -270,46 +276,28 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard textField === phoneTextField else { return true }
         // 过滤那些不是数字的所有输入, 即使是粘贴也不行.
-        let decimalSet = NSMutableCharacterSet.decimalDigits()
-        let typeSet = NSCharacterSet(charactersIn: string)
-        decimalSet.addCharacters(in: "-")
-        
-        let count = phoneTextField.text?.characters.filter { $0 != "-" }.count
-        var phone = phoneTextField.text!
-        let firstSeparator = phone.index(phone.startIndex, offsetBy: 3)
-        let secondSeparator = phone.index(phone.startIndex, offsetBy: 8)
-        
-        guard decimalSet.isSuperset(of: typeSet) else { return false }
-        if count == 4 && phone[3] != "-" {
-            phone.insert("-", at: firstSeparator)
+        var decimalSet = CharacterSet.decimalDigits
+        let typeSet = CharacterSet(charactersIn: string)
+        decimalSet.insert(charactersIn: "-")
+		print("2")
+        var phone = String(phoneTextField.text!.characters.filter({ $0 != "-" }))
+        let count = phone.characters.count
+//        var phone = phoneTextField.text!
+        let firstSeparator = phone.index(phone.startIndex, offsetBy: 3, limitedBy: phone.endIndex)
+        let secondSeparator = phone.index(phone.startIndex, offsetBy: 8, limitedBy: phone.endIndex)
+		print("3")
+		guard decimalSet.isSuperset(of: typeSet) else { return false }
+		print("4")
+        if count == 11 && Int(string) != nil { return false }
+        switch count {
+        case 3...7 where Int(string) != nil:
+            phone.insert("-", at: firstSeparator!)
+        case 8...11 where Int(string) != nil:
+            phone.insert("-", at: firstSeparator!)
+            phone.insert("-", at: secondSeparator!)
+        default:
+            break
         }
-        
-        if count == 7 && phone[7] != "-" {
-            phone.insert("-", at: secondSeparator)
-            // 因为会清楚 - 的原因, 所以在重新生成 - 的时候, 同时生成第三位的
-            if phone[3] != "-" {
-                phone.insert("-", at: firstSeparator)
-            }
-        }
-        
-        // 如果电话号码已经11位, 并且输入的是数字的话, 则返回 false
-        // 因为非数字已经被排序, 现在能输入的之后 删除键. 通过 Int(stirng) 来判断输入的是数字还是删除
-        if count >= 11 && Int(string) != nil {
-            if phone[3] != "-" {
-                phone.insert("-", at: firstSeparator)
-                phone.insert("-", at: secondSeparator)
-            } else {
-                return false
-            }
-            // 在电话号码小于 10 位的时候, 清除 -
-        } else if count <= 10 && Int(string) == nil {
-            phone = phone
-                .characters
-                .split(separator: "-")
-                .map(String.init(_:))
-                .joined(separator: "")
-        }
-        
         phoneTextField.text = phone
         return true
     }

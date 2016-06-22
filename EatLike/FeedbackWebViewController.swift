@@ -17,8 +17,8 @@ class FeedbackWebViewController: UIViewController {
         // 需要前往 info 文件添加一个 App Transport Security 字典,
         // 并设置 Allow Arbitrary Loads to `YES`
         if let url = NSURL(string: "https://www.icloud.com/#mail/") {
-            let request = NSURLRequest(url: url)
-            webView.loadRequest(request)
+            let request = NSURLRequest(url: url as URL)
+            webView.loadRequest(request as URLRequest)
         }
         // Do any additional setup after loading the view.
     }

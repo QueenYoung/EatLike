@@ -16,14 +16,14 @@ class Restaurant: NSManagedObject {
 	@NSManaged var type: String
 	@NSManaged var location: String
 	@NSManaged var phoneNumber: String
-	@NSManaged var image: NSData?
+	@NSManaged var image: Data?
 	// 因为 coredata 不存在 Boolean 类型, 所以需要使用 NSNumber
     @NSManaged var note: String
     @NSManaged var userRate: NSNumber
     @NSManaged var needRemind: NSNumber
 
     // 餐厅的详细位置
-    @NSManaged var dueDate: NSDate!
+    @NSManaged var dueDate: Date!
     @NSManaged var alertMessage: String
     @NSManaged var keyString: String
 }
@@ -49,17 +49,17 @@ extension Restaurant {
 	    if !needRemind.boolValue {
 		    let existingNotification = scheduledNotifications()
 		    if let exist = existingNotification {
-			    UIApplication.shared().cancel(exist)
+			    UIApplication.shared().cancelLocalNotification(exist)
 			    return
 		    }
-	    } else if dueDate.compare(NSDate()) == .orderedDescending {
+	    } else if dueDate.compare(NSDate() as Date) == .orderedDescending {
 		    let notification = UILocalNotification()
             // fix some bug
             // 这个可选集合必须包括所有需要用到的时间 Unit, 否则默认都是0
-            let dateComponents = NSCalendar.current().components(
-                [.day, .hour, .minute, .second, .month, .year], from: dueDate)
+            var dateComponents = Calendar.current().components(
+                [.day, .hour, .minute, .second, .month, .year], from: dueDate as Date)
             dateComponents.second = 0
-            let fixedDate = NSCalendar.current().date(from: dateComponents)!
+            let fixedDate = Calendar.current().date(from: dateComponents)!
             print(fixedDate)
 		    notification.fireDate = fixedDate
 		    notification.timeZone = .default()
@@ -106,13 +106,14 @@ extension Restaurant {
             rate.append(String(repeating:  Character("⭐️"), count: userRate.intValue))
         }
 
-
         attributeSet.contentDescription = "\(location)\(rate)\n\(phoneNumber)"
         attributeSet.thumbnailData = image
         attributeSet.supportsPhoneCall = true
 
-        attributeSet.phoneNumbers = [phoneNumber]
-        attributeSet.keywords = [phoneNumber, name, location]
+        let phone = String(phoneNumber.characters.filter({$0 != "-"}))
+        print(phone)
+        attributeSet.phoneNumbers = [phone]
+        attributeSet.keywords = [phoneNumber, name, location, type]
 
         attributeSet.relatedUniqueIdentifier = keyString
 

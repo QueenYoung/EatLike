@@ -27,7 +27,7 @@ extension DropSegue: UIViewControllerTransitioningDelegate {
 
 class DropPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
   
-  func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+  func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
     return 0.5
   }
   
@@ -39,7 +39,7 @@ class DropPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     // 2. Add the to-view to the transition context
     if let toView = toView {
-      transitionContext.containerView()?.addSubview(toView)
+      transitionContext.containerView().addSubview(toView)
     }
 
     // 3. Set up the initial state for the animation
@@ -70,7 +70,7 @@ class DropPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
 class DropDismissAnimator:NSObject, UIViewControllerAnimatedTransitioning {
     
-    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
     
@@ -83,7 +83,7 @@ class DropDismissAnimator:NSObject, UIViewControllerAnimatedTransitioning {
         
         // 2. Add the to-view to the transition context
         if let fromView = fromView, let toView = toView {
-                transitionContext.containerView()?.insertSubview(toView, belowSubview: fromView)
+                transitionContext.containerView().insertSubview(toView, belowSubview: fromView)
         }
 
         // 3. Set up the initial state for the animation

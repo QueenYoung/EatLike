@@ -46,12 +46,16 @@ class MapViewController: UIViewController {
         mapView.showsTraffic = true
         mapView.showsScale = true
         mapView.showsBuildings = true
-
+        mapView.showsPointsOfInterest = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         mapView.showsUserLocation = false
         locationManager.stopUpdatingLocation()
+    }
+
+    deinit {
+        resultSearchController = nil
     }
 
     // Naviation Methods
@@ -75,7 +79,8 @@ class MapViewController: UIViewController {
         // 去除 emoji 的影响
         searchRequest.naturalLanguageQuery = String(restaurant.type.characters.split(separator: " ")[1])
         // 获得当前地图中心, 方圆 2 公里的区域
-        let region = MKCoordinateRegionMakeWithDistance(mapView.centerCoordinate, 2000, 2000)
+        let region = MKCoordinateRegionMakeWithDistance(
+            restaurantAnnotation.coordinate, 2000, 2000)
         searchRequest.region = region
 
         let localSearch = MKLocalSearch(request: searchRequest)
@@ -105,36 +110,46 @@ class MapViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showNavigationSteps" {
+        switch segueIdentifier(for: segue) {
+        case .showNavigationSteps:
             let stepsTC = segue.destinationViewController as! StepsTableViewController
             if let route = currentRoutes?.steps {
                 stepsTC.routeSteps = route
             }
+        case .unwindToDetail:
+            break
+
         }
     }
+}
 
+extension MapViewController: SegueHandlerType {
+    enum SegueIdentifier: String {
+        case showNavigationSteps
+        case unwindToDetail
+    }
 }
 
 // MARK: - MapView Delegate Method
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "ShopPinDetailView"
-
+        
         // 如果是用户自己的位置的话, 忽略
         if annotation is MKUserLocation || annotation.title! != restaurant.name {
             return nil
         }
-
+        
         // 和 Cell 一样, 也通过重用队列中的 Annotation 来节省内存
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
-
+        
         // 如果队列中不存在可重用的， 则重新创建
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.canShowCallout = true
         }
-
-            // 通过 nib 文件创建直接创建 UIView
+        
+        // 通过 nib 文件创建直接创建 UIView
         let detailView = (UINib(nibName: identifier, bundle: nil)
             .instantiate(withOwner: nil, options: nil).first as? UIView) as! MapPinView
         detailView.delegate = self
@@ -142,28 +157,28 @@ extension MapViewController: MKMapViewDelegate {
         detailView.currentRestaurantPlacemark = currentRestaurantPlacemark
         annotationView?.detailCalloutAccessoryView = detailView
         annotationView?.pinTintColor = MKPinAnnotationView.greenPinColor()
-
+        
         return annotationView
     }
-
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let render = MKPolylineRenderer(overlay: overlay)
         render.strokeColor = chooseTransportType == .walking ? .blue() : UIColor.yellow()
         render.lineWidth = 8.0
-
+        
         return render
     }
-
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if currentRoutes == nil {
             let alert = UIAlertController(title: "You Can't Do This", message: "You should tap the direction button first", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "I will do it", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else {
-            performSegue(withIdentifier: "showNavigationSteps", sender: self)
+            performSegue(with: .showNavigationSteps, sender: self)
         }
     }
-
+    
 }
 
 // MARK: - Helper Methods
@@ -177,19 +192,19 @@ extension MapViewController {
             locationManager.requestWhenInUseAuthorization()
         }
     }
-
+    
     // Set the source and destination of the route
     private func setRoute() -> MKDirectionsRequest? {
         let directionRequest = MKDirectionsRequest()
         directionRequest.source = MKMapItem.forCurrentLocation()
-
+        
         guard let currentRestaurantPlacemark = currentRestaurantPlacemark else { return nil }
         let destinationPlacemark = MKPlacemark(placemark: currentRestaurantPlacemark)
         directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
         directionRequest.transportType = chooseTransportType
         return directionRequest
     }
-
+    
     // Calculate the direction
     private func calculateDirection(for request: MKDirectionsRequest?) {
         guard let directionRequest = request else { return }
@@ -202,7 +217,7 @@ extension MapViewController {
                     title: routeError!.localizedFailureReason!,
                     message: routeError!.localizedDescription,
                     preferredStyle: .alert)
-
+                
                 alert.addAction(UIAlertAction(title: "I got it!", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
@@ -237,7 +252,7 @@ extension MapViewController {
         alertController.addAction(cancelAction)
         
         let appSettingsAction = UIAlertAction(title: "App Settings", style: .default) { action in
-            UIApplication.shared().open(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared().openURL(URL(string: UIApplicationOpenSettingsURLString)!)
         }
         alertController.addAction(appSettingsAction)
         
@@ -302,7 +317,7 @@ extension MapViewController {
 }
 
 extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChange status: CLAuthorizationStatus) {
+    @nonobjc func locationManager(_ manager: CLLocationManager, didChange status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
             print("Location authorization not determined")
@@ -333,7 +348,7 @@ extension MapViewController: Navigationable {
             alert.addAction(UIAlertAction(title: "I will do it", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else {
-            performSegue(withIdentifier: "showNavigationSteps", sender: self)
+            performSegue(with: .showNavigationSteps, sender: self)
         }
     }
 }

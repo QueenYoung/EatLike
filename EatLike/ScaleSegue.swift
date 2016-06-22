@@ -29,7 +29,7 @@ private protocol ViewScaleable {
 }
 
 class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
 
@@ -50,7 +50,7 @@ class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         // 2. Add the to-view to the transition context
         if let toView = toView {
-            transitionContext.containerView()?.addSubview(toView)
+            transitionContext.containerView().addSubview(toView)
         }
 
         // 3. Set up the initial state for the animation
@@ -83,7 +83,7 @@ class ScalePresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 }
 
 class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
 
@@ -105,7 +105,7 @@ class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // Add the to- view to the transition context
         if let fromView = fromView,
             toView = toView {
-            transitionContext.containerView()?.insertSubview(toView, belowSubview:fromView)
+            transitionContext.containerView().insertSubview(toView, belowSubview:fromView)
         }
 
         // Set up the inital state for the animation

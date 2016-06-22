@@ -34,7 +34,7 @@ class FadeAnimator:NSObject, UIViewControllerAnimatedTransitioning {
 
     var isPresenting = false
 
-    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
 
@@ -49,13 +49,13 @@ class FadeAnimator:NSObject, UIViewControllerAnimatedTransitioning {
         if isPresenting {
             toView?.alpha = 0.0
             if let toView = toView {
-                transitionContext.containerView()?.addSubview(toView)
+                transitionContext.containerView().addSubview(toView)
             }
 
         } else {
             if let fromView = fromView {
                 if let toView = toView {
-                    transitionContext.containerView()?.insertSubview(toView, belowSubview: fromView)
+                    transitionContext.containerView().insertSubview(toView, belowSubview: fromView)
                 }
                 fromView.alpha = 1.0
             }

@@ -20,8 +20,8 @@ class MapPinView: UIView {
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var timeButton: UIButton!
 
-    lazy var dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
         formatter.timeStyle = .shortStyle
         return formatter
     }()

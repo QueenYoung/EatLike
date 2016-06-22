@@ -10,8 +10,8 @@ import UIKit
 public func call(telphone: String, isAlert: Bool = true) -> UIAlertController? {
     guard !telphone.isEmpty else { return nil }
     let number = String(telphone.characters.filter { $0 != "-" })
-    let url = NSURL(string: "tel://" + number)
-    
+    let url = URL(string: "tel://" + number)!
+
     if isAlert {
         let alert = UIAlertController(
             title: "确定要拨打 \(number)",
@@ -19,14 +19,14 @@ public func call(telphone: String, isAlert: Bool = true) -> UIAlertController? {
             preferredStyle: .actionSheet)
         let callAction = UIAlertAction(title: "我要吃饭!", style: .destructive) {
             _ in
-            UIApplication.shared().open(url!)
+            UIApplication.shared().openURL(url)
         }
         
         alert.addAction(callAction)
         alert.addAction(UIAlertAction(title: "手残,按错", style: .cancel, handler: nil))
         return alert
     }
-    UIApplication.shared().open(url!)
+    UIApplication.shared().openURL(url)
     return nil
 }
 
@@ -37,24 +37,25 @@ public func getBlur(in view: UIView, style: UIBlurEffectStyle) {
     let blurEffect = UIBlurEffect(style: style)
     let blurView = UIVisualEffectView(effect: blurEffect)
     blurView.frame = view.frame
+    print(blurView.frame)
     // 将毛玻璃界面放在最后面.
     view.insertSubview(blurView, at: 0)
 }
 
-public func spring(duration: NSTimeInterval, delay: NSTimeInterval = 0, animations: () -> Void) {
+public func spring(duration: TimeInterval, delay: TimeInterval = 0, animations: () -> Void) {
     UIView.animate(
         withDuration: duration,
         delay: 0,
         usingSpringWithDamping: 0.7,
         initialSpringVelocity: 0.7,
-        options: [],
-        animations: animations,
-        completion: nil)
+        animations: animations
+	)
 }
 
-
+// FIXME!
 public func delay(with seconds: Double, closure: () -> Void) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
+	let afterInMilliseconds = DispatchTime.now() + DispatchTimeInterval.milliseconds(Int(seconds * 1000))
+	DispatchQueue.main.after(when: afterInMilliseconds, execute: closure)
 }
 
 extension UIImage {
@@ -83,7 +84,7 @@ public func configureAppearance() {
 
 func getData() -> [DiscoverRestaurants] {
     let a = NSArray(contentsOf:
-        NSBundle.main().urlForResource(
+        Bundle.main().urlForResource(
             "Preview", withExtension: "plist")!)!
         as! [[String: AnyObject]]
     return a.map {

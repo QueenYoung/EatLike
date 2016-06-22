@@ -27,13 +27,20 @@ class FriendRestaurantViewController: UIViewController {
         userImageView.image = friendData.authorImage
         authorLabel.text = friendData.userName
         authorLabel.text?.append(" 👉 \(friendData.foodName)")
+        navigationItem.title = friendData.name
         
         self.dackButton.alpha = 0.0
         self.descriptionTextView.alpha = 0.0
-        
-        print(NSDate().timeIntervalSince(startTime))
+        print(NSDate().timeIntervalSince(startTime as Date))
+
+        let imageSize = CGSize(width: 1, height: 1)
+        self.navigationController?.navigationBar
+            .setBackgroundImage(.withColor(color: .clear(), size: imageSize), for: .default)
+        self.navigationController?.navigationBar.shadowImage = .withColor(color: .clear(), size: imageSize)
+
+
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -51,14 +58,15 @@ class FriendRestaurantViewController: UIViewController {
         }
     }
     
-    @IBAction func cancel(sender: UIButton) {
+    @IBAction func cancel(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
     private func textViewWithFont(textView: UITextView, fontName: String, fontSize: CGFloat, lineSpacing: CGFloat) {
-        let queue = dispatch_queue_create("com.queen.jaxu.eatlike", DISPATCH_QUEUE_CONCURRENT)
+		
+        let queue = DispatchQueue(label: "com.queen.jxau.eatlike", attributes: DispatchQueueAttributes.concurrent, target: nil)
         let font = UIFont(name: fontName, size: fontSize)
-        dispatch_async(queue!) {
+        queue.async {
             let text = self.friendData.note
             
             let paragraphStyle = NSMutableParagraphStyle()
@@ -67,8 +75,8 @@ class FriendRestaurantViewController: UIViewController {
             let attributedString = NSMutableAttributedString(string: text)
             attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
             attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, attributedString.length))
-            
-            dispatch_async(dispatch_get_main_queue()) {
+
+            DispatchQueue.main.async {
                 textView.attributedText = attributedString
             }
         }
@@ -92,13 +100,26 @@ class FriendRestaurantViewController: UIViewController {
     
     
     // fixme: 
-    @IBAction func swipeDownToDismissView(sender: UISwipeGestureRecognizer) {
-        UIView.animate(withDuration: 0.2) {
-            self.dismiss(animated: true, completion: nil)
+
+    @IBAction func swipeDownDismiss(sender: UISwipeGestureRecognizer) {
+        let gravity = UIGravityBehavior(items: [self.view])
+        gravity.gravityDirection = CGVector(dx: 0, dy: 10)
+        let animator = UIDynamicAnimator(referenceView: view)
+        switch sender.state {
+        case .began:
+            print("oo")
+            break
+        case .changed:
+            print("aa")
+           let location = sender.location(in: view)
+           let frame = view.frame
+           view.frame = CGRect(x: frame.origin.x, y: frame.origin.y + location.y, width: frame.width, height: frame.height)
+        default:
+            animator.addBehavior(gravity)
         }
     }
-    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+
 }

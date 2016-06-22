@@ -15,11 +15,13 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
     lazy var pictures = [
         UIImage(named: "cafedeadend"),
         UIImage(named: "homei"),
-        UIImage(named: "royaloak"),
         UIImage(named: "teakha"),
         UIImage(named: "traif"),
         UIImage(named: "cafelore"),
-        UIImage(named: "confessional")
+        UIImage(named: "confessional"),
+        UIImage(named: "upstate"),
+        UIImage(named: "donostia"),
+        UIImage(named: "royaloak"),
     ]
 
     override func viewDidLoad() {
@@ -49,8 +51,8 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
         return pictures.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! previewCollectionCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! previewCollectionCell
     
         // Configure the cell
         cell.photoImageView.image = pictures[indexPath.row]
@@ -62,7 +64,7 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(
         _ collectionView: UICollectionView,
-        shouldHighlightItemAt indexPath: NSIndexPath) -> Bool {
+        shouldHighlightItemAt indexPath: IndexPath)-> Bool {
         return true
     }
 
@@ -81,8 +83,8 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
         return CGSize(width: cellWidth, height: cellHeight)
     } */
 
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! previewCollectionCell
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath as IndexPath) as! previewCollectionCell
         let image = cell.photoImageView.image!
         delegate?.imageBeSelected(selectedImage: image)
     }
@@ -103,15 +105,15 @@ final class previewCollectionCell: UICollectionViewCell {
         photoImageView.clipsToBounds = true
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(photoImageView)
-        
-        photoImageView.topAnchor.constraintEqual(
-            to: contentView.topAnchor).isActive = true
-        photoImageView.bottomAnchor.constraintEqual(
-            to: contentView.bottomAnchor).isActive = true
-        photoImageView.leftAnchor.constraintEqual(
-            to: contentView.leftAnchor).isActive = true
-        photoImageView.rightAnchor.constraintEqual(
-            to: contentView.rightAnchor).isActive = true
+
+        photoImageView.topAnchor.constraint(
+            equalTo: contentView.topAnchor).isActive = true
+		photoImageView.bottomAnchor.constraint(
+			equalTo:contentView.bottomAnchor).isActive = true
+        photoImageView.leftAnchor.constraint(
+            equalTo: contentView.leftAnchor).isActive = true
+        photoImageView.rightAnchor.constraint(
+            equalTo: contentView.rightAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

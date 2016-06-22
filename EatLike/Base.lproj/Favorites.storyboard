@@ -404,6 +404,7 @@
                         <outlet property="dateLabel" destination="mgF-2X-1Z0" id="sJP-Lu-rxc"/>
                         <outlet property="datePicker" destination="a7g-ES-erJ" id="qD2-ln-tNF"/>
                         <outlet property="datePickerCell" destination="wu5-4g-8EJ" id="4hr-on-uQT"/>
+                        <outlet property="doubleTap" destination="G5D-sj-cLI" id="sMp-pW-gKH"/>
                         <outlet property="messageField" destination="izT-3a-LTf" id="6ew-V3-GRQ"/>
                         <outlet property="needRemainedSwitch" destination="hHk-0Y-2zS" id="krE-Af-Ybo"/>
                     </connections>
@@ -417,8 +418,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="a7g-ES-erJ">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="a7g-ES-erJ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                <gestureRecognizers/>
                                 <date key="date" timeIntervalSinceReferenceDate="483770182.260382">
                                     <!--2016-05-01 04:36:22 +0000-->
                                 </date>
@@ -435,6 +437,7 @@
                         </constraints>
                     </tableViewCellContentView>
                 </tableViewCell>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="G5D-sj-cLI"/>
             </objects>
             <point key="canvasLocation" x="4463" y="918"/>
         </scene>
@@ -855,7 +858,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sPK-OC-XUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4457" y="143"/>
+            <point key="canvasLocation" x="4445" y="68"/>
         </scene>
     </scenes>
     <resources>

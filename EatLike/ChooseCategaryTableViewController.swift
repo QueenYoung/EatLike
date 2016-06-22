@@ -22,8 +22,8 @@ class ChooseCategaryTableViewController: UITableViewController {
     }
 
     override func tableView(
-        _ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)!
+        _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath as IndexPath)!
         choosedCategary = cell.textLabel?.text
         performSegue(withIdentifier: "UnwindCategary", sender: self)
     }

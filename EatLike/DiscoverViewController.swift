@@ -16,7 +16,7 @@ class DiscoverViewController: UIViewController {
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var likesTotalLabel: UILabel!
     @IBOutlet weak var buttonStackView: UIStackView!
-    @IBOutlet var restaurantImageButton: UIButton!
+    @IBOutlet weak var restaurantImageButton: UIButton!
     @IBOutlet weak var likesButton: UIButton!
     @IBOutlet weak var dialogView: UIView!
 
@@ -36,16 +36,12 @@ class DiscoverViewController: UIViewController {
             dialogView.alpha = 0
         }
 
+//        backgroundBlurImage.bottomAnchor.constraintEqual(to: bottomLayoutGuide.topAnchor).isActive = true
         configureView()
         getBlur(in: backgroundBlurImage, style: .dark)
         getBlur(in: headerView, style: .dark)
         animator = UIDynamicAnimator(referenceView: view)
 
-        let imageSize = CGSize(width: 1, height: 1)
-        self.navigationController?.navigationBar
-            .setBackgroundImage(.withColor(color: .clear(), size: imageSize), for: .default)
-        self.navigationController?.navigationBar.shadowImage = .withColor(color: .clear(), size: imageSize)
-        
         view.insertSubview(backgroundBlurImage, at: 0)
     }
 
@@ -102,10 +98,10 @@ class DiscoverViewController: UIViewController {
             
             // 添加钟摆效果并且计算偏移量, 摆动终点就是手指停留的位置
             let centerOffset = UIOffsetMake(
-                boxLocation.x - myView.bounds.midX,
-                boxLocation.y - myView.bounds.midY
+                boxLocation.x - (myView?.bounds.midX)!,
+                boxLocation.y - (myView?.bounds.midY)!
             )
-            attachmentBehavior = UIAttachmentBehavior(item: myView, offsetFromCenter: centerOffset, attachedToAnchor: location)
+            attachmentBehavior = UIAttachmentBehavior(item: myView!, offsetFromCenter: centerOffset, attachedToAnchor: location)
             attachmentBehavior.frequency = 0.0
             
             animator.addBehavior(attachmentBehavior)
@@ -131,7 +127,7 @@ class DiscoverViewController: UIViewController {
                 delay(with: 0.2) { self.refreshView() }
             } else {
                 // otherwise 添加晃动动作
-                snapBehavior = UISnapBehavior(item: myView, snapTo: view.center)
+                snapBehavior = UISnapBehavior(item: myView!, snapTo: view.center)
                 animator.addBehavior(snapBehavior)
             }
         }

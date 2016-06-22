@@ -50,15 +50,15 @@ class StepsTableViewController: UITableViewController {
     }
 
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "StepCell", for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StepCell", for: indexPath as IndexPath)
 
         // Configure the cell...
         cell.textLabel?.text = routeSteps[indexPath.row].instructions
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: NSIndexPath) -> NSIndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
     }
 }

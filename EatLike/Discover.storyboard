@@ -386,14 +386,14 @@
                         <viewControllerLayoutGuide type="bottom" id="pbJ-1G-TF4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Xez-W2-qdk">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pMb-A1-jKl">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmN-yc-pRH">
-                                <rect key="frame" x="160" y="134" width="280" height="284"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZmN-yc-pRH">
+                                <rect key="frame" x="160" y="159" width="280" height="284"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-lK-B0n" userLabel="Dialog Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="284"/>
@@ -405,7 +405,7 @@
                                                     <constraint firstAttribute="width" secondItem="59p-fZ-Frl" secondAttribute="height" multiplier="7:6" id="F9d-Ox-2WU"/>
                                                     <constraint firstAttribute="width" constant="280" id="tAl-XD-rIz"/>
                                                 </constraints>
-                                                <state key="normal" image="image"/>
+                                                <state key="normal" image="upstate"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="F9d-Ox-2WU"/>
@@ -541,7 +541,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
+                                        <integer key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -623,6 +623,9 @@
                                                 <exclude reference="zgs-g7-ftl"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="9oH-e2-eaG" appends="YES" id="hpq-W4-tqr"/>
+                                        </connections>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4if-AJ-sbp">
                                         <rect key="frame" x="20" y="260" width="560" height="40"/>
@@ -681,8 +684,26 @@
                                     </mask>
                                 </variation>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2hA-K9-snX">
-                                <rect key="frame" x="15" y="20" width="44" height="44"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="O6R-8H-HJB" firstAttribute="top" secondItem="O6s-VZ-4s5" secondAttribute="bottom" constant="-44" id="DPN-He-cBC"/>
+                            <constraint firstItem="Pb1-8Q-Wuy" firstAttribute="top" secondItem="O6R-8H-HJB" secondAttribute="bottom" id="T92-6s-xSs"/>
+                            <constraint firstItem="O6R-8H-HJB" firstAttribute="leading" secondItem="72W-E0-ko6" secondAttribute="leading" id="UZa-ty-EIO"/>
+                            <constraint firstAttribute="trailing" secondItem="O6R-8H-HJB" secondAttribute="trailing" id="ZU0-1d-sNP"/>
+                            <constraint firstItem="O6R-8H-HJB" firstAttribute="top" secondItem="72W-E0-ko6" secondAttribute="top" id="f7x-xP-Eha"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DPN-He-cBC"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="RVY-XQ-Ya6">
+                        <barButtonItem key="leftBarButtonItem" id="jC5-IC-bZG">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2hA-K9-snX">
+                                <rect key="frame" x="20" y="0.0" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="23q-cH-MgL"/>
                                     <constraint firstAttribute="width" constant="41" id="6eL-uj-BQv"/>
@@ -702,26 +723,8 @@
                                     <action selector="cancelWithSender:" destination="0Gc-x5-4JT" eventType="touchUpInside" id="PXQ-wF-aEL"/>
                                 </connections>
                             </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="O6R-8H-HJB" firstAttribute="top" secondItem="O6s-VZ-4s5" secondAttribute="bottom" constant="-44" id="DPN-He-cBC"/>
-                            <constraint firstItem="O6R-8H-HJB" firstAttribute="leading" secondItem="2hA-K9-snX" secondAttribute="trailing" constant="-59" id="FEo-W3-MPm"/>
-                            <constraint firstItem="Pb1-8Q-Wuy" firstAttribute="top" secondItem="O6R-8H-HJB" secondAttribute="bottom" id="T92-6s-xSs"/>
-                            <constraint firstItem="O6R-8H-HJB" firstAttribute="leading" secondItem="72W-E0-ko6" secondAttribute="leading" id="UZa-ty-EIO"/>
-                            <constraint firstAttribute="trailing" secondItem="O6R-8H-HJB" secondAttribute="trailing" id="ZU0-1d-sNP"/>
-                            <constraint firstItem="O6R-8H-HJB" firstAttribute="top" secondItem="2hA-K9-snX" secondAttribute="bottom" constant="-64" id="egU-cR-tFx"/>
-                            <constraint firstItem="O6R-8H-HJB" firstAttribute="top" secondItem="72W-E0-ko6" secondAttribute="top" id="f7x-xP-Eha"/>
-                            <constraint firstItem="2hA-K9-snX" firstAttribute="top" secondItem="O6s-VZ-4s5" secondAttribute="bottom" id="qSO-AI-VUV"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="DPN-He-cBC"/>
-                                <exclude reference="qSO-AI-VUV"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <navigationItem key="navigationItem" id="RVY-XQ-Ya6"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="authorLabel" destination="aL4-pp-2mc" id="62a-ya-v1i"/>
@@ -732,6 +735,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q8v-ZI-xy4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="9oH-e2-eaG">
+                    <connections>
+                        <action selector="swipeDownDismissWithSender:" destination="0Gc-x5-4JT" id="LpI-sS-3Oi"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5110" y="733"/>
         </scene>
@@ -743,7 +751,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="rBU-Oy-f7l"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5RZ-Ks-EjM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -765,10 +773,9 @@
         <!--Navigation Controller-->
         <scene sceneID="NJn-IC-TOC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" toolbarHidden="NO" id="eJ1-6N-Mix" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="eJ1-6N-Mix" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wsc-cP-V2b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -789,9 +796,9 @@
         <image name="cafedeadend" width="640" height="640"/>
         <image name="dialog-favorites" width="38" height="38"/>
         <image name="discover" width="25" height="25"/>
-        <image name="image" width="800" height="600"/>
         <image name="like" width="24" height="22"/>
         <image name="share" width="19" height="27"/>
+        <image name="upstate" width="640" height="640"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
