@@ -40,7 +40,6 @@
 		96C801031CB2842F003BC85E /* DiscoverRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */; };
 		96C801071CB28B1C003BC85E /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C801061CB28B1C003BC85E /* Discover.storyboard */; };
 		96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C99E751C95A6D80007849E /* ReviewViewController.swift */; };
-		96E22EE41CDA240C00781CD0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E22EE31CDA240C00781CD0 /* ImageCache.swift */; };
 		96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */; };
 		96E3CE6C1CEAD9220008822D /* ScaleSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */; };
 		96E3CE6E1CEAD9B10008822D /* DropSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E3CE6D1CEAD9B10008822D /* DropSegue.swift */; };
@@ -97,7 +96,6 @@
 		96C801021CB2842F003BC85E /* DiscoverRestaurants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverRestaurants.swift; sourceTree = "<group>"; };
 		96C801061CB28B1C003BC85E /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		96C99E751C95A6D80007849E /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
-		96E22EE31CDA240C00781CD0 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = EatLike/ImageCache.swift; sourceTree = "<group>"; };
 		96E23DBD1CBA189700B7EB7D /* FriendRestaurantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRestaurantViewController.swift; sourceTree = "<group>"; };
 		96E3CE6B1CEAD9220008822D /* ScaleSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleSegue.swift; sourceTree = "<group>"; };
 		96E3CE6D1CEAD9B10008822D /* DropSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSegue.swift; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 			isa = PBXGroup;
 			children = (
 				9692D2801CB8B765006D5CEF /* ExtensionFile.swift */,
-				96E22EE31CDA240C00781CD0 /* ImageCache.swift */,
 				96E6E90C1CA192B400D33EB9 /* Walkthrough */,
 				96B564451CC1D070008638BD /* AboutTab */,
 				96B564441CC1D050008638BD /* DiscoverTab */,
@@ -308,7 +305,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Queen;
 				TargetAttributes = {
 					96275E561C92E5EF00E90E2E = {
@@ -377,7 +374,6 @@
 				96C99E761C95A6D80007849E /* ReviewViewController.swift in Sources */,
 				96B0D8D91D05710900627A38 /* SegueHandlerType.swift in Sources */,
 				960B214E1CEB3348001BEB51 /* LocationSearchTable.swift in Sources */,
-				96E22EE41CDA240C00781CD0 /* ImageCache.swift in Sources */,
 				963BC9351CD8E891002702A7 /* ChooseCategaryTableViewController.swift in Sources */,
 				96B488AA1C941FDE00A6B008 /* RestaurantDetailViewController.swift in Sources */,
 				96E23DBE1CBA189700B7EB7D /* FriendRestaurantViewController.swift in Sources */,
@@ -489,8 +485,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -535,8 +533,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

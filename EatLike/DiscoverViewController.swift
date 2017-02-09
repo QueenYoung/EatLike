@@ -73,7 +73,7 @@ class DiscoverViewController: UIViewController {
 
     // MARK: - Navigation
 
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "modalFriend" {
             let nav = segue.destinationViewController as! UINavigationController
             let friendVC = nav.topViewController as! FriendRestaurantViewController

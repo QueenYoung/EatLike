@@ -86,7 +86,7 @@ func getData() -> [DiscoverRestaurants] {
     let a = NSArray(contentsOf:
         Bundle.main().urlForResource(
             "Preview", withExtension: "plist")!)!
-        as! [[String: AnyObject]]
+        as! [[String: Any]]
     return a.map {
         DiscoverRestaurants(name: $0["name"] as! String,
             userName: $0["userName"] as! String,

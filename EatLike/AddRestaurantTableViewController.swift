@@ -29,7 +29,6 @@ class AddRestaurantTableViewController: UITableViewController {
     
     var previews = [PreviewCollectionViewController]()
     
-    let cache = (UIApplication.shared().delegate as! AppDelegate).imageCache
     
     var newRestaurant: Restaurant!
     // MARK: - View Controller
@@ -72,9 +71,9 @@ class AddRestaurantTableViewController: UITableViewController {
     
     // unwind 回来并更新 category
     @IBAction func updateCategary(sender: UIStoryboardSegue) {
-        let categaryTVC = sender.sourceViewController as! ChooseCategaryTableViewController
+        let categaryTVC = sender.source as! ChooseCategaryTableViewController
         categaryLabel.text = categaryTVC.choosedCategary
-        categaryLabel.textColor = .black()
+        categaryLabel.textColor = .black
         if phoneTextField.text!.isEmpty {
             phoneTextField.becomeFirstResponder()
         }
@@ -100,7 +99,7 @@ class AddRestaurantTableViewController: UITableViewController {
         }
         
         guard let managedObjectContext =
-            (UIApplication.shared().delegate as? AppDelegate)?.managedObjectContext
+            (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext
             else { return }
         
         // 如果是添加新的数据, 则插入一个新的数据实例.
@@ -116,7 +115,7 @@ class AddRestaurantTableViewController: UITableViewController {
             hudText = "Updated"
         }
         
-        let queue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosDefault)
+        let queue = DispatchQueue.global()
         queue.async() {
             self.updateRestaurantInformation()
             do {
@@ -149,7 +148,7 @@ class AddRestaurantTableViewController: UITableViewController {
     }
     
     private func configeRestaurantInformation() {
-        imageView.image        = cache.image(for: newRestaurant.keyString)
+        imageView.image        = newRestaurant.image,
         nameTextField.text     = newRestaurant.name
         locationTextField.text = newRestaurant.location
         categaryLabel.text     = newRestaurant.type
@@ -158,7 +157,7 @@ class AddRestaurantTableViewController: UITableViewController {
         isUpdate               = true
         
         imageView.contentMode = .scaleAspectFill
-        categaryLabel.textColor = .black()
+        categaryLabel.textColor = .black
     }
     
     
@@ -172,9 +171,7 @@ class AddRestaurantTableViewController: UITableViewController {
         let phone    = phoneTextField.text!
         let note     = noteTextField.text!
         
-        // TODO: 找到一个方法, 不用每次都加缓存.
-        cache.set(imagedata: image!, key: newRestaurant.keyString)
-        
+
         newRestaurant.name        = name
         newRestaurant.location    = location
         newRestaurant.type        = type
@@ -190,7 +187,7 @@ class AddRestaurantTableViewController: UITableViewController {
 extension AddRestaurantTableViewController:
 UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    private func showImagePicker() {
+    fileprivate func showImagePicker() {
         let canMakePicture = UIImagePickerController.isCameraDeviceAvailable(.rear)
         let imagePicker = UIImagePickerController()
         // Never don't forget!!!!!!!!
@@ -245,7 +242,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         present(actionSheet, animated: true, completion: nil)
     }
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -263,11 +260,11 @@ extension AddRestaurantTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        if nameTextField.isFirstResponder() {
+        if nameTextField.isFirstResponder {
             locationTextField.becomeFirstResponder()
-        } else if locationTextField.isFirstResponder() {
+        } else if locationTextField.isFirstResponder {
             locationTextField.resignFirstResponder()
-        } else if noteTextField.isFirstResponder() {
+        } else if noteTextField.isFirstResponder {
             noteTextField.resignFirstResponder()
         }
         return true

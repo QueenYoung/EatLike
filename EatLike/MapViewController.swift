@@ -109,7 +109,7 @@ class MapViewController: UIViewController {
         mapView.selectAnnotation(restaurantAnnotation, animated: true)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segueIdentifier(for: segue) {
         case .showNavigationSteps:
             let stepsTC = segue.destinationViewController as! StepsTableViewController

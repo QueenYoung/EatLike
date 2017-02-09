@@ -16,15 +16,13 @@ class RestaurantDetailViewController: UIViewController,
     @IBOutlet var tableView: UITableView!
 
     var restaurant: Restaurant!
-    let cache = (UIApplication.shared().delegate as! AppDelegate).imageCache
-
     // MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.title = restaurant.name
         // 设置状态栏的透明效果
-        restaurantImageView.image = cache.image(for: restaurant.keyString)
+        restaurantImageView.image = restaurant.image
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.estimatedRowHeight = 64
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -50,7 +48,7 @@ class RestaurantDetailViewController: UIViewController,
         // 突然发现 因为都是引用类型, 根本不需要使用将 sourceView 的 属性
         // 赋值给当前视图的属性
         // 我完全是在做无用功啊!  不过这样下次可以试下使用 结构体咯.
-        let sourceViewController = segue.sourceViewController
+        let sourceViewController = segue.source
         if sourceViewController is ReviewViewController {
             let count = Int(restaurant.userRate.intValue)
             configureStarColor(count)
@@ -68,7 +66,7 @@ class RestaurantDetailViewController: UIViewController,
         }
 
         guard let managedObjectContext =
-            (UIApplication.shared().delegate as? AppDelegate)?
+            (UIApplication.shared.delegate as? AppDelegate)?
                 .managedObjectContext else { return }
 
         try! managedObjectContext.save()
@@ -76,22 +74,22 @@ class RestaurantDetailViewController: UIViewController,
     }
 
 
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segueIdentifier(for: segue) {
         case .EditRestaurant:
-            let editNV = segue.destinationViewController as! UINavigationController
+            let editNV = segue.destination as! UINavigationController
             let editVc = editNV.topViewController as! AddRestaurantTableViewController
             editVc.newRestaurant = restaurant
         case .ShowReminded:
-            let remindVC = segue.destinationViewController as! RemindTableViewController
+            let remindVC = segue.destination as! RemindTableViewController
             remindVC.restaurant = restaurant
             remindVC.dueDate = restaurant.dueDate ?? Date()
         case .ModalMapView:
-            let mapViewNC = segue.destinationViewController as! UINavigationController
+            let mapViewNC = segue.destination as! UINavigationController
             let mapView = mapViewNC.topViewController as! MapViewController
             mapView.restaurant = restaurant
         case .ScaleImage:
-            let scaleVC = (segue.destinationViewController as! UINavigationController)
+            let scaleVC = (segue.destination as! UINavigationController)
                 .topViewController as! DetailImageController
             scaleVC.image = restaurantImageView.image
         }
@@ -165,9 +163,9 @@ class RestaurantDetailViewController: UIViewController,
             cell.textLabel?.text = NSLocalizedString("Review", comment: "review")
             cell.accessoryType = .disclosureIndicator
             if case 1...5 = count {
-                cell.detailTextLabel?.text = String(repeating:  Character("⭐️"), count: count)
+                cell.detailTextLabel?.text = String(repeating: "⭐️", count: count)
             } else {
-                cell.detailTextLabel?.text = String(repeating:  Character("🌕"), count: 5)
+                cell.detailTextLabel?.text = String(repeating: "🌕", count: 5)
             }
         default:
             break
@@ -178,7 +176,7 @@ class RestaurantDetailViewController: UIViewController,
     private func configureStarColor(_ count: Int) {
         let indexpath = IndexPath(row: 3, section: 0)
         let cell = tableView.cellForRow(at: indexpath)
-        cell?.detailTextLabel?.text = String(repeating: Character("⭐️"), count: count)
+        cell?.detailTextLabel?.text = String(repeating: "⭐️", count: count)
     }
 
     @IBAction func cancel(sender: UIBarButtonItem) {

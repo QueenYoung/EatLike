@@ -30,7 +30,7 @@ class PreviewCollectionViewController: UICollectionViewController, UICollectionV
         self.collectionView!.register(previewCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
-        self.collectionView?.backgroundColor = UIColor.clear()
+		self.collectionView?.backgroundColor = .clear
         self.view.frame.size = CGSize(width: delegate!.pictureWidth, height: 98)
         collectionView?.delegate = self
     }

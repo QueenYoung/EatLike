@@ -86,7 +86,7 @@ extension Restaurant {
     // 因为某个我还不太了解的原因, 这里必须使用 nonobjc 标记, 或者使用计算属性.
     @nonobjc static let domainIdentifier = "com.jxau.queen.eatlike"
 
-    var userActivityUserInfo: [NSObject: AnyObject] {
+    var userActivityUserInfo: [NSObject: Any] {
         return ["id": keyString]
     }
 

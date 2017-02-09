@@ -13,20 +13,19 @@ import CoreSpotlight
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var imageCache = ImageCache()
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.shared().statusBarStyle = .lightContent
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        UIApplication.shared.statusBarStyle = .lightContent
         configureAppearance()
         if let barFont = UIFont(name: "Avenir-Light", size: 24) {
             UINavigationBar.appearance().titleTextAttributes =
-                [NSForegroundColorAttributeName: UIColor.white(),
+                [NSForegroundColorAttributeName: UIColor.white,
                  NSFontAttributeName: barFont]
         }
 
         return true
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         let objectId: String
         if userActivity.activityType == Restaurant.domainIdentifier,
             let activityObjectId = userActivity.userInfo?["id"] as? String {
@@ -41,12 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
 
-        print(window!.rootViewController)
+        print(window!.rootViewController!)
         print((window!.rootViewController as! UITabBarController).viewControllers!)
         if let tabv = window!.rootViewController as? UITabBarController,
-            nav = tabv.viewControllers!.first as? UINavigationController,
-            homeVC = nav.viewControllers.first as? RestaurantTableViewController,
-            restaurant = homeVC.restaurants.filter({$0.keyString == objectId}).first {
+            let nav = tabv.viewControllers!.first as? UINavigationController,
+            let homeVC = nav.viewControllers.first as? RestaurantTableViewController,
+            let restaurant = homeVC.restaurants.filter({$0.keyString == objectId}).first {
 
             nav.popToRootViewController(animated: false)
             let restaurantDetailVC = (
@@ -74,19 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .topViewController?.present(alert, animated: true, completion: nil)
     }
 
-    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: () -> Void) {
-        if identifier == "Justsavaworld" {
-            NotificationCenter.default().post(name: "SaveWorld" as NSNotification.Name, object: nil)
-        }
-
-        completionHandler()
-    }
-
 	func applicationWillTerminate(_ application: UIApplication) {
 		self.saveContext()
 	}
-
-
 
 	// MARK: - Core Data Saving support
 
@@ -108,13 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.appcoda.CoreDataDemo" in the application's documents Application Support directory.
-        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+		let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main().urlForResource("EatLike", withExtension: "momd")!
+		let modelURL = Bundle.main.url(forResource: "EatLike", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
@@ -122,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = try! self.applicationDocumentsDirectory.appendingPathComponent("EatLike.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("EatLike.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStore(
@@ -133,7 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
         } catch {
             // Report any error we got.
-            var dict = [String: AnyObject]()
+            var dict = [String: Any]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
 

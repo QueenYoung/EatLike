@@ -5,7 +5,7 @@ import UIKit
 class FadeSegue: UIStoryboardSegue {
 
     override func perform() {
-        destinationViewController.transitioningDelegate = self
+        destination.transitioningDelegate = self
         super.perform()
     }
 }
@@ -21,7 +21,7 @@ extension FadeSegue: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(
-        forDismissedController: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let fade = FadeAnimator()
         fade.isPresenting = false
         return fade
@@ -34,35 +34,35 @@ class FadeAnimator:NSObject, UIViewControllerAnimatedTransitioning {
 
     var isPresenting = false
 
-    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
 
-    func animateTransition(_ transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
         // 1. Get the transition context to- view
-        let fromView = transitionContext.view(forKey: UITransitionContextFromViewKey)
-        let toView = transitionContext.view(forKey: UITransitionContextToViewKey)
+        let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from)
+        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)
 
         // 2. Add the to-view to the transition context
         // 3. Set up the initial state for the animation
         if isPresenting {
             toView?.alpha = 0.0
             if let toView = toView {
-                transitionContext.containerView().addSubview(toView)
+                transitionContext.containerView.addSubview(toView)
             }
 
         } else {
             if let fromView = fromView {
                 if let toView = toView {
-                    transitionContext.containerView().insertSubview(toView, belowSubview: fromView)
+                    transitionContext.containerView.insertSubview(toView, belowSubview: fromView)
                 }
                 fromView.alpha = 1.0
             }
         }
 
         // 4. Perform the animation
-        let duration = transitionDuration(transitionContext)
+        let duration = transitionDuration(using: transitionContext)
 
         UIView.animate(withDuration: duration, animations: {
             if self.isPresenting {
